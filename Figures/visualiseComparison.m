@@ -1,6 +1,7 @@
 function visualiseComparison( prefixes)
     %close all;
     %clear all;
+[substr, c1, c2] = diffSubStr( prefixes{:})
 
     AltLabels_x = {'Time (days)', 'Distance to Spheroid Border (\mu m)', 'Distance to Spheroid Border (\mu m)'};
     AltLabels_y = {'Spheroid Radius (\mu m)', 'Ki67-positive Cell Fraction', 'Extra-Cellular Matrix Density'};
@@ -37,6 +38,7 @@ function visualiseComparison( prefixes)
             fe_vs_it = [];
             e_vs_it = [];
             j=0;
+            %exist([prefixes{i} num2str(j+1) '.mat'], 'file')
             while( exist([prefixes{i} num2str(j+1) '.mat'], 'file'))
                 j=j+1;
                 disp([prefixes{i} num2str(j) '.mat']);
@@ -70,15 +72,13 @@ function visualiseComparison( prefixes)
                 % parameter values
                 temp = [temp; x'];
             end
-            X = [X temp];
-            %X = [X x'];
-            %size(x)
-            %1:size(x,1)
-            %G = [G 1:size(x,1)];
+            %X = [X temp];
+            X = [temp X];
+            
             G = [G -i*ones(1,size(x,1))];
-            L = [L 1:size(x,1)]
+            L = [L 1:size(x,1)];
             %L = horzcat(L,  options.legend{1:size(x,1)});
-            size(G), size(X), size(L), size(Lab)
+            %size(G), size(X), size(L), size(Lab)
             
             
             %% final fit
@@ -118,16 +118,19 @@ function visualiseComparison( prefixes)
 
         end
         
+        disp('Plot function evaluations')
         h_fe = figure(2);
         legend( findobj(h_fe,'Tag','Box'), prefixes, 'interpreter', 'none', 'Location', 'northoutside');
         xlabel('iteration');
         ylabel('function evaluations');
         
+        disp('Plot objective function')
         h_e = figure(3);
         legend( findobj(h_e,'Tag','Box'), prefixes, 'interpreter', 'none', 'Location', 'northoutside');
         xlabel('iteration');
         ylabel('objective function threshold \epsilon');
         
+        disp('Prepare Labels')
         for p=1:size(x,1) % parameters
             for m=1:size(prefixes,2) % models
                 if( isfield(options, 'legend'))
@@ -142,6 +145,8 @@ function visualiseComparison( prefixes)
                 end
             end
         end
+        
+        identifiabilityTab( X, {L, G})
         
         h_bp = figure(1);
         gap_size =  0;
@@ -158,6 +163,9 @@ function visualiseComparison( prefixes)
         
 
         %% Independent Boxplots
+        
+        figure(7)
+        groupedBoxplots( ceil(size(x,1)/2),2, X, L, options.legend, G, prefixes, colmap);
         
         %figure(5); clf();
         for p=1:size(x,1)
@@ -195,9 +203,16 @@ function visualiseComparison( prefixes)
     %h_bp = figure(1);
     %saveas( gcf, [prefixes{:} '.png'], 'png');
 
-    plotEPS( h_fe, 'functionEvaluations.eps', 800/2, 300);
-    plotEPS( h_e,  'objectiveFunction.eps', 800/2, 300);
-    plotEPS( h_5,  'independentBoxplots.eps', 800, 300);
-    plotEPS( h_ff, 'fit.eps', 800, 200);
+    LatexLabRow = {'$k_{div}^{max}$', '$l^{crit}$', '$l^{init}$', '$q_{init}$', '$k_{e}^{pro}$', '$k_{e}^{deg}$', '$e^{crit}$'};
+    [m,s, idTab] = identifiabilityTab(X, {L,G})
+    LatexLabCol = diffSubStr( prefixes{:})
+    matrix2latex([ c1 'XXX' c2 'uncertainty.tex'], idTab, LatexLabCol, LatexLabRow)
+    matrix2latex([ c1 'XXX' c2 'identifiability.tex'], idTab, LatexLabCol, LatexLabRow, 1)
+    
+    plotEPS( h_fe, [ c1 'XXX' c2 'functionEvaluations.eps'], 800/2, 300);
+    plotEPS( h_fe, [ c1 'XXX' c2 'functionEvaluations.eps'], 800/2, 300);
+    plotEPS( h_e,  [ c1 'XXX' c2 'objectiveFunction.eps'], 800/2, 300);
+    plotEPS( h_5,  [ c1 'XXX' c2 'independentBoxplots.eps'], 800, 300);
+    plotEPS( h_ff, [ c1 'XXX' c2 'fit.eps'], 800, 200);
 
 end

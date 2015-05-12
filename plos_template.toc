@@ -1,9 +1,9 @@
 \contentsline {paragraph}{Parameter Inference}{2}{section*.9}
 \contentsline {paragraph}{Sensitivity to Population/Sample Size}{3}{section*.12}
-\contentsline {paragraph}{Cell model:}{6}{section*.19}
-\contentsline {paragraph}{Molecular model:}{6}{section*.20}
-\contentsline {paragraph}{Initial \& boundary conditions:}{6}{section*.21}
-\contentsline {paragraph}{Parameters}{6}{section*.22}
-\contentsline {paragraph}{Choice of Prior Distribution $p^{(t)}(\theta )$}{7}{section*.25}
-\contentsline {paragraph}{Choice of $\varepsilon $-thresholds}{7}{section*.26}
-\contentsline {paragraph}{(Surrogate Approximation)}{7}{section*.27}
+\contentsline {paragraph}{Cell model:}{7}{section*.21}
+\contentsline {paragraph}{Molecular model:}{7}{section*.22}
+\contentsline {paragraph}{Initial \& boundary conditions:}{7}{section*.23}
+\contentsline {paragraph}{Parameters}{7}{section*.24}
+\contentsline {paragraph}{Choice of Prior Distribution $p^{(t)}(\theta )$}{8}{section*.27}
+\contentsline {paragraph}{Choice of $\varepsilon $-thresholds}{8}{section*.28}
+\contentsline {paragraph}{(Surrogate Approximation)}{8}{section*.29}

@@ -106,7 +106,9 @@
 % rotating package for sideways tables
 \usepackage{rotating}
 
+% ADDED BY NICK JAGIELLA
 \usepackage{color}
+\usepackage{grffile}
 %\usepackage{minitoc}
 
 % Remove comment for double spacing
@@ -276,16 +278,16 @@ We also can observe that the acceptance rate of candidate samples becomes dramat
 \begin{minipage}[t]{0.33\textwidth}
 %\textbf{A} \hspace{180pt} \textbf{B} \\
 \textbf{A}
-\includegraphics[width=\textwidth]{Figures/FitToyData2a}\\
+\includegraphics[width=\textwidth]{Data/TumorToyData2D_0.001merr_100pop_GCKI67ECM_NEW_acceptanceRate}\\
 \textbf{B}
-\includegraphics[width=\textwidth]{Figures/FitToyData2b}
+\includegraphics[width=\textwidth]{Data/TumorToyData2D_0.001merr_100pop_GCKI67ECM-objFunc}
 \end{minipage}
 \begin{minipage}[t]{0.66\textwidth}
 \textbf{C}\\
-\includegraphics[width=\textwidth]{Figures/FitToyData2c}
+\includegraphics[width=\textwidth]{Data/TumorToyData2D_0.001merr_100pop_GCKI67ECM-scatterPlotMatrix}
 \end{minipage}
 \textbf{D}\\
-\includegraphics[width=\textwidth]{Figures/FitToyData1.eps}
+\includegraphics[width=\textwidth]{Data/TumorToyData2D_0.001merr_100pop_GCKI67ECM-fits}
 \caption{{\bf Artificial data and fits for 5 (color-coded) generation (complete dataset).}
 \textbf{A}  acceptance rate over iteration; \textbf{B} $\epsilon$ threshold (cyan) and distance of the accepted population (blue) over iteration; for comparison the median distance at the optimum is depicted (red); \textbf{C} scatter matrix for 5 (color-coded) generation. todo: color spectrum. \textbf{D} Artificial data and fits for 5 (color-coded) generations (complete dataset).}
 \label{fig3}
@@ -297,12 +299,12 @@ Fig.~\ref{fig4} illustrates that the population size has an critical impact on t
 
 \begin{figure}[htbp]
 \textbf{A} \hspace{180pt} \textbf{B} \\
-\includegraphics[width=0.49\textwidth]{Figures/FitToyData4a}
-\includegraphics[width=0.49\textwidth]{Figures/FitToyData4b}\\
+\includegraphics[width=0.49\textwidth]{Data/TumorToyData2D_0.001merr_XXX0pop_GCKI67ECMfunctionEvaluations}
+\includegraphics[width=0.49\textwidth]{Data/TumorToyData2D_0.001merr_XXX0pop_GCKI67ECMobjectiveFunction}\\
  \textbf{C} \\
-\includegraphics[width=\textwidth]{Figures/FitToyData4c}\\
+\includegraphics[width=\textwidth]{Data/TumorToyData2D_0.001merr_XXX0pop_GCKI67ECMindependentBoxplots}\\
  \textbf{D} \\
-\includegraphics[width=\textwidth]{Figures/FitToyData4d}\\
+\includegraphics[width=\textwidth]{Data/TumorToyData2D_0.001merr_XXX0pop_GCKI67ECMfit}\\
 \caption{{\bf Sensitivity to Population/Sample Size.}
 \textbf{A}  number of function evaluations over iteration; \textbf{B} threshold over iteration; \textbf{C} box plot of final sample for different population sizes. \textbf{D} final fits.}
 \label{fig4}
@@ -310,7 +312,7 @@ Fig.~\ref{fig4} illustrates that the population size has an critical impact on t
 
 
 \subsection*{Experimental data (2D)}
-Fig.~\ref{fig5} 
+Fig.~\ref{fig:exp2d} 
 
 no histological info on proliferation (Ki67) leads to wrong predictions cellular kinetic param.
 kinetic ECM param. not identifiable without hist. info. on ECM (ColV)
@@ -320,15 +322,40 @@ kinetic ECM param. not identifiable without hist. info. on ECM (ColV)
 \textbf{A}\\
 %\includegraphics[width=0.49\textwidth]{Figures/FitToyData5a}
 %\includegraphics[width=0.49\textwidth]{Figures/FitToyData5b}
-\includegraphics[width=\textwidth]{Figures/FitToyData5c}\\
+\includegraphics[width=\textwidth]{Data/Tumor2dGCXXXindependentBoxplots}\\
 \textbf{B}\\
-\includegraphics[width=\textwidth]{Figures/FitExpDataIdentifiabilityTable}\\
+%\includegraphics[width=\textwidth]{Figures/FitExpDataIdentifiabilityTable}\\
+\input{Data/Tumor2dGCXXXidentifiability}
+\input{Data/Tumor2dGCXXXuncertainty}
 \textbf{C}\\
-\includegraphics[width=\textwidth]{Figures/FitToyData5d}
+\includegraphics[width=\textwidth]{Data/Tumor2dGCXXXfit}
 \caption{{\bf Different combinations of experimental data sets.}
 \textbf{A} box plot for different combinations of data sets; \textbf{B} identifiablitity table (+ identifiable, o large uncertainty, - unidentifiable); \textbf{C} final fits and scenarios.}
-\label{fig5}
+\label{fig:exp2d}
 \end{figure}
+
+\subsection*{Experimental data (3D)}
+Fig.~\ref{fig:exp3d} 
+
+\begin{figure}[htbp]
+\begin{minipage}[t]{0.33\textwidth}
+%\textbf{A} \hspace{180pt} \textbf{B} \\
+\textbf{A}
+\includegraphics[width=\textwidth]{Data/Tumor3dGCKI67ECM-acceptanceRate.eps}\\
+\textbf{B}
+\includegraphics[width=\textwidth]{Data/Tumor3dGCKI67ECM-objFunc.eps}
+\end{minipage}
+\begin{minipage}[t]{0.66\textwidth}
+\textbf{C}\\
+\includegraphics[width=\textwidth]{Data/Tumor3dGCKI67ECM-scatterPlotMatrix.eps}
+\end{minipage}
+\textbf{D}\\
+\includegraphics[width=\textwidth]{Data/Tumor3dGCKI67ECM-fits.eps}
+\caption{{\bf Artificial data and fits for 5 (color-coded) generation (complete dataset).}
+\textbf{A}  acceptance rate over iteration; \textbf{B} $\epsilon$ threshold (cyan) and distance of the accepted population (blue) over iteration; for comparison the median distance at the optimum is depicted (red); \textbf{C} scatter matrix for 5 (color-coded) generation. todo: color spectrum. \textbf{D} Artificial data and fits for 5 (color-coded) generations (complete dataset).}
+\label{fig:exp3d}
+\end{figure}
+
 
 %\begin{table}[!ht]
 %\begin{adjustwidth}{-2.25in}{0in} % Comment out/remove adjustwidth environment if table fits in text column.

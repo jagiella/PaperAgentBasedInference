@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.1415926-2.5-1.40.14 (TeX Live 2013) (format=pdflatex 2013.10.11)  7 MAY 2015 16:31
+This is pdfTeX, Version 3.1415926-2.5-1.40.14 (TeX Live 2013) (format=pdflatex 2013.10.11)  12 MAY 2015 18:09
 entering extended mode
  \write18 enabled.
  file:line:error style messages enabled.
@@ -733,6 +733,13 @@ File: color.cfg 2007/01/18 v1.5 color configuration of teTeX/TeXLive
 )
 Package color Info: Driver file: pdftex.def on input line 130.
 )
+(/usr/local/texlive/2013/texmf-dist/tex/latex/oberdiek/grffile.sty
+Package: grffile 2012/04/05 v1.16 Extended file name support for graphics (HO)
+Package grffile Info: Option `multidot' is set to `true'.
+Package grffile Info: Option `extendedchars' is set to `false'.
+Package grffile Info: Option `space' is set to `true'.
+Package grffile Info: \Gin@ii of package `graphicx' fixed on input line 486.
+)
 (/usr/local/texlive/2013/texmf-dist/tex/latex/caption/caption.sty
 Package: caption 2013/05/02 v3.3-89 Customizing captions (AR)
 
@@ -786,28 +793,28 @@ e
 (./plos_template.aux)
 \openout1 = `plos_template.aux'.
 
-LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 158.
-LaTeX Font Info:    ... okay on input line 158.
-LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 158.
-LaTeX Font Info:    ... okay on input line 158.
-LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 158.
-LaTeX Font Info:    ... okay on input line 158.
-LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 158.
-LaTeX Font Info:    ... okay on input line 158.
-LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 158.
-LaTeX Font Info:    ... okay on input line 158.
-LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 158.
-LaTeX Font Info:    ... okay on input line 158.
-LaTeX Font Info:    Checking defaults for TS1/cmr/m/n on input line 158.
-LaTeX Font Info:    Try loading font information for TS1+cmr on input line 158.
+LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 160.
+LaTeX Font Info:    ... okay on input line 160.
+LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 160.
+LaTeX Font Info:    ... okay on input line 160.
+LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 160.
+LaTeX Font Info:    ... okay on input line 160.
+LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 160.
+LaTeX Font Info:    ... okay on input line 160.
+LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 160.
+LaTeX Font Info:    ... okay on input line 160.
+LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 160.
+LaTeX Font Info:    ... okay on input line 160.
+LaTeX Font Info:    Checking defaults for TS1/cmr/m/n on input line 160.
+LaTeX Font Info:    Try loading font information for TS1+cmr on input line 160.
 
 
 (/usr/local/texlive/2013/texmf-dist/tex/latex/base/ts1cmr.fd
 File: ts1cmr.fd 1999/05/25 v2.5h Standard LaTeX font definitions
 )
-LaTeX Font Info:    ... okay on input line 158.
-LaTeX Font Info:    Checking defaults for PD1/pdf/m/n on input line 158.
-LaTeX Font Info:    ... okay on input line 158.
+LaTeX Font Info:    ... okay on input line 160.
+LaTeX Font Info:    Checking defaults for PD1/pdf/m/n on input line 160.
+LaTeX Font Info:    ... okay on input line 160.
 
 *geometry* driver: auto-detecting
 *geometry* detected driver: pdftex
@@ -844,15 +851,15 @@ LaTeX Font Info:    ... okay on input line 158.
 * (1in=72.27pt=25.4mm, 1cm=28.453pt)
 
 \AtBeginShipoutBox=\box30
-Package hyperref Info: Link coloring OFF on input line 158.
-LaTeX Info: Redefining \ref on input line 158.
-LaTeX Info: Redefining \pageref on input line 158.
-LaTeX Info: Redefining \nameref on input line 158.
+Package hyperref Info: Link coloring OFF on input line 160.
+LaTeX Info: Redefining \ref on input line 160.
+LaTeX Info: Redefining \pageref on input line 160.
+LaTeX Info: Redefining \nameref on input line 160.
 (./plos_template.out) (./plos_template.out)
 \@outlinefile=\write3
 \openout3 = `plos_template.out'.
 
-LaTeX Info: Redefining \microtypecontext on input line 158.
+LaTeX Info: Redefining \microtypecontext on input line 160.
 Package microtype Info: Generating PDF output.
 Package microtype Info: Character protrusion enabled (level 2).
 Package microtype Info: Using default protrusion set `alltext'.
@@ -889,15 +896,15 @@ Package lastpage Info: Please have a look at the pageslts package at
 (lastpage)             or
 (lastpage)             http://www.ctan.org/tex-archive/ 
 (lastpage)             install/macros/latex/contrib/pageslts.tds.zip
-(lastpage)             ! on input line 158.
-LaTeX Font Info:    Try loading font information for U+msa on input line 170.
+(lastpage)             ! on input line 160.
+LaTeX Font Info:    Try loading font information for U+msa on input line 172.
  (/usr/local/texlive/2013/texmf-dist/tex/latex/amsfonts/umsa.fd
 File: umsa.fd 2013/01/14 v3.01 AMS symbols A
 )
 (/usr/local/texlive/2013/texmf-dist/tex/latex/microtype/mt-msa.cfg
 File: mt-msa.cfg 2006/02/04 v1.1 microtype config. file: AMS symbols (a) (RS)
 )
-LaTeX Font Info:    Try loading font information for U+msb on input line 170.
+LaTeX Font Info:    Try loading font information for U+msb on input line 172.
 
 (/usr/local/texlive/2013/texmf-dist/tex/latex/amsfonts/umsb.fd
 File: umsb.fd 2013/01/14 v3.01 AMS symbols B
@@ -917,7 +924,7 @@ Package microtype Info: Loading generic settings for font family
 File: Figures/Pipeline.pdf Graphic file (type pdf)
 
 <use Figures/Pipeline.pdf>
-Package pdftex.def Info: Figures/Pipeline.pdf used on input line 244.
+Package pdftex.def Info: Figures/Pipeline.pdf used on input line 246.
 (pdftex.def)             Requested size: 379.4175pt x 179.17117pt.
 
 
@@ -927,7 +934,7 @@ LaTeX Warning: `h' float specifier changed to `ht'.
 File: Figures/SimulationSnapshots.png Graphic file (type png)
 
 <use Figures/SimulationSnapshots.png>
-Package pdftex.def Info: Figures/SimulationSnapshots.png used on input line 255
+Package pdftex.def Info: Figures/SimulationSnapshots.png used on input line 257
 .
 (pdftex.def)             Requested size: 379.4175pt x 215.28873pt.
 
@@ -942,14 +949,14 @@ Package epstopdf Info: Source file: <PLOS-submission.eps>
 (epstopdf)                    size: 15299 bytes
 (epstopdf)             Command: <epstopdf --outfile=PLOS-submission-eps-convert
 ed-to.pdf PLOS-submission.eps>
-(epstopdf)             \includegraphics on input line 272.
+(epstopdf)             \includegraphics on input line 274.
 Package epstopdf Info: Output file is already uptodate.
 <PLOS-submission-eps-converted-to.pdf, id=10, 216.81pt x 35.13126pt>
 File: PLOS-submission-eps-converted-to.pdf Graphic file (type pdf)
 
 <use PLOS-submission-eps-converted-to.pdf>
 Package pdftex.def Info: PLOS-submission-eps-converted-to.pdf used on input lin
-e 272.
+e 274.
 (pdftex.def)             Requested size: 144.54pt x 23.42201pt.
 
 
@@ -970,225 +977,285 @@ Package epstopdf Info: Source file: <PLOS-submission.eps>
 (epstopdf)                    size: 15299 bytes
 (epstopdf)             Command: <epstopdf --outfile=PLOS-submission-eps-convert
 ed-to.pdf PLOS-submission.eps>
-(epstopdf)             \includegraphics on input line 274.
+(epstopdf)             \includegraphics on input line 276.
 Package epstopdf Info: Output file is already uptodate.
 File: PLOS-submission-eps-converted-to.pdf Graphic file (type pdf)
  <use PLOS-submission-eps-converted-to.pdf>
 Package pdftex.def Info: PLOS-submission-eps-converted-to.pdf used on input lin
-e 274.
+e 276.
 (pdftex.def)             Requested size: 144.54pt x 23.42201pt.
 
 [2 <./Figures/Pipeline.pdf> <./Figures/SimulationSnapshots.png>]
-Package epstopdf Info: Source file: <Figures/FitToyData2a.eps>
-(epstopdf)                    date: 2015-05-07 16:14:10
-(epstopdf)                    size: 15351 bytes
-(epstopdf)             Output file: <Figures/FitToyData2a-eps-converted-to.pdf>
+<Data/TumorToyData2D_0.001merr_100pop_GCKI67ECM_NEW_acceptanceRate.png, id=207,
+ 578.16pt x 433.62pt>
+File: Data/TumorToyData2D_0.001merr_100pop_GCKI67ECM_NEW_acceptanceRate.png Gra
+phic file (type png)
 
-(epstopdf)                    date: 2015-05-07 16:30:28
-(epstopdf)                    size: 6289 bytes
-(epstopdf)             Command: <epstopdf --outfile=Figures/FitToyData2a-eps-co
-nverted-to.pdf Figures/FitToyData2a.eps>
-(epstopdf)             \includegraphics on input line 279.
+<use Data/TumorToyData2D_0.001merr_100pop_GCKI67ECM_NEW_acceptanceRate.png>
+Package pdftex.def Info: Data/TumorToyData2D_0.001merr_100pop_GCKI67ECM_NEW_acc
+eptanceRate.png used on input line 281.
+(pdftex.def)             Requested size: 125.20847pt x 93.90137pt.
+Package epstopdf Info: Source file: <Data/TumorToyData2D_0.001merr_100pop_GCKI6
+7ECM-objFunc.eps>
+(epstopdf)                    date: 2015-05-12 18:09:05
+(epstopdf)                    size: 896845 bytes
+(epstopdf)             Output file: <Data/TumorToyData2D_0.001merr_100pop_GCKI6
+7ECM-objFunc-eps-converted-to.pdf>
+(epstopdf)                    date: 2015-05-12 18:09:05
+(epstopdf)                    size: 27142 bytes
+(epstopdf)             Command: <epstopdf --outfile=Data/TumorToyData2D_0.001me
+rr_100pop_GCKI67ECM-objFunc-eps-converted-to.pdf Data/TumorToyData2D_0.001merr_
+100pop_GCKI67ECM-objFunc.eps>
+(epstopdf)             \includegraphics on input line 283.
 Package epstopdf Info: Output file is already uptodate.
 
-<Figures/FitToyData2a-eps-converted-to.pdf, id=207, 348.30125pt x 278.03876pt>
-File: Figures/FitToyData2a-eps-converted-to.pdf Graphic file (type pdf)
+<Data/TumorToyData2D_0.001merr_100pop_GCKI67ECM-objFunc-eps-converted-to.pdf, i
+d=208, 356.33125pt x 280.04625pt>
+File: Data/TumorToyData2D_0.001merr_100pop_GCKI67ECM-objFunc-eps-converted-to.p
+df Graphic file (type pdf)
 
-<use Figures/FitToyData2a-eps-converted-to.pdf>
-Package pdftex.def Info: Figures/FitToyData2a-eps-converted-to.pdf used on inpu
-t line 279.
-(pdftex.def)             Requested size: 125.20847pt x 99.94962pt.
-Package epstopdf Info: Source file: <Figures/FitToyData2b.eps>
-(epstopdf)                    date: 2015-05-07 16:14:10
-(epstopdf)                    size: 126573 bytes
-(epstopdf)             Output file: <Figures/FitToyData2b-eps-converted-to.pdf>
+<use Data/TumorToyData2D_0.001merr_100pop_GCKI67ECM-objFunc-eps-converted-to.pd
+f>
+Package pdftex.def Info: Data/TumorToyData2D_0.001merr_100pop_GCKI67ECM-objFunc
+-eps-converted-to.pdf used on input line 283.
+(pdftex.def)             Requested size: 125.20847pt x 98.40222pt.
 
-(epstopdf)                    date: 2015-05-07 16:30:28
-(epstopdf)                    size: 10781 bytes
-(epstopdf)             Command: <epstopdf --outfile=Figures/FitToyData2b-eps-co
-nverted-to.pdf Figures/FitToyData2b.eps>
-(epstopdf)             \includegraphics on input line 281.
-Package epstopdf Info: Output file is already uptodate.
-
-<Figures/FitToyData2b-eps-converted-to.pdf, id=208, 354.32375pt x 280.04625pt>
-File: Figures/FitToyData2b-eps-converted-to.pdf Graphic file (type pdf)
-
-<use Figures/FitToyData2b-eps-converted-to.pdf>
-Package pdftex.def Info: Figures/FitToyData2b-eps-converted-to.pdf used on inpu
-t line 281.
-(pdftex.def)             Requested size: 125.20847pt x 98.95773pt.
-
-Underfull \hbox (badness 10000) in paragraph at lines 278--282
+Underfull \hbox (badness 10000) in paragraph at lines 280--284
 []\OT1/cmr/bx/n/10 A
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 278--282
+Underfull \hbox (badness 10000) in paragraph at lines 280--284
 \OT1/cmr/bx/n/10 B
  []
 
-Package epstopdf Info: Source file: <Figures/FitToyData2c.eps>
-(epstopdf)                    date: 2015-05-07 16:14:08
-(epstopdf)                    size: 2651735 bytes
-(epstopdf)             Output file: <Figures/FitToyData2c-eps-converted-to.pdf>
-
-(epstopdf)                    date: 2015-05-07 16:30:29
-(epstopdf)                    size: 463076 bytes
-(epstopdf)             Command: <epstopdf --outfile=Figures/FitToyData2c-eps-co
-nverted-to.pdf Figures/FitToyData2c.eps>
-(epstopdf)             \includegraphics on input line 285.
+Package epstopdf Info: Source file: <Data/TumorToyData2D_0.001merr_100pop_GCKI6
+7ECM-scatterPlotMatrix.eps>
+(epstopdf)                    date: 2015-05-12 18:09:05
+(epstopdf)                    size: 2258967 bytes
+(epstopdf)             Output file: <Data/TumorToyData2D_0.001merr_100pop_GCKI6
+7ECM-scatterPlotMatrix-eps-converted-to.pdf>
+(epstopdf)                    date: 2015-05-12 18:09:05
+(epstopdf)                    size: 225176 bytes
+(epstopdf)             Command: <epstopdf --outfile=Data/TumorToyData2D_0.001me
+rr_100pop_GCKI67ECM-scatterPlotMatrix-eps-converted-to.pdf Data/TumorToyData2D_
+0.001merr_100pop_GCKI67ECM-scatterPlotMatrix.eps>
+(epstopdf)             \includegraphics on input line 287.
 Package epstopdf Info: Output file is already uptodate.
-<Figures/FitToyData2c-eps-converted-to.pdf, id=209, 636.3775pt x 634.37pt>
-File: Figures/FitToyData2c-eps-converted-to.pdf Graphic file (type pdf)
 
-<use Figures/FitToyData2c-eps-converted-to.pdf>
-Package pdftex.def Info: Figures/FitToyData2c-eps-converted-to.pdf used on inpu
-t line 285.
+<Data/TumorToyData2D_0.001merr_100pop_GCKI67ECM-scatterPlotMatrix-eps-converted
+-to.pdf, id=209, 636.3775pt x 634.37pt>
+File: Data/TumorToyData2D_0.001merr_100pop_GCKI67ECM-scatterPlotMatrix-eps-conv
+erted-to.pdf Graphic file (type pdf)
+
+<use Data/TumorToyData2D_0.001merr_100pop_GCKI67ECM-scatterPlotMatrix-eps-conve
+rted-to.pdf>
+Package pdftex.def Info: Data/TumorToyData2D_0.001merr_100pop_GCKI67ECM-scatter
+PlotMatrix-eps-converted-to.pdf used on input line 287.
 (pdftex.def)             Requested size: 250.41693pt x 249.61995pt.
-Package epstopdf Info: Source file: <Figures/FitToyData1.eps>
-(epstopdf)                    date: 2015-05-07 16:14:15
-(epstopdf)                    size: 2677344 bytes
-(epstopdf)             Output file: <Figures/FitToyData1-eps-converted-to.pdf>
-(epstopdf)                    date: 2015-05-07 16:30:30
-(epstopdf)                    size: 669562 bytes
-(epstopdf)             Command: <epstopdf --outfile=Figures/FitToyData1-eps-con
-verted-to.pdf Figures/FitToyData1.eps>
-(epstopdf)             \includegraphics on input line 288.
+Package epstopdf Info: Source file: <Data/TumorToyData2D_0.001merr_100pop_GCKI6
+7ECM-fits.eps>
+(epstopdf)                    date: 2015-05-12 18:09:05
+(epstopdf)                    size: 9403108 bytes
+(epstopdf)             Output file: <Data/TumorToyData2D_0.001merr_100pop_GCKI6
+7ECM-fits-eps-converted-to.pdf>
+(epstopdf)                    date: 2015-05-12 18:09:05
+(epstopdf)                    size: 2227372 bytes
+(epstopdf)             Command: <epstopdf --outfile=Data/TumorToyData2D_0.001me
+rr_100pop_GCKI67ECM-fits-eps-converted-to.pdf Data/TumorToyData2D_0.001merr_100
+pop_GCKI67ECM-fits.eps>
+(epstopdf)             \includegraphics on input line 290.
 Package epstopdf Info: Output file is already uptodate.
 
-<Figures/FitToyData1-eps-converted-to.pdf, id=210, 661.47125pt x 186.6975pt>
-File: Figures/FitToyData1-eps-converted-to.pdf Graphic file (type pdf)
+<Data/TumorToyData2D_0.001merr_100pop_GCKI67ECM-fits-eps-converted-to.pdf, id=2
+10, 659.46375pt x 186.6975pt>
+File: Data/TumorToyData2D_0.001merr_100pop_GCKI67ECM-fits-eps-converted-to.pdf 
+Graphic file (type pdf)
 
-<use Figures/FitToyData1-eps-converted-to.pdf>
-Package pdftex.def Info: Figures/FitToyData1-eps-converted-to.pdf used on input
- line 288.
-(pdftex.def)             Requested size: 379.4175pt x 107.08813pt.
-Package epstopdf Info: Source file: <Figures/FitToyData4a.eps>
-(epstopdf)                    date: 2015-05-07 12:27:51
-(epstopdf)                    size: 21706 bytes
-(epstopdf)             Output file: <Figures/FitToyData4a-eps-converted-to.pdf>
+<use Data/TumorToyData2D_0.001merr_100pop_GCKI67ECM-fits-eps-converted-to.pdf>
+Package pdftex.def Info: Data/TumorToyData2D_0.001merr_100pop_GCKI67ECM-fits-ep
+s-converted-to.pdf used on input line 290.
+(pdftex.def)             Requested size: 379.4175pt x 107.4186pt.
+Package epstopdf Info: Source file: <Data/TumorToyData2D_0.001merr_XXX0pop_GCKI
+67ECMfunctionEvaluations.eps>
+(epstopdf)                    date: 2015-05-12 18:09:07
+(epstopdf)                    size: 21701 bytes
+(epstopdf)             Output file: <Data/TumorToyData2D_0.001merr_XXX0pop_GCKI
+67ECMfunctionEvaluations-eps-converted-to.pdf>
+(epstopdf)                    date: 2015-05-12 18:09:05
+(epstopdf)                    size: 8020 bytes
+(epstopdf)             Command: <epstopdf --outfile=Data/TumorToyData2D_0.001me
+rr_XXX0pop_GCKI67ECMfunctionEvaluations-eps-converted-to.pdf Data/TumorToyData2
+D_0.001merr_XXX0pop_GCKI67ECMfunctionEvaluations.eps>
+(epstopdf)             \includegraphics on input line 302.
+runsystem(epstopdf --outfile=Data/TumorToyData2D_0.001merr_XXX0pop_GCKI67ECMfun
+ctionEvaluations-eps-converted-to.pdf Data/TumorToyData2D_0.001merr_XXX0pop_GCK
+I67ECMfunctionEvaluations.eps)...executed.
 
-(epstopdf)                    date: 2015-05-07 14:30:36
-(epstopdf)                    size: 8042 bytes
-(epstopdf)             Command: <epstopdf --outfile=Figures/FitToyData4a-eps-co
-nverted-to.pdf Figures/FitToyData4a.eps>
-(epstopdf)             \includegraphics on input line 300.
-Package epstopdf Info: Output file is already uptodate.
+Package epstopdf Info: Result file: <Data/TumorToyData2D_0.001merr_XXX0pop_GCKI
+67ECMfunctionEvaluations-eps-converted-to.pdf>
+(epstopdf)                    date: 2015-05-12 18:09:24
+(epstopdf)                    size: 8020 bytes.
 
-<Figures/FitToyData4a-eps-converted-to.pdf, id=212, 352.31625pt x 283.0575pt>
-File: Figures/FitToyData4a-eps-converted-to.pdf Graphic file (type pdf)
+<Data/TumorToyData2D_0.001merr_XXX0pop_GCKI67ECMfunctionEvaluations-eps-convert
+ed-to.pdf, id=212, 352.31625pt x 283.0575pt>
+File: Data/TumorToyData2D_0.001merr_XXX0pop_GCKI67ECMfunctionEvaluations-eps-co
+nverted-to.pdf Graphic file (type pdf)
 
-<use Figures/FitToyData4a-eps-converted-to.pdf>
-Package pdftex.def Info: Figures/FitToyData4a-eps-converted-to.pdf used on inpu
-t line 300.
+<use Data/TumorToyData2D_0.001merr_XXX0pop_GCKI67ECMfunctionEvaluations-eps-con
+verted-to.pdf>
+Package pdftex.def Info: Data/TumorToyData2D_0.001merr_XXX0pop_GCKI67ECMfunctio
+nEvaluations-eps-converted-to.pdf used on input line 302.
 (pdftex.def)             Requested size: 185.91666pt x 149.36757pt.
-Package epstopdf Info: Source file: <Figures/FitToyData4b.eps>
-(epstopdf)                    date: 2015-05-07 12:27:51
-(epstopdf)                    size: 103120 bytes
-(epstopdf)             Output file: <Figures/FitToyData4b-eps-converted-to.pdf>
-
-(epstopdf)                    date: 2015-05-07 14:30:36
-(epstopdf)                    size: 9539 bytes
-(epstopdf)             Command: <epstopdf --outfile=Figures/FitToyData4b-eps-co
-nverted-to.pdf Figures/FitToyData4b.eps>
-(epstopdf)             \includegraphics on input line 301.
-Package epstopdf Info: Output file is already uptodate.
-
-<Figures/FitToyData4b-eps-converted-to.pdf, id=213, 355.3275pt x 283.0575pt>
-File: Figures/FitToyData4b-eps-converted-to.pdf Graphic file (type pdf)
-
-<use Figures/FitToyData4b-eps-converted-to.pdf>
-Package pdftex.def Info: Figures/FitToyData4b-eps-converted-to.pdf used on inpu
-t line 301.
-(pdftex.def)             Requested size: 185.91666pt x 148.10638pt.
-Package epstopdf Info: Source file: <Figures/FitToyData4c.eps>
-(epstopdf)                    date: 2015-05-07 12:27:52
-(epstopdf)                    size: 45507 bytes
-(epstopdf)             Output file: <Figures/FitToyData4c-eps-converted-to.pdf>
-
-(epstopdf)                    date: 2015-05-07 14:30:36
-(epstopdf)                    size: 9659 bytes
-(epstopdf)             Command: <epstopdf --outfile=Figures/FitToyData4c-eps-co
-nverted-to.pdf Figures/FitToyData4c.eps>
+Package epstopdf Info: Source file: <Data/TumorToyData2D_0.001merr_XXX0pop_GCKI
+67ECMobjectiveFunction.eps>
+(epstopdf)                    date: 2015-05-12 18:09:07
+(epstopdf)                    size: 103113 bytes
+(epstopdf)             Output file: <Data/TumorToyData2D_0.001merr_XXX0pop_GCKI
+67ECMobjectiveFunction-eps-converted-to.pdf>
+(epstopdf)                    date: 2015-05-12 18:09:05
+(epstopdf)                    size: 9513 bytes
+(epstopdf)             Command: <epstopdf --outfile=Data/TumorToyData2D_0.001me
+rr_XXX0pop_GCKI67ECMobjectiveFunction-eps-converted-to.pdf Data/TumorToyData2D_
+0.001merr_XXX0pop_GCKI67ECMobjectiveFunction.eps>
 (epstopdf)             \includegraphics on input line 303.
-Package epstopdf Info: Output file is already uptodate.
+runsystem(epstopdf --outfile=Data/TumorToyData2D_0.001merr_XXX0pop_GCKI67ECMobj
+ectiveFunction-eps-converted-to.pdf Data/TumorToyData2D_0.001merr_XXX0pop_GCKI6
+7ECMobjectiveFunction.eps)...executed.
 
-<Figures/FitToyData4c-eps-converted-to.pdf, id=214, 648.4225pt x 256.96pt>
-File: Figures/FitToyData4c-eps-converted-to.pdf Graphic file (type pdf)
+Package epstopdf Info: Result file: <Data/TumorToyData2D_0.001merr_XXX0pop_GCKI
+67ECMobjectiveFunction-eps-converted-to.pdf>
+(epstopdf)                    date: 2015-05-12 18:09:24
+(epstopdf)                    size: 9513 bytes.
 
-<use Figures/FitToyData4c-eps-converted-to.pdf>
-Package pdftex.def Info: Figures/FitToyData4c-eps-converted-to.pdf used on inpu
-t line 303.
-(pdftex.def)             Requested size: 379.4175pt x 150.35823pt.
-Package epstopdf Info: Source file: <Figures/FitToyData4d.eps>
-(epstopdf)                    date: 2015-05-07 12:27:54
-(epstopdf)                    size: 7472067 bytes
-(epstopdf)             Output file: <Figures/FitToyData4d-eps-converted-to.pdf>
+<Data/TumorToyData2D_0.001merr_XXX0pop_GCKI67ECMobjectiveFunction-eps-converted
+-to.pdf, id=213, 355.3275pt x 283.0575pt>
+File: Data/TumorToyData2D_0.001merr_XXX0pop_GCKI67ECMobjectiveFunction-eps-conv
+erted-to.pdf Graphic file (type pdf)
 
-(epstopdf)                    date: 2015-05-07 14:30:38
-(epstopdf)                    size: 1681995 bytes
-(epstopdf)             Command: <epstopdf --outfile=Figures/FitToyData4d-eps-co
-nverted-to.pdf Figures/FitToyData4d.eps>
+<use Data/TumorToyData2D_0.001merr_XXX0pop_GCKI67ECMobjectiveFunction-eps-conve
+rted-to.pdf>
+Package pdftex.def Info: Data/TumorToyData2D_0.001merr_XXX0pop_GCKI67ECMobjecti
+veFunction-eps-converted-to.pdf used on input line 303.
+(pdftex.def)             Requested size: 185.91666pt x 148.10638pt.
+Package epstopdf Info: Source file: <Data/TumorToyData2D_0.001merr_XXX0pop_GCKI
+67ECMindependentBoxplots.eps>
+(epstopdf)                    date: 2015-05-12 18:09:07
+(epstopdf)                    size: 46438 bytes
+(epstopdf)             Output file: <Data/TumorToyData2D_0.001merr_XXX0pop_GCKI
+67ECMindependentBoxplots-eps-converted-to.pdf>
+(epstopdf)                    date: 2015-05-12 18:09:05
+(epstopdf)                    size: 9649 bytes
+(epstopdf)             Command: <epstopdf --outfile=Data/TumorToyData2D_0.001me
+rr_XXX0pop_GCKI67ECMindependentBoxplots-eps-converted-to.pdf Data/TumorToyData2
+D_0.001merr_XXX0pop_GCKI67ECMindependentBoxplots.eps>
 (epstopdf)             \includegraphics on input line 305.
-Package epstopdf Info: Output file is already uptodate.
+runsystem(epstopdf --outfile=Data/TumorToyData2D_0.001merr_XXX0pop_GCKI67ECMind
+ependentBoxplots-eps-converted-to.pdf Data/TumorToyData2D_0.001merr_XXX0pop_GCK
+I67ECMindependentBoxplots.eps)...executed.
 
-<Figures/FitToyData4d-eps-converted-to.pdf, id=215, 658.46pt x 185.69376pt>
-File: Figures/FitToyData4d-eps-converted-to.pdf Graphic file (type pdf)
+Package epstopdf Info: Result file: <Data/TumorToyData2D_0.001merr_XXX0pop_GCKI
+67ECMindependentBoxplots-eps-converted-to.pdf>
+(epstopdf)                    date: 2015-05-12 18:09:24
+(epstopdf)                    size: 9649 bytes.
 
-<use Figures/FitToyData4d-eps-converted-to.pdf>
-Package pdftex.def Info: Figures/FitToyData4d-eps-converted-to.pdf used on inpu
-t line 305.
-(pdftex.def)             Requested size: 379.4175pt x 107.00258pt.
+<Data/TumorToyData2D_0.001merr_XXX0pop_GCKI67ECMindependentBoxplots-eps-convert
+ed-to.pdf, id=214, 644.4075pt x 256.96pt>
+File: Data/TumorToyData2D_0.001merr_XXX0pop_GCKI67ECMindependentBoxplots-eps-co
+nverted-to.pdf Graphic file (type pdf)
 
-Underfull \hbox (badness 10000) in paragraph at lines 299--307
+<use Data/TumorToyData2D_0.001merr_XXX0pop_GCKI67ECMindependentBoxplots-eps-con
+verted-to.pdf>
+Package pdftex.def Info: Data/TumorToyData2D_0.001merr_XXX0pop_GCKI67ECMindepen
+dentBoxplots-eps-converted-to.pdf used on input line 305.
+(pdftex.def)             Requested size: 379.4175pt x 151.29926pt.
+Package epstopdf Info: Source file: <Data/TumorToyData2D_0.001merr_XXX0pop_GCKI
+67ECMfit.eps>
+(epstopdf)                    date: 2015-05-12 18:09:07
+(epstopdf)                    size: 7497359 bytes
+(epstopdf)             Output file: <Data/TumorToyData2D_0.001merr_XXX0pop_GCKI
+67ECMfit-eps-converted-to.pdf>
+(epstopdf)                    date: 2015-05-12 18:09:05
+(epstopdf)                    size: 1679051 bytes
+(epstopdf)             Command: <epstopdf --outfile=Data/TumorToyData2D_0.001me
+rr_XXX0pop_GCKI67ECMfit-eps-converted-to.pdf Data/TumorToyData2D_0.001merr_XXX0
+pop_GCKI67ECMfit.eps>
+(epstopdf)             \includegraphics on input line 307.
+runsystem(epstopdf --outfile=Data/TumorToyData2D_0.001merr_XXX0pop_GCKI67ECMfit
+-eps-converted-to.pdf Data/TumorToyData2D_0.001merr_XXX0pop_GCKI67ECMfit.eps)..
+.executed.
+
+Package epstopdf Info: Result file: <Data/TumorToyData2D_0.001merr_XXX0pop_GCKI
+67ECMfit-eps-converted-to.pdf>
+(epstopdf)                    date: 2015-05-12 18:09:26
+(epstopdf)                    size: 1679051 bytes.
+
+<Data/TumorToyData2D_0.001merr_XXX0pop_GCKI67ECMfit-eps-converted-to.pdf, id=21
+5, 666.49pt x 185.69376pt>
+File: Data/TumorToyData2D_0.001merr_XXX0pop_GCKI67ECMfit-eps-converted-to.pdf G
+raphic file (type pdf)
+
+<use Data/TumorToyData2D_0.001merr_XXX0pop_GCKI67ECMfit-eps-converted-to.pdf>
+Package pdftex.def Info: Data/TumorToyData2D_0.001merr_XXX0pop_GCKI67ECMfit-eps
+-converted-to.pdf used on input line 307.
+(pdftex.def)             Requested size: 379.4175pt x 105.71336pt.
+
+Underfull \hbox (badness 10000) in paragraph at lines 301--309
 
  []
 
-Package epstopdf Info: Source file: <Figures/FitToyData5c.eps>
-(epstopdf)                    date: 2015-05-07 14:54:39
-(epstopdf)                    size: 54487 bytes
-(epstopdf)             Output file: <Figures/FitToyData5c-eps-converted-to.pdf>
+Package epstopdf Info: Source file: <Data/Tumor2dGCXXXindependentBoxplots.eps>
+(epstopdf)                    date: 2015-05-12 18:09:07
+(epstopdf)                    size: 54234 bytes
+(epstopdf)             Output file: <Data/Tumor2dGCXXXindependentBoxplots-eps-c
+onverted-to.pdf>
+(epstopdf)                    date: 2015-05-12 18:09:05
+(epstopdf)                    size: 10602 bytes
+(epstopdf)             Command: <epstopdf --outfile=Data/Tumor2dGCXXXindependen
+tBoxplots-eps-converted-to.pdf Data/Tumor2dGCXXXindependentBoxplots.eps>
+(epstopdf)             \includegraphics on input line 325.
+runsystem(epstopdf --outfile=Data/Tumor2dGCXXXindependentBoxplots-eps-converted
+-to.pdf Data/Tumor2dGCXXXindependentBoxplots.eps)...executed.
 
-(epstopdf)                    date: 2015-05-07 14:56:20
-(epstopdf)                    size: 10726 bytes
-(epstopdf)             Command: <epstopdf --outfile=Figures/FitToyData5c-eps-co
-nverted-to.pdf Figures/FitToyData5c.eps>
-(epstopdf)             \includegraphics on input line 323.
-Package epstopdf Info: Output file is already uptodate.
-<Figures/FitToyData5c-eps-converted-to.pdf, id=217, 645.41125pt x 256.96pt>
-File: Figures/FitToyData5c-eps-converted-to.pdf Graphic file (type pdf)
+Package epstopdf Info: Result file: <Data/Tumor2dGCXXXindependentBoxplots-eps-c
+onverted-to.pdf>
+(epstopdf)                    date: 2015-05-12 18:09:27
+(epstopdf)                    size: 10602 bytes.
 
-<use Figures/FitToyData5c-eps-converted-to.pdf>
-Package pdftex.def Info: Figures/FitToyData5c-eps-converted-to.pdf used on inpu
-t line 323.
+<Data/Tumor2dGCXXXindependentBoxplots-eps-converted-to.pdf, id=217, 645.41125pt
+ x 256.96pt>
+File: Data/Tumor2dGCXXXindependentBoxplots-eps-converted-to.pdf Graphic file (t
+ype pdf)
+ <use Data/Tumor2dGCXXXindependentBoxplots-eps-converted-to.pdf>
+Package pdftex.def Info: Data/Tumor2dGCXXXindependentBoxplots-eps-converted-to.
+pdf used on input line 325.
 (pdftex.def)             Requested size: 379.4175pt x 151.05615pt.
 
-<Figures/FitExpDataIdentifiabilityTable.pdf, id=218, 438.63875pt x 240.9pt>
-File: Figures/FitExpDataIdentifiabilityTable.pdf Graphic file (type pdf)
+(./Data/Tumor2dGCXXXidentifiability.tex) (./Data/Tumor2dGCXXXuncertainty.tex)
+Package epstopdf Info: Source file: <Data/Tumor2dGCXXXfit.eps>
+(epstopdf)                    date: 2015-05-12 18:09:07
+(epstopdf)                    size: 6397883 bytes
+(epstopdf)             Output file: <Data/Tumor2dGCXXXfit-eps-converted-to.pdf>
 
-<use Figures/FitExpDataIdentifiabilityTable.pdf>
-Package pdftex.def Info: Figures/FitExpDataIdentifiabilityTable.pdf used on inp
-ut line 325.
-(pdftex.def)             Requested size: 379.4175pt x 208.3793pt.
-Package epstopdf Info: Source file: <Figures/FitToyData5d.eps>
-(epstopdf)                    date: 2015-05-07 14:54:41
-(epstopdf)                    size: 6397958 bytes
-(epstopdf)             Output file: <Figures/FitToyData5d-eps-converted-to.pdf>
-
-(epstopdf)                    date: 2015-05-07 14:56:22
-(epstopdf)                    size: 1737465 bytes
-(epstopdf)             Command: <epstopdf --outfile=Figures/FitToyData5d-eps-co
-nverted-to.pdf Figures/FitToyData5d.eps>
-(epstopdf)             \includegraphics on input line 327.
+(epstopdf)                    date: 2015-05-12 18:09:07
+(epstopdf)                    size: 1737315 bytes
+(epstopdf)             Command: <epstopdf --outfile=Data/Tumor2dGCXXXfit-eps-co
+nverted-to.pdf Data/Tumor2dGCXXXfit.eps>
+(epstopdf)             \includegraphics on input line 331.
 Package epstopdf Info: Output file is already uptodate.
 
-<Figures/FitToyData5d-eps-converted-to.pdf, id=219, 666.49pt x 189.70876pt>
-File: Figures/FitToyData5d-eps-converted-to.pdf Graphic file (type pdf)
+<Data/Tumor2dGCXXXfit-eps-converted-to.pdf, id=218, 666.49pt x 189.70876pt>
+File: Data/Tumor2dGCXXXfit-eps-converted-to.pdf Graphic file (type pdf)
 
-<use Figures/FitToyData5d-eps-converted-to.pdf>
-Package pdftex.def Info: Figures/FitToyData5d-eps-converted-to.pdf used on inpu
-t line 327.
+<use Data/Tumor2dGCXXXfit-eps-converted-to.pdf>
+Package pdftex.def Info: Data/Tumor2dGCXXXfit-eps-converted-to.pdf used on inpu
+t line 331.
 (pdftex.def)             Requested size: 379.4175pt x 107.99905pt.
+
+Overfull \hbox (7.06184pt too wide) in paragraph at lines 322--333
+[]  []
+ []
+
 Package epstopdf Info: Source file: <PLOS-submission.eps>
 (epstopdf)                    date: 2015-01-13 11:30:04
 (epstopdf)                    size: 283246 bytes
@@ -1197,17 +1264,39 @@ Package epstopdf Info: Source file: <PLOS-submission.eps>
 (epstopdf)                    size: 15299 bytes
 (epstopdf)             Command: <epstopdf --outfile=PLOS-submission-eps-convert
 ed-to.pdf PLOS-submission.eps>
-(epstopdf)             \includegraphics on input line 351.
+(epstopdf)             \includegraphics on input line 337.
+Package epstopdf Info: Output file is already uptodate.
+File: PLOS-submission-eps-converted-to.pdf Graphic file (type pdf)
+<use PLOS-submission-eps-converted-to.pdf>
+Package pdftex.def Info: PLOS-submission-eps-converted-to.pdf used on input lin
+e 337.
+(pdftex.def)             Requested size: 144.54pt x 23.42201pt.
+ [3 <./Data/TumorToyData2D_0.001merr_100pop_GCKI67ECM_NEW_acceptanceRate.png (P
+NG copy)> <./Data/TumorToyData2D_0.001merr_100pop_GCKI67ECM-objFunc-eps-convert
+ed-to.pdf> <./Data/TumorToyData2D_0.001merr_100pop_GCKI67ECM-scatterPlotMatrix-
+eps-converted-to.pdf> <./Data/TumorToyData2D_0.001merr_100pop_GCKI67ECM-fits-ep
+s-converted-to.pdf>]
+Package epstopdf Info: Source file: <PLOS-submission.eps>
+(epstopdf)                    date: 2015-01-13 11:30:04
+(epstopdf)                    size: 283246 bytes
+(epstopdf)             Output file: <PLOS-submission-eps-converted-to.pdf>
+(epstopdf)                    date: 2015-05-07 16:30:28
+(epstopdf)                    size: 15299 bytes
+(epstopdf)             Command: <epstopdf --outfile=PLOS-submission-eps-convert
+ed-to.pdf PLOS-submission.eps>
+(epstopdf)             \includegraphics on input line 337.
 Package epstopdf Info: Output file is already uptodate.
 File: PLOS-submission-eps-converted-to.pdf Graphic file (type pdf)
 
 <use PLOS-submission-eps-converted-to.pdf>
 Package pdftex.def Info: PLOS-submission-eps-converted-to.pdf used on input lin
-e 351.
+e 337.
 (pdftex.def)             Requested size: 144.54pt x 23.42201pt.
- [3 <./Figures/FitToyData2a-eps-converted-to.pdf> <./Figures/FitToyData2b-eps-c
-onverted-to.pdf> <./Figures/FitToyData2c-eps-converted-to.pdf> <./Figures/FitTo
-yData1-eps-converted-to.pdf>]
+ [4 <./Data/TumorToyData2D_0.001merr_XXX0pop_GCKI67ECMfunctionEvaluations-eps-c
+onverted-to.pdf> <./Data/TumorToyData2D_0.001merr_XXX0pop_GCKI67ECMobjectiveFun
+ction-eps-converted-to.pdf> <./Data/TumorToyData2D_0.001merr_XXX0pop_GCKI67ECMi
+ndependentBoxplots-eps-converted-to.pdf> <./Data/TumorToyData2D_0.001merr_XXX0p
+op_GCKI67ECMfit-eps-converted-to.pdf>]
 Package epstopdf Info: Source file: <PLOS-submission.eps>
 (epstopdf)                    date: 2015-01-13 11:30:04
 (epstopdf)                    size: 283246 bytes
@@ -1216,52 +1305,150 @@ Package epstopdf Info: Source file: <PLOS-submission.eps>
 (epstopdf)                    size: 15299 bytes
 (epstopdf)             Command: <epstopdf --outfile=PLOS-submission-eps-convert
 ed-to.pdf PLOS-submission.eps>
-(epstopdf)             \includegraphics on input line 351.
-Package epstopdf Info: Output file is already uptodate.
-File: PLOS-submission-eps-converted-to.pdf Graphic file (type pdf)
-
-<use PLOS-submission-eps-converted-to.pdf>
-Package pdftex.def Info: PLOS-submission-eps-converted-to.pdf used on input lin
-e 351.
-(pdftex.def)             Requested size: 144.54pt x 23.42201pt.
- [4 <./Figures/FitToyData4a-eps-converted-to.pdf> <./Figures/FitToyData4b-eps-c
-onverted-to.pdf> <./Figures/FitToyData4c-eps-converted-to.pdf> <./Figures/FitTo
-yData4d-eps-converted-to.pdf>]
-Package epstopdf Info: Source file: <PLOS-submission.eps>
-(epstopdf)                    date: 2015-01-13 11:30:04
-(epstopdf)                    size: 283246 bytes
-(epstopdf)             Output file: <PLOS-submission-eps-converted-to.pdf>
-(epstopdf)                    date: 2015-05-07 16:30:28
-(epstopdf)                    size: 15299 bytes
-(epstopdf)             Command: <epstopdf --outfile=PLOS-submission-eps-convert
-ed-to.pdf PLOS-submission.eps>
-(epstopdf)             \includegraphics on input line 351.
-Package epstopdf Info: Output file is already uptodate.
-File: PLOS-submission-eps-converted-to.pdf Graphic file (type pdf)
-
-<use PLOS-submission-eps-converted-to.pdf>
-Package pdftex.def Info: PLOS-submission-eps-converted-to.pdf used on input lin
-e 351.
-(pdftex.def)             Requested size: 144.54pt x 23.42201pt.
- [5 <./Figures/FitToyData5c-eps-converted-to.pdf> <./Figures/FitExpDataIdentifi
-abilityTable.pdf> <./Figures/FitToyData5d-eps-converted-to.pdf>]
-Package epstopdf Info: Source file: <PLOS-submission.eps>
-(epstopdf)                    date: 2015-01-13 11:30:04
-(epstopdf)                    size: 283246 bytes
-(epstopdf)             Output file: <PLOS-submission-eps-converted-to.pdf>
-(epstopdf)                    date: 2015-05-07 16:30:28
-(epstopdf)                    size: 15299 bytes
-(epstopdf)             Command: <epstopdf --outfile=PLOS-submission-eps-convert
-ed-to.pdf PLOS-submission.eps>
-(epstopdf)             \includegraphics on input line 395.
+(epstopdf)             \includegraphics on input line 337.
 Package epstopdf Info: Output file is already uptodate.
 File: PLOS-submission-eps-converted-to.pdf Graphic file (type pdf)
  <use PLOS-submission-eps-converted-to.pdf>
 Package pdftex.def Info: PLOS-submission-eps-converted-to.pdf used on input lin
-e 395.
+e 337.
 (pdftex.def)             Requested size: 144.54pt x 23.42201pt.
- [6]
-(./plos_template.bbl) 
+ [5 <./Data/Tumor2dGCXXXindependentBoxplots-eps-converted-to.pdf> <./Data/Tumor
+2dGCXXXfit-eps-converted-to.pdf>]
+Package epstopdf Info: Source file: <Data/Tumor3dGCKI67ECM-acceptanceRate.eps>
+(epstopdf)                    date: 2015-05-12 18:09:07
+(epstopdf)                    size: 17552 bytes
+(epstopdf)             Output file: <Data/Tumor3dGCKI67ECM-acceptanceRate-eps-c
+onverted-to.pdf>
+(epstopdf)                    date: 2015-05-12 18:09:07
+(epstopdf)                    size: 6642 bytes
+(epstopdf)             Command: <epstopdf --outfile=Data/Tumor3dGCKI67ECM-accep
+tanceRate-eps-converted-to.pdf Data/Tumor3dGCKI67ECM-acceptanceRate.eps>
+(epstopdf)             \includegraphics on input line 344.
+Package epstopdf Info: Output file is already uptodate.
+
+<Data/Tumor3dGCKI67ECM-acceptanceRate-eps-converted-to.pdf, id=297, 349.305pt x
+ 278.03876pt>
+File: Data/Tumor3dGCKI67ECM-acceptanceRate-eps-converted-to.pdf Graphic file (t
+ype pdf)
+ <use Data/Tumor3dGCKI67ECM-acceptanceRate-eps-converted-to.pdf>
+Package pdftex.def Info: Data/Tumor3dGCKI67ECM-acceptanceRate-eps-converted-to.
+pdf used on input line 344.
+(pdftex.def)             Requested size: 125.20847pt x 99.66113pt.
+Package epstopdf Info: Source file: <Data/Tumor3dGCKI67ECM-objFunc.eps>
+(epstopdf)                    date: 2015-05-12 18:09:05
+(epstopdf)                    size: 292237 bytes
+(epstopdf)             Output file: <Data/Tumor3dGCKI67ECM-objFunc-eps-converte
+d-to.pdf>
+(epstopdf)                    date: 2015-05-12 18:09:05
+(epstopdf)                    size: 16275 bytes
+(epstopdf)             Command: <epstopdf --outfile=Data/Tumor3dGCKI67ECM-objFu
+nc-eps-converted-to.pdf Data/Tumor3dGCKI67ECM-objFunc.eps>
+(epstopdf)             \includegraphics on input line 346.
+Package epstopdf Info: Output file is already uptodate.
+
+<Data/Tumor3dGCKI67ECM-objFunc-eps-converted-to.pdf, id=298, 352.31625pt x 280.
+04625pt>
+File: Data/Tumor3dGCKI67ECM-objFunc-eps-converted-to.pdf Graphic file (type pdf
+)
+ <use Data/Tumor3dGCKI67ECM-objFunc-eps-converted-to.pdf>
+Package pdftex.def Info: Data/Tumor3dGCKI67ECM-objFunc-eps-converted-to.pdf use
+d on input line 346.
+(pdftex.def)             Requested size: 125.20847pt x 99.52179pt.
+
+Underfull \hbox (badness 10000) in paragraph at lines 343--347
+[]\OT1/cmr/bx/n/10 A
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 343--347
+\OT1/cmr/bx/n/10 B
+ []
+
+Package epstopdf Info: Source file: <Data/Tumor3dGCKI67ECM-scatterPlotMatrix.ep
+s>
+(epstopdf)                    date: 2015-05-12 18:09:07
+(epstopdf)                    size: 2594963 bytes
+(epstopdf)             Output file: <Data/Tumor3dGCKI67ECM-scatterPlotMatrix-ep
+s-converted-to.pdf>
+(epstopdf)                    date: 2015-05-12 18:09:05
+(epstopdf)                    size: 406546 bytes
+(epstopdf)             Command: <epstopdf --outfile=Data/Tumor3dGCKI67ECM-scatt
+erPlotMatrix-eps-converted-to.pdf Data/Tumor3dGCKI67ECM-scatterPlotMatrix.eps>
+(epstopdf)             \includegraphics on input line 350.
+runsystem(epstopdf --outfile=Data/Tumor3dGCKI67ECM-scatterPlotMatrix-eps-conver
+ted-to.pdf Data/Tumor3dGCKI67ECM-scatterPlotMatrix.eps)...executed.
+
+Package epstopdf Info: Result file: <Data/Tumor3dGCKI67ECM-scatterPlotMatrix-ep
+s-converted-to.pdf>
+(epstopdf)                    date: 2015-05-12 18:09:27
+(epstopdf)                    size: 406546 bytes.
+
+<Data/Tumor3dGCKI67ECM-scatterPlotMatrix-eps-converted-to.pdf, id=299, 636.3775
+pt x 634.37pt>
+File: Data/Tumor3dGCKI67ECM-scatterPlotMatrix-eps-converted-to.pdf Graphic file
+ (type pdf)
+
+<use Data/Tumor3dGCKI67ECM-scatterPlotMatrix-eps-converted-to.pdf>
+Package pdftex.def Info: Data/Tumor3dGCKI67ECM-scatterPlotMatrix-eps-converted-
+to.pdf used on input line 350.
+(pdftex.def)             Requested size: 250.41693pt x 249.61995pt.
+Package epstopdf Info: Source file: <Data/Tumor3dGCKI67ECM-fits.eps>
+(epstopdf)                    date: 2015-05-12 18:09:05
+(epstopdf)                    size: 5246396 bytes
+(epstopdf)             Output file: <Data/Tumor3dGCKI67ECM-fits-eps-converted-t
+o.pdf>
+(epstopdf)                    date: 2015-05-12 18:09:05
+(epstopdf)                    size: 1537436 bytes
+(epstopdf)             Command: <epstopdf --outfile=Data/Tumor3dGCKI67ECM-fits-
+eps-converted-to.pdf Data/Tumor3dGCKI67ECM-fits.eps>
+(epstopdf)             \includegraphics on input line 353.
+Package epstopdf Info: Output file is already uptodate.
+
+<Data/Tumor3dGCKI67ECM-fits-eps-converted-to.pdf, id=300, 661.47125pt x 186.697
+5pt>
+File: Data/Tumor3dGCKI67ECM-fits-eps-converted-to.pdf Graphic file (type pdf)
+ <use Data/Tumor3dGCKI67ECM-fits-eps-converted-to.pdf>
+Package pdftex.def Info: Data/Tumor3dGCKI67ECM-fits-eps-converted-to.pdf used o
+n input line 353.
+(pdftex.def)             Requested size: 379.4175pt x 107.08813pt.
+Package epstopdf Info: Source file: <PLOS-submission.eps>
+(epstopdf)                    date: 2015-01-13 11:30:04
+(epstopdf)                    size: 283246 bytes
+(epstopdf)             Output file: <PLOS-submission-eps-converted-to.pdf>
+(epstopdf)                    date: 2015-05-07 16:30:28
+(epstopdf)                    size: 15299 bytes
+(epstopdf)             Command: <epstopdf --outfile=PLOS-submission-eps-convert
+ed-to.pdf PLOS-submission.eps>
+(epstopdf)             \includegraphics on input line 389.
+Package epstopdf Info: Output file is already uptodate.
+File: PLOS-submission-eps-converted-to.pdf Graphic file (type pdf)
+
+<use PLOS-submission-eps-converted-to.pdf>
+Package pdftex.def Info: PLOS-submission-eps-converted-to.pdf used on input lin
+e 389.
+(pdftex.def)             Requested size: 144.54pt x 23.42201pt.
+ [6 <./Data/Tumor3dGCKI67ECM-acceptanceRate-eps-converted-to.pdf> <./Data/Tumor
+3dGCKI67ECM-objFunc-eps-converted-to.pdf> <./Data/Tumor3dGCKI67ECM-scatterPlotM
+atrix-eps-converted-to.pdf> <./Data/Tumor3dGCKI67ECM-fits-eps-converted-to.pdf>
+]
+Package epstopdf Info: Source file: <PLOS-submission.eps>
+(epstopdf)                    date: 2015-01-13 11:30:04
+(epstopdf)                    size: 283246 bytes
+(epstopdf)             Output file: <PLOS-submission-eps-converted-to.pdf>
+(epstopdf)                    date: 2015-05-07 16:30:28
+(epstopdf)                    size: 15299 bytes
+(epstopdf)             Command: <epstopdf --outfile=PLOS-submission-eps-convert
+ed-to.pdf PLOS-submission.eps>
+(epstopdf)             \includegraphics on input line 430.
+Package epstopdf Info: Output file is already uptodate.
+File: PLOS-submission-eps-converted-to.pdf Graphic file (type pdf)
+
+<use PLOS-submission-eps-converted-to.pdf>
+Package pdftex.def Info: PLOS-submission-eps-converted-to.pdf used on input lin
+e 430.
+(pdftex.def)             Requested size: 144.54pt x 23.42201pt.
+ [7] (./plos_template.bbl)
+
 AED: lastpage setting LastPage
 Package epstopdf Info: Source file: <PLOS-submission.eps>
 (epstopdf)                    date: 2015-01-13 11:30:04
@@ -1271,31 +1458,31 @@ Package epstopdf Info: Source file: <PLOS-submission.eps>
 (epstopdf)                    size: 15299 bytes
 (epstopdf)             Command: <epstopdf --outfile=PLOS-submission-eps-convert
 ed-to.pdf PLOS-submission.eps>
-(epstopdf)             \includegraphics on input line 459.
+(epstopdf)             \includegraphics on input line 486.
 Package epstopdf Info: Output file is already uptodate.
 File: PLOS-submission-eps-converted-to.pdf Graphic file (type pdf)
 <use PLOS-submission-eps-converted-to.pdf>
 Package pdftex.def Info: PLOS-submission-eps-converted-to.pdf used on input lin
-e 459.
+e 486.
 (pdftex.def)             Requested size: 144.54pt x 23.42201pt.
- [7]
-Package atveryend Info: Empty hook `BeforeClearDocument' on input line 459.
-Package atveryend Info: Empty hook `AfterLastShipout' on input line 459.
+ [8]
+Package atveryend Info: Empty hook `BeforeClearDocument' on input line 486.
+Package atveryend Info: Empty hook `AfterLastShipout' on input line 486.
  (./plos_template.aux)
-Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 459.
-Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 459.
+Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 486.
+Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 486.
 Package rerunfilecheck Info: File `plos_template.out' has not changed.
 (rerunfilecheck)             Checksum: D41D8CD98F00B204E9800998ECF8427E;0.
-Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 459.
+Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 486.
  ) 
 Here is how much of TeX's memory you used:
- 10646 strings out of 493315
- 161618 string characters out of 6137903
- 287501 words of memory out of 5000000
- 13821 multiletter control sequences out of 15000+600000
+ 10712 strings out of 493315
+ 165357 string characters out of 6137903
+ 290435 words of memory out of 5000000
+ 13902 multiletter control sequences out of 15000+600000
  8864 words of font info for 48 fonts, out of 8000000 for 9000
  957 hyphenation exceptions out of 8191
- 42i,15n,43p,636b,427s stack positions out of 5000i,500n,10000p,200000b,80000s
+ 42i,16n,44p,636b,411s stack positions out of 5000i,500n,10000p,200000b,80000s
 </usr/local/texlive/2013/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx10.pfb
 ></usr/local/texlive/2013/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx12.pfb>
 </usr/local/texlive/2013/texmf-dist/fonts/type1/public/amsfonts/cm/cmex10.pfb><
@@ -1312,10 +1499,10 @@ ve/2013/texmf-dist/fonts/type1/public/amsfonts/cm/cmss8.pfb></usr/local/texlive
 2013/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy5.pfb></usr/local/texlive/20
 13/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy7.pfb></usr/local/texlive/2013
 /texmf-dist/fonts/type1/public/amsfonts/cm/cmti10.pfb>
-Output written on plos_template.pdf (7 pages, 5780214 bytes).
+Output written on plos_template.pdf (8 pages, 9090348 bytes).
 PDF statistics:
- 434 PDF objects out of 1000 (max. 8388607)
- 302 compressed objects within 4 object streams
- 47 named destinations out of 1000 (max. 500000)
- 11847 words of extra memory for PDF output out of 12000 (max. 10000000)
+ 436 PDF objects out of 1000 (max. 8388607)
+ 303 compressed objects within 4 object streams
+ 50 named destinations out of 1000 (max. 500000)
+ 11862 words of extra memory for PDF output out of 12000 (max. 10000000)
 

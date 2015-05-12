@@ -1,0 +1,15 @@
+function makeFigures()
+%     close all;
+%     visualiseABCResultsNEW( '../Data/TumorToyData2D_0.001merr_100pop_GCKI67ECM');
+%     
+%     close all;
+%     visualiseComparison({'../Data/Tumor2dGC', '../Data/Tumor2dGCKI67', '../Data/Tumor2dGCECM', '../Data/Tumor2dGCKI67ECM'});
+%     
+%     close all;
+%     visualiseComparison({'../Data/TumorToyData2D_0.001merr_200pop_GCKI67ECM','../Data/TumorToyData2D_0.001merr_100pop_GCKI67ECM','../Data/TumorToyData2D_0.001merr_10pop_GCKI67ECM'});
+    
+   % close all;
+    %visualiseABCResultsNEW( '../Data/Tumor3dGCKI67ECM');
+    
+    for 
+end
