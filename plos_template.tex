@@ -215,6 +215,9 @@ Jan Hasenauer\textsuperscript{1,2,*}
 \tableofcontents
 %\minitoc
 
+%%%%%%
+%%%%%%
+%%%%%%
 % Please keep the abstract below 300 words
 \section*{Abstract}
 The accurate description of multi-scale biological process requires sophisticated computational models. A variety of tools for the construction and simulations of such models are available. The inference of the unknown parameters of multi-scale models however remains and open problem. Key challenges are stochasticity and computational complexity of most multi-scale models. In this manuscript we present an parallel Approximate Bayesian Computations (pABC) sequential Monte Carlo (SMC) algorithm for the inference of hybrid discrete-continuum models of biological tissue. The propose pABC~SMC algorithm is tailored for large computing clusters with a queuing systems, and allows for the study of stochastic processes. In a simulation example, we verify that the parameters of hybrid discrete-continuum models of tumor spheroids can be inferred reliably. Accordingly, we use the pABC~SMC algorithm to study tumor spheroid growth in droplets, a model for in vivo tumor spread. Interestingly, we find that 2D and 3D models provide similar parameter estimates. Furthermore, the inference results can be used for experimental planning. These results illustrate the feasibility of data-driven modeling of complex multi-scale processes and the reliability of ABC methods.
@@ -227,9 +230,48 @@ To do.
 
 \linenumbers
 
+%%%%%%
+%%%%%%
+%%%%%%
 \section*{Introduction}
-To do.
 
+Mathematical modeling aims at a mechanistic understanding of biological processes. As biological processes span a wide range of timescales and length scales \cite{HunterBor2003}, multi-scale models are necessary to achieve this goal.
+
+Different types of multi-scale models
+examples for multi-scale models
+all computationally demanding
+deterministic, e.g., whole-heart model, whole-body physiology-based pharmacokinetic/pharmacodynamic (PK/PD) -> gradient-based optimization
+stochastic, e.g., whole cell model, cancer growth models, liver lobule model
+sensitivity calculation in general not feasible
+no application of gradient-based methods
+global optimization
+uncertainty analysis no possible
+
+spatial moments not available / approximation
+
+likelihood function cannot be evaluated
+integration over stochastic realizations
+
+simple distance measures
+Approximate Bayesian Computation (ABC)
+circumvents evaluation of likelihood functions
+simple methods in general low acceptance rate
+sequential Monte Carlo
+convergences to true posterior
+
+computationally efficiency
+individual simulations are time consuming
+parallelization on multi-core system
+
+computational efficiency demonstrated for more simple stochastic processes -> INSIGHT, Toni, time-lapse (Carolin)...
+
+use of parallel architecture
+design ABC which ensure convergence
+
+hybrid discrete-continuum model
+cells are models by discrete agents
+nutrition concentration is model using PDE
+computationally demanding
 
 % Results and Discussion can be combined.
 \section*{Results}
@@ -478,7 +520,8 @@ where $\mu$ is the mean and $\Sigma$ is the standard deviation of the current po
 % here.
 % 
 \bibliographystyle{plos2015}
-\bibliography{bibliography}
+%\bibliography{bibliography}
+\bibliography{Database.bib}
 
 
 \end{document}
