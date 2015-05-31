@@ -133,6 +133,8 @@
 \renewcommand{\@biblabel}[1]{\quad#1.}
 \makeatother
 
+\newcommand{\jh}[1]{{\color{red}#1}}
+
 % Leave date blank
 \date{}
 
@@ -220,7 +222,7 @@ Jan Hasenauer\textsuperscript{1,2,*}
 %%%%%%
 % Please keep the abstract below 300 words
 \section*{Abstract}
-The accurate description of multi-scale biological process requires sophisticated computational models. A variety of tools for the construction and simulations of such models are available. The inference of the unknown parameters of multi-scale models however remains and open problem. Key challenges are stochasticity and computational complexity of most multi-scale models. In this manuscript we present an parallel Approximate Bayesian Computations (pABC) sequential Monte Carlo (SMC) algorithm for the inference of hybrid discrete-continuum models of biological tissue. The propose pABC~SMC algorithm is tailored for large computing clusters with a queuing systems, and allows for the study of stochastic processes. In a simulation example, we verify that the parameters of hybrid discrete-continuum models of tumor spheroids can be inferred reliably. Accordingly, we use the pABC~SMC algorithm to study tumor spheroid growth in droplets, a model for in vivo tumor spread. Interestingly, we find that 2D and 3D models provide similar parameter estimates. Furthermore, the inference results can be used for experimental planning. These results illustrate the feasibility of data-driven modeling of complex multi-scale processes and the reliability of ABC methods.
+The accurate description of multi-scale biological process requires sophisticated computational models. A variety of tools for the construction and simulations of such models are available. The inference of the unknown parameters of multi-scale models however remains and open problem. Key challenges are stochasticity and computational complexity of most multi-scale models. In this manuscript we present a parallel Approximate Bayesian Computations (pABC) sequential Monte Carlo (SMC) algorithm for the inference of hybrid discrete-continuum models of biological tissue. The propose pABC~SMC algorithm is tailored for large computing clusters with a queuing systems, and allows for the study of stochastic processes. In a simulation example, we verify that the parameters of hybrid discrete-continuum models of tumor spheroids can be inferred reliably. Accordingly, we use the pABC~SMC algorithm to study tumor spheroid growth in droplets, a model for in vivo tumor spread. Interestingly, we find that 2D and 3D models provide similar parameter estimates. Furthermore, the inference results can be used for experimental planning. These results illustrate the feasibility of data-driven modeling of complex multi-scale processes and the reliability of ABC methods.
 
 % Please keep the Author Summary between 150 and 200 words
 % Use first person. PLOS ONE authors please skip this step. 
@@ -235,51 +237,31 @@ To do.
 %%%%%%
 \section*{Introduction}
 
-Mathematical modeling aims at a mechanistic understanding of biological processes. As biological processes span a wide range of timescales and length scales \cite{HunterBor2003}, multi-scale models are necessary to achieve this goal.
+Systems and computational biology aims at a mechanistic understanding of biological systems. To achieve this, biological processes on a wide range of time and length scales have to be captured~\cite{HunterBor2003}. This established the need for multi-scale models. World-wide interdisciplinary initiatives have been formed to develop multi-scale models and modeling approaches for basic research, diagnosis and therapy~\cite{PhysiomeProject}. Among the most well-known projects are the whole-heart~\cite{HunterBor2003,Nobel2002,Trayanova2011} and the whole-cell modeling initiatives~\cite{TomitaHas1999,KarrSan2012}. Furthermore, software toolboxes such as MCell~\cite{StilesBar2001}, VCell~\cite{SchaffFin1997}, FLAME~\cite{}, Deutsch, ... for the implementation and simulation of multi-scale models have been made available. All this resulted in a tremendous increase of the availability and popularity or multi-scale models. A problem which is however largely unsolved is the parameterization of multi-scale models. To enable truly quantitative predictions, the parameters of multi-scale models have to be inferred from experimental data.
 
-Different types of multi-scale models
-examples for multi-scale models
-all computationally demanding
-deterministic, e.g., whole-heart model, whole-body physiology-based pharmacokinetic/pharmacodynamic (PK/PD) -> gradient-based optimization
-stochastic, e.g., whole cell model, cancer growth models, liver lobule model
-sensitivity calculation in general not feasible
-no application of gradient-based methods
-global optimization
-uncertainty analysis no possible
+For deterministic multi-scale models obtained by coupling ordinary and partial differential equations (O/PDE) promising successes have be achieved. An integrated physiologically based whole-body model of the glucose-insulin-glucagon regulatory system has been developed and parameterized for individual patients to improve the understanding of type~1 diabetes~\cite{SchallerWil2013}. Similarly, whole-heart models could be used to infer ischemic regions from body surface potential maps to provide early diagnosis of heart infarction~\cite{NielsenLys2013}. These and other applications demonstrated that the automated parameterization of multi-scale model from experiment data is feasible. This is however mostly limited to coupled ODE and PDE models, which are deterministic and allow for efficient gradient-based optimization. The parameterization of computationally demanding stochastic model is unsolved\jh{, as the recent DREAM challenge revealed~\cite{}.}
 
-spatial moments not available / approximation
+Biological processes such as gene expression~\cite{ElowitzLev2002,EldarElo2010}, signal transaction~\cite{NiepelSpe2009,KlannLap2009}, cell division~\cite{HuhPau2011} and cell movement~\cite{GranerGlazier1992,AndersonQua2008} are intrinsically stochastic. This stochasticity renders stochastic multi-scale~\cite{DadaMen2011,WalpolePap2013,HasenauerJag2015} essential. The analysis and parameterization of these stochastic models is more sophisticated than of their deterministic counterparts. Key reasons are that (i) the simulation of stochastic models is often computationally demanding and that (ii) the likelihood function and its gradients cannot be assessed. The simulation of sophisticated agent-based models of liver regeneration~\cite{HoehmeBru2010} and tumor growth~\cite{AndersonQua2008,Jagiella2012} takes days to months. To assess the expected behavior of models a large number of such stochastic simulations are necessary. Even worst, the evaluation of the likelihood function of the data given the model -- the objective function for parameter optimization -- requires the integration over all possible trajectories of the systems. This is already for simple models infeasible and researchers restores to approximations~\cite{Dargatz2010}. In practice approximations of the likelihood are mostly based on a few realizations of the processes and therefore corrupted by large statistical noise. This statistical noise renders the reliable calculation of mostly infeasible, limiting the use of scalable gradient-based optimization methods~\cite{RaueSch2013}. Instead simple manual line search methods are used in practice (see e.g.~\cite{KarrSan2012,Jagiella2015}). These methods are known to be inefficient, possess convergence problems and do not provide reliable information about the parameter uncertainty. \jh{ToDo: Add something regarding the DREAM challenge.}
 
-likelihood function cannot be evaluated
-integration over stochastic realizations
+To infer parameters of stochastic processes, Approximate Bayesian Computation (ABC) algorithms have been developed~\cite{BeaumontZha2002}. These ABC algorithms circumvent the evaluation of the likelihood function by assessing the distance between summary statistics of measured and simulated data. If the distance measure exceeds a threshold the parameter values used to simulate data is rejected otherwise they are accepted. This concept can be used in rejection sampling~\cite{BeaumontZha2002} but as the acceptance rates are generally low, Markov chain Monte Carlo sampling~\cite{MarjoramMol2003} and in sequential Monte Carlo methods~\cite{SissonFan2007}. If the summary statistics are informative enough, samples obtained using ABC algorithms converge to the true posterior as the threshold approaches zero~\cite{MarinPil2014}. ABC algorithms have been used in a multitude of systems biology applications including gene expression and signal transtuction~\cite{ToniWel2009,ToniJov2011,LillacciKha2013,LiepeFil2013,LoosMar2015}. The inference of multi-scale models has however not been approached. A potential reason is the large number of necessary simulation, limiting the study of computationally intensive models. 
 
-simple distance measures
-Approximate Bayesian Computation (ABC)
-circumvents evaluation of likelihood functions
-simple methods in general low acceptance rate
-sequential Monte Carlo
-convergences to true posterior
+In this study we introduce a parallel Approximate Bayesian Computations sequential Monte Carlo (pABC SMC) algorithm. This simple extension of ABC SMC facilitates the use of multi-core systems and computing clusters, thereby enabling the analysis of computationally demanding stochastic multi-scale models. Convergences of the samples is ensured by rigorous ordering. Using the pABC SMC algorithm we address parameter inference for the widely used class of hybrid discrete-continuum models~\cite{AndersonQua2008,HoehmeBru2010,Jagiella2012,Jagiella2015} \jh{- MORE WOULD BE BETTER -}. These computational multi-scale models describes cells as interacting agents with intracellular information processing. The dynamics of extracellular substances such as nutrition or extracellular matrix are captured by diffusion reaction equations, namely PDEs. The individual subsystems are coupled via boundary conditions. This model call is highly complex and analytical methods and no analytical methods are available.
 
-computationally efficiency
-individual simulations are time consuming
-parallelization on multi-core system
+The performance of the method is demonstrated for models of tumor spheroid growth. In separate studies the parameters of the model influencing tumor growth are inferred from artificial and real experiment data. These studies provide a proof-of-principle that the parameter inference for computationally demanding models with complex internal structure is feasible using ABC methods.
 
-computational efficiency demonstrated for more simple stochastic processes -> INSIGHT, Toni, time-lapse (Carolin)...
-
-use of parallel architecture
-design ABC which ensure convergence
-
-hybrid discrete-continuum model
-cells are models by discrete agents
-nutrition concentration is model using PDE
-computationally demanding
-
-% Results and Discussion can be combined.
+%%%%%%
+%%%%%%
+%%%%%%
 \section*{Results}
 
+%%%%%%
+%%%%%%
 \subsection*{ABC implementation for computationally demanding models}
 We used a parallelized version of the well established ABC SMC method for parameter inference (see Material and Methods section). Fig.~\ref{fig1} illustrates the pipeline used for parallelization. There are many possibilities how to parallelize (multi-core, GPU, cluster, etc.). As we aim for resource-wise and computationally expensive models, we make use of a queue-mediated cluster architecture. Here a master is running the actual ABC SMC routine and is outsourcing the time and resource consuming 
 
 viele Parallelisierungsans\"atze, point out that m consequtive ones are only accepted if all intermingled simulations finished
+
+\jh{can we design a simple example in which we see the bias which is introduced if we do not keep track of the order?}
 
 
 \begin{figure}[h]
@@ -334,6 +316,8 @@ We also can observe that the acceptance rate of candidate samples becomes dramat
 \end{figure}
 
 
+%%%%%%
+%%%%%%
 \paragraph{Sensitivity to Population/Sample Size}
 Fig.~\ref{fig4} illustrates that the population size has an critical impact on the convergence of the algorithm. If the population size is chosen too small, in our case 20, then convergence can not be assured. On the other hand we observe no significant improvement for an increase from 100 to 200. So for the means of limiting the cluster load per iteration all following parameter inference runs will be done with a population size of 100.
 
@@ -351,6 +335,8 @@ Fig.~\ref{fig4} illustrates that the population size has an critical impact on t
 \end{figure}
 
 
+%%%%%%
+%%%%%%
 \subsection*{Experimental data (2D)}
 Fig.~\ref{fig:exp2d} 
 
@@ -374,6 +360,8 @@ kinetic ECM param. not identifiable without hist. info. on ECM (ColV)
 \label{fig:exp2d}
 \end{figure}
 
+%%%%%%
+%%%%%%
 \subsection*{Experimental data (3D)}
 Fig.~\ref{fig:exp3d} 
 
@@ -415,7 +403,13 @@ Fig.~\ref{fig:exp3d}
 %\end{table}
 
 
+%%%%%%
+%%%%%%
+%%%%%%
 \section*{Discussion}
+
+
+spatial moments
 
 
 % You may title this section "Methods" or "Models". 
@@ -478,6 +472,12 @@ where $\mu$ is the mean and $\Sigma$ is the standard deviation of the current po
 \paragraph{(Surrogate Approximation)}
 
 
+
+
+
+%%%%%%
+%%%%%%
+%%%%%%
 \section*{Supporting Information}
 
 % Include only the SI item label in the subsection heading. Use the \nameref{label} command to cite SI items in the text.
@@ -501,26 +501,31 @@ where $\mu$ is the mean and $\Sigma$ is the standard deviation of the current po
 %\label{S1_Table}
 %{\bf Lorem Ipsum.} Maecenas convallis mauris sit amet sem ultrices gravida. Etiam eget sapien nibh. Sed ac ipsum eget enim egestas ullamcorper nec euismod ligula. Curabitur fringilla pulvinar lectus consectetur pellentesque.
 
-\section*{Acknowledgments}
-%Cras egestas velit mauris, eu mollis turpis pellentesque sit amet. Interdum et malesuada fames ac ante ipsum primis in faucibus. Nam id pretium nisi. Sed ac quam id nisi malesuada congue. Sed interdum aliquet augue, at pellentesque quam rhoncus vitae.
+%%%%%%
+%%%%%%
+%%%%%%
+\section*{Acknowledgements}
+
+%(this will go in the funding statement provided in the online submission system)
+
+This work was supported by the Postdoctoral Fellowship Program (PFP) of the Helmholtz Zentrum M\"unchen (J.H.).
+
+%%%%%%
+%%%%%%
+%%%%%%
+\section*{Author Contributions}
+
+Conceived and Designed the Methods: NJ DR FJT JH.
+Developed Models: NJ.
+Performed Numerical Experiments: NJ DR.
+Wrote the Paper: NJ FJT JH.
 
 \nolinenumbers
 
-%\section*{References}
-% Either type in your references using
-% \begin{thebibliography}{}
-% \bibitem{}
-% Text
-% \end{thebibliography}
-%
-% OR
-%
-% Compile your BiBTeX database using our plos2015.bst
-% style file and paste the contents of your .bbl file
-% here.
-% 
+%%%%%%
+%%%%%%
+%%%%%%
 \bibliographystyle{plos2015}
-%\bibliography{bibliography}
 \bibliography{Database.bib}
 
 

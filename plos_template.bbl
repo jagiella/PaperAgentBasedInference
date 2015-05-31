@@ -1,8 +1,174 @@
-\begin{thebibliography}{1}
+\begin{thebibliography}{10}
 
 \bibitem{HunterBor2003}
 Hunter PJ, Borg TK.
 \newblock Integration from proteins to organs: the {P}hysiome {P}roject.
 \newblock Nat Rev Mol Cell Biol. 2003 Mar;4(3):237--243.
+
+\bibitem{PhysiomeProject}
+Physiome Project, http://physiomeproject.org;.
+
+\bibitem{Nobel2002}
+Noble D.
+\newblock Modeling the heart -- from genes to cells to the whole organ.
+\newblock Science. 2002;295(37):26--33.
+
+\bibitem{Trayanova2011}
+Trayanova NA.
+\newblock Whole-heart modeling: applications to cardiac electrophysiology and
+  electromechanics.
+\newblock Circulation Research. 2011 Jan;108(1):113--128.
+
+\bibitem{KarrSan2012}
+Karr JR, Sanghvi JC, Macklin DN, Gutschow MV, Jacobs JM, {Bolival~Jr} B, et~al.
+\newblock A whole-cell computational model predicts phenotype from genotype.
+\newblock Cell. 2012 July;150(2):389--401.
+
+\bibitem{StilesBar2001}
+Stiles JR, Bartol TM.
+\newblock Monte Carlo methods for simulating realistic synaptic microphysiology
+  using {MCell}.
+\newblock In: {De~Schutter} E, editor. Computational Neuroscience: Realistic
+  Modeling for Experimentalists. CRC Press, Boca Raton; 2001. p. 87--127.
+
+\bibitem{SchaffFin1997}
+Schaff J, Fink CC, Slepchenko B, Carson JH, Loew LM.
+\newblock A general computational framework for modeling cellular structure and
+  function.
+\newblock Biophys J. 1997 Sept;73(3):1135--1146.
+
+\bibitem{SchallerWil2013}
+Schaller S, Willmann S, Lippert J, Schaupp L, Pieber TR, Schuppert A, et~al.
+\newblock A generic integrated physiologically based whole-body model of the
+  glucose-insulin-glucagon regulatory system.
+\newblock CPT Pharmacometrics Syst Pharmacol. 2013 June;2:e65.
+
+\bibitem{NielsenLys2013}
+Nielsen BF, Lysaker M, Gr{{\o}}ttum P.
+\newblock Computing ischemic regions in the heart with the bidomain model --
+  first steps towards validation.
+\newblock IEEE Trans Med Imaging. 2013 June;32(6):1085--1096.
+
+\bibitem{ElowitzLev2002}
+Elowitz MB, Levine AJ, Siggia ED, Swain PS.
+\newblock Stochastic gene expression in a single cell.
+\newblock Science. 2002 Aug;297(5584):1183--1186.
+
+\bibitem{EldarElo2010}
+Eldar A, Elowitz MB.
+\newblock Functional roles for noise in genetic circuits.
+\newblock Nature. 2010 Sept;467(9):1--7.
+
+\bibitem{NiepelSpe2009}
+Niepel M, Spencer SL, Sorger PK.
+\newblock Non-genetic cell-to-cell variability and the consequences for
+  pharmacology.
+\newblock Curr Opin Biotechnol. 2009 Dec;13(5--6):556--561.
+
+\bibitem{KlannLap2009}
+Klann MT, Lapin A, Reuss M.
+\newblock Stochastic simulation of signal transduction: {I}mpact of the
+  cellular architecture on diffusion.
+\newblock Biophys J. 2009 June;96(12):5122--5129.
+
+\bibitem{HuhPau2011}
+Huh D, Paulsson J.
+\newblock Non-genetic heterogeneity from stochastic partitioning at cell
+  division.
+\newblock Nat Gen. 2011 Feb;43(2):95--102.
+
+\bibitem{GranerGlazier1992}
+Graner F, Glazier J.
+\newblock Simulation of biological cell sorting using a two-dimensional
+  extended {P}otts model.
+\newblock Phys Rev Lett. 1992 Sept;69(13):2013--2016.
+
+\bibitem{AndersonQua2008}
+Anderson ARA, Quaranta V.
+\newblock Integrative mathematical oncology.
+\newblock Nat Rev Cancer. 2008 Mar;8(3):227--234.
+
+\bibitem{DadaMen2011}
+Dada JO, Mendes P.
+\newblock Multi-scale modelling and simulation in systems biology.
+\newblock Integr Biol. 2011;3:86--96.
+
+\bibitem{WalpolePap2013}
+Walpole J, Papin JA, Peirce SM.
+\newblock Multiscale computational models of complex biological systems.
+\newblock Annu Rev Biomed Eng. 2013;15:137--154.
+
+\bibitem{HoehmeBru2010}
+Hoehme S, Brulport M, Bauer A, Bedawy E, Schormann W, Gebhardt R, et~al.
+\newblock Prediction and validation of cell alignment along microvessels as
+  order principle to restore tissue architecture in liver regeneration.
+\newblock {Proc Natl Acad Sci U~S~A}. 2010 June;107(23):10371--10376.
+
+\bibitem{Jagiella2012}
+Jagiella N.
+\newblock Parameterization of lattice-based tumor models from data [Ph.D.
+  thesis].
+\newblock Universit\'e Pierre et Marie Curie. Paris, France; 2012.
+
+\bibitem{Dargatz2010}
+Dargatz C.
+\newblock Inference for diffusion processes with applications in life sciences.
+\newblock Springer; 2013.
+
+\bibitem{RaueSch2013}
+Raue A, Schilling M, Bachmann J, Matteson A, Schelke M, Kaschek D, et~al.
+\newblock Lessons learned from quantitative dynamical modeling in systems
+  biology.
+\newblock {PL}o{S} {ONE}. 2013 Sept;8(9):e74335.
+
+\bibitem{BeaumontZha2002}
+Beaumont MA, Zhang W, Balding DJ.
+\newblock {A}pproximate {B}ayesian {C}omputation in population genetics.
+\newblock Genetics. 2002 Dec;162(4):2025--2035.
+
+\bibitem{MarjoramMol2003}
+Marjoram P, Molitor J, Plagnol V, Tavare S.
+\newblock Markov chain {M}onte {C}arlo without likelihoods.
+\newblock Proc Nati Acad Sci U~S~A. 2003 Dec;100(26):15324--15328.
+
+\bibitem{SissonFan2007}
+Sisson SA, Fan Y, Tanaka MM.
+\newblock Sequential {M}onte {C}arlo without likelihoods.
+\newblock {Proc Natl Acad Sci U~S~A}. 2007 Jan;104(6):1760--1765.
+
+\bibitem{MarinPil2014}
+Marin JM, Pillai NS, Robert CP, Rousseau J.
+\newblock Relevant statistics for {B}ayesian model choice.
+\newblock JR Statist Soc B. 2014 Nov;76(5):833---859.
+
+\bibitem{ToniWel2009}
+Toni T, Welch D, Strelkowa N, Ipsen A, Stumpf MPH.
+\newblock Approximate {B}ayesian computation scheme for parameter inference and
+  model selection in dynamical systems.
+\newblock J R Soc Interface. 2009 July;6:187--202.
+
+\bibitem{ToniJov2011}
+Toni T, Jovanovic G, Huvet M, Buck M, Stumpf MPH.
+\newblock From qualitative data to quantitative models: analysis of the phage
+  shock protein stress response in {E}scherichia coli.
+\newblock {BMC} Syst Biol. 2011 May;5(69).
+
+\bibitem{LillacciKha2013}
+Lillacci G, Khammash M.
+\newblock The signal within the noise: efficient inference of stochastic gene
+  regulation models using fluorescence histograms and stochastic simulations.
+\newblock Bioinf. 2013 July;29(18):2311--2319.
+
+\bibitem{LiepeFil2013}
+Liepe J, Filippi S, Komorowski M, Stumpf MPH.
+\newblock Maximizing the information content of experiments in systems biology.
+\newblock {PL}o{S} Comput Biol. 2013 Jan;9(1):e1002888.
+
+\bibitem{LoosMar2015}
+Loos C, Marr C, Theis FJ, Hasenauer J.
+\newblock Approximate {B}ayesian {C}omputation for stochastic single-cell
+  time-lapse data using multivariate test statistics.
+\newblock submitted to 13th Conference on Computational Methods in Systems
+  Biology. 2015;in submission.
 
 \end{thebibliography}
