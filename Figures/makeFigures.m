@@ -2,8 +2,8 @@ function makeFigures()
     close all;
     visualiseABCResultsNEW( '../Data/TumorToyData2D_0.001merr_100pop_GCKI67ECM');
     
-     close all;
-     visualiseComparison({'../Data/Tumor2dGC', '../Data/Tumor2dGCKI67', '../Data/Tumor2dGCECM', '../Data/Tumor2dGCKI67ECM'});
+    close all;
+    visualiseComparison({'../Data/Tumor2dGC', '../Data/Tumor2dGCKI67', '../Data/Tumor2dGCECM', '../Data/Tumor2dGCKI67ECM'});
     
     close all;
     visualiseComparison({'../Data/TumorToyData2D_0.001merr_200pop_GCKI67ECM','../Data/TumorToyData2D_0.001merr_100pop_GCKI67ECM','../Data/TumorToyData2D_0.001merr_10pop_GCKI67ECM'});
@@ -11,6 +11,9 @@ function makeFigures()
     close all;
     visualiseABCResultsNEW( '../Data/Tumor3dGCKI67ECM');
     
+    close all;
+    visualiseComparison({'../Data/Tumor2dGCKI67ECM','../Data/Tumor3dGCKI67ECM'});
+
 %     i=1;
 %     M = [-1.4 2 1.1 -0.2 -2.3 -3.3 -2.3];
 %     for p=1:7

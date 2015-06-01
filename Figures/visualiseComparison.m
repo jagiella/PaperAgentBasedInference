@@ -10,6 +10,8 @@ function visualiseComparison( prefixes)
     
     
     switch( size(prefixes,2) )
+        case 2
+            colmap = colmap( [1,10], :);
         case 3
             colmap = colmap( [1,4,10], :);
         case 4
@@ -88,7 +90,7 @@ function visualiseComparison( prefixes)
                 subplot(1,length(options.data), j);
                 %for i=1:size(prefixes,2)
 
-                %
+                % 
                 xmax=0;
                 for k=1:size(raw_data,1)
                     xmax = max( [xmax; raw_data(k,j).x(:)]);
@@ -98,7 +100,7 @@ function visualiseComparison( prefixes)
                 num_data_points = length(options.data(j).y);
                 step_size = ceil(num_data_points/20);
                 indices = 1:step_size:num_data_points; % sparsen out
-                indices = options.data(j).x(indices,:) <= xmax; % smaller than data
+                %indices = options.data(j).x(indices,:) <= xmax; % smaller than data
                 errorbar(options.data(j).x(indices,:), options.data(j).y(indices), options.data(j).s(indices), 'k-'); 
  
                 %errorbar( options.data(j).x, options.data(j).y, options.data(j).s, 'k-');

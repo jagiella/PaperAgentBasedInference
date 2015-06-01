@@ -19,7 +19,7 @@ function scatterPlotMatrix(x, lb, ub, true, xr, varargin)
     
     
     R = corrcoef(x');
-    lab = {'k_{div}^{max}', 'l^{crit}', 'l^{init}', 'q_{init}', 'k_{e}^{pro}', 'k_{e}^{deg}', 'e^{crit}'};
+    lab = {'k_{div}^{max}', 'l^{crit}', 'l^{init}', 'q_{init}', 'k_{e}^{pro}', 'k_{e}^{deg}', 'e^{crit}', 'k_{re}', 'k_{nec}', 'k_{lys}', 'p^{div}_{ATP}', 'p^{nec}_{ATP}', 'l^{div}', 'l^{nec}', 'D_W', 'q_W', 'w^{div}', 'n^{max}_{exp}'};
     
     for i=1:d
         for j=1:d

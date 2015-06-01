@@ -20,24 +20,27 @@ h_sp = figure(4); clf()
      
 %% LOAD RAW DATA
 likelihood = zeros(100,1);
-for i=1:length(options.data) % each parameter
-    if( isfield(options.data(i), 'raw'))
-        n = size(options.data(i).raw,1);
-        for j=1:n % each independent experiment
-            likelihood(j) = likelihood(j) + 0.5 * sum( ( (options.data(i).y - options.data(i).raw(j,:)) ./ options.data(i).s ).^2)...
-                / length(options.data(i).y);
-        end
-    else
-        n = 10;
 
-        for j=1:n
-            RND = normrnd(0,1);
-            likelihood(j) = likelihood(j) + 0.5 *  RND^2;
-            %likelihood(j) = likelihood(j) + 0.5 *  nansum( ( normrnd(0, options.data(i).s) ./ options.data(i).s ).^2) / length(options.data(i).y);
+if( isfield( options, 'data'))
+    for i=1:length(options.data) % each parameter
+        if( isfield(options.data(i), 'raw'))
+            n = size(options.data(i).raw,1);
+            for j=1:n % each independent experiment
+                likelihood(j) = likelihood(j) + 0.5 * sum( ( (options.data(i).y - options.data(i).raw(j,:)) ./ options.data(i).s ).^2)...
+                    / length(options.data(i).y);
+            end
+        else
+            n = 10;
+
+            for j=1:n
+                RND = normrnd(0,1);
+                likelihood(j) = likelihood(j) + 0.5 *  RND^2;
+                %likelihood(j) = likelihood(j) + 0.5 *  nansum( ( normrnd(0, options.data(i).s) ./ options.data(i).s ).^2) / length(options.data(i).y);
+            end
         end
     end
+    likelihood = likelihood(1:n)
 end
-likelihood = likelihood(1:n)
     
 
 
