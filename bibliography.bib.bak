@@ -1,0 +1,19 @@
+% This file was created with JabRef 2.10.
+% Encoding: MacRoman
+
+
+@Article{Toni2009,
+  Title                    = {Approximate Bayesian computation scheme for parameter inference and model selection in dynamical systems},
+  Author                   = {Toni, Tina and Welch, David and Strelkowa, Natalja and Ipsen, Andreas and Stumpf, Michael P.H},
+  Journal                  = {Journal of The Royal Society Interface},
+  Year                     = {2009},
+  Number                   = {31},
+  Pages                    = {187--202},
+  Volume                   = {6},
+
+  Doi                      = {10.1098/rsif.2008.0172},
+  ISBN                     = {1742-5662},
+  ISSN                     = {1742-5689},
+  Publisher                = {The Royal Society}
+}
+
