@@ -9,8 +9,8 @@ done
 # Profiles
 for c in II III; do
 	for t in 3 4; do
-		cat ~/Dropbox/Work/PUBLICATIONS/Paper-wp2-lungsys/data/SK-MES-1-CryoSections-MACBOOK/Condition${c}/T${t}/Ki67_MEDIAN_histDiv_StandardDerivation.dat | awk '{print $1, $4, $12}' > SK-MES1_${c}_T${t}_Ki67.dat
-		cat ~/Dropbox/Work/PUBLICATIONS/Paper-wp2-lungsys/data/SK-MES-1-CryoSections-MACBOOK/Condition${c}/T${t}/TUNEL_MEDIAN_histDiv_StandardDerivation.dat | awk '{print $1, $4, $12}' > SK-MES1_${c}_T${t}_TUNEL.dat
-		cat ~/Dropbox/Work/PUBLICATIONS/Paper-wp2-lungsys/data/SK-MES-1-CryoSections-MACBOOK/Condition${c}/T${t}/ColIV_ECM_histDiv_StandardDerivation.dat | awk '{print $1, $2/256., $5/256.}' > SK-MES1_${c}_T${t}_ECM.dat
+		cat ~/Dropbox/Work/PUBLICATIONS/Paper-wp2-lungsys/data/SK-MES-1-CryoSections-MACBOOK/Condition${c}/T${t}/Ki67_MEDIAN_histDiv_StandardDerivation.dat | awk '{if( $1 !="#") print $1, $4, $12}' > SK-MES1_${c}_T${t}_Ki67.dat
+		cat ~/Dropbox/Work/PUBLICATIONS/Paper-wp2-lungsys/data/SK-MES-1-CryoSections-MACBOOK/Condition${c}/T${t}/TUNEL_MEDIAN_histDiv_StandardDerivation.dat | awk '{if( $1 !="#") print $1, $4, $12}' > SK-MES1_${c}_T${t}_TUNEL.dat
+		cat ~/Dropbox/Work/PUBLICATIONS/Paper-wp2-lungsys/data/SK-MES-1-CryoSections-MACBOOK/Condition${c}/T${t}/ColIV_ECM_histDiv_StandardDerivation.dat | awk '{if( $1 !="#") print $1, $2/256., $5/256.}' > SK-MES1_${c}_T${t}_ECM.dat
 	done
 done

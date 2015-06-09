@@ -97,8 +97,8 @@ for i=IterationArray
         xlim([min(options.data(j).x), max(options.data(j).x)]);
         idx = (options.data(j).s ~= 0);
         ylim([min(options.data(j).y(idx)), max(options.data(j).y(idx) + options.data(j).s(idx))]);
-        xlabel(options.xlabel(j))
-        ylabel(options.ylabel(j))
+        %TODO: xlabel(options.xlabel(j))
+        %TODO: ylabel(options.ylabel(j))
         hold on;
     end
     
