@@ -236,28 +236,18 @@ To do.
 %%%%%%
 %%%%%%
 \section*{Introduction}
-%<<<<<<< Updated upstream:plos_template.tex
 
-Systems and computational biology aims at a mechanistic understanding of biological systems. To achieve this, biological processes on a wide range of time and length scales have to be captured~\cite{HunterBor2003}. This established the need for multi-scale models. World-wide interdisciplinary initiatives have been formed to develop multi-scale models and modeling approaches for basic research, diagnosis and therapy~\cite{PhysiomeProject}. Among the most well-known projects are the whole-heart~\cite{HunterBor2003,Nobel2002,Trayanova2011} and the whole-cell modeling initiatives~\cite{TomitaHas1999,KarrSan2012}. Furthermore, software toolboxes such as MCell~\cite{StilesBar2001}, VCell~\cite{SchaffFin1997}, FLAME~\cite{}, Deutsch, ... for the implementation and simulation of multi-scale models have been made available. All this resulted in a tremendous increase of the availability and popularity or multi-scale models. A problem which is however largely unsolved is the parameterization of multi-scale models. To enable truly quantitative predictions, the parameters of multi-scale models have to be inferred from experimental data.
+Systems and computational biology aims at a mechanistic understanding of biological systems. To achieve this, biological processes on a wide range of time and length scales have to be captured~\cite{HunterBor2003}. This established the need for multi-scale models. World-wide interdisciplinary initiatives have been formed to develop multi-scale models and modeling approaches for basic research, diagnosis and therapy~\cite{PhysiomeProject}. Among the most well-known projects are the whole-heart~\cite{HunterBor2003,Nobel2002,Trayanova2011} and the whole-cell modeling initiatives~\cite{TomitaHas1999,KarrSan2012}. Furthermore, platforms for multiscale modeling of individual cells~\cite{StilesBar2001,SchaffFin1997}, tissues~\cite{RichmondWal2010,SwatTho2012,StarrussBac2014} and organs~\cite{MiramsArt2013} have been developed and made available. This resulted in a tremendous increase of the availability and popularity or multi-scale models. A problem which is however largely unsolved is the parameterization of multi-scale models. To enable truly quantitative predictions, the parameters of multi-scale models have to be inferred from experimental data.
 
-For deterministic multi-scale models obtained by coupling ordinary and partial differential equations (O/PDE) promising successes have be achieved. An integrated physiologically based whole-body model of the glucose-insulin-glucagon regulatory system has been developed and parameterized for individual patients to improve the understanding of type~1 diabetes~\cite{SchallerWil2013}. Similarly, whole-heart models could be used to infer ischemic regions from body surface potential maps to provide early diagnosis of heart infarction~\cite{NielsenLys2013}. These and other applications demonstrated that the automated parameterization of multi-scale model from experiment data is feasible. This is however mostly limited to coupled ODE and PDE models, which are deterministic and allow for efficient gradient-based optimization. The parameterization of computationally demanding stochastic model is unsolved\jh{, as the recent DREAM challenge revealed~\cite{}.}
+For deterministic multi-scale models obtained by coupling ordinary differential equations (ODEs) and partial differential equations (PDEs) promising successes have be achieved. An integrated physiologically based whole-body model of the glucose-insulin-glucagon regulatory system has been developed and parameterized for individual patients to improve the understanding of type~1 diabetes~\cite{SchallerWil2013}. Similarly, whole-heart models could be used to infer ischemic regions from body surface potential maps to provide early diagnosis of heart infarction~\cite{NielsenLys2013}. These and other applications demonstrated that the automated parameterization of multi-scale models from experiment data is feasible. This is however mostly limited to coupled ODE and PDE models, which are deterministic and allow for efficient gradient-based optimization. The parameterization of computationally demanding stochastic and hybrid stochastic-deterministic models is more challenging~\cite{AdraKir2011,KarrWil2015}.
 
-Biological processes such as gene expression~\cite{ElowitzLev2002,EldarElo2010}, signal transaction~\cite{NiepelSpe2009,KlannLap2009}, cell division~\cite{HuhPau2011} and cell movement~\cite{GranerGlazier1992,AndersonQua2008} are intrinsically stochastic. This stochasticity renders stochastic multi-scale~\cite{DadaMen2011,WalpolePap2013,HasenauerJag2015} essential. The analysis and parameterization of these stochastic models is more sophisticated than of their deterministic counterparts. Key reasons are that (i) the simulation of stochastic models is often computationally demanding and that (ii) the likelihood function and its gradients cannot be assessed. The simulation of sophisticated agent-based models of liver regeneration~\cite{HoehmeBru2010} and tumor growth~\cite{AndersonQua2008,Jagiella2012} takes days to months. To assess the expected behavior of models a large number of such stochastic simulations are necessary. Even worst, the evaluation of the likelihood function of the data given the model -- the objective function for parameter optimization -- requires the integration over all possible trajectories of the systems. This is already for simple models infeasible and researchers restores to approximations~\cite{Dargatz2010}. In practice approximations of the likelihood are mostly based on a few realizations of the processes and therefore corrupted by large statistical noise. This statistical noise renders the reliable calculation of mostly infeasible, limiting the use of scalable gradient-based optimization methods~\cite{RaueSch2013}. Instead simple manual line search methods are used in practice (see e.g.~\cite{KarrSan2012,Jagiella2015}). These methods are known to be inefficient, possess convergence problems and do not provide reliable information about the parameter uncertainty. \jh{ToDo: Add something regarding the DREAM challenge.}
-%=======
-In order to study biological systems, usually models are used to validate hypothesis about the mechanics of a target system, and, in a second step, to make predictions by extrapolate its behavior between experimental observations. In both cases, a given model has to be parameterized in such a way that its fits experimental measurements. I.e. the set of model parameters has to be found for which the difference between model prediction and data is the smallest.
+Biological processes such as gene expression~\cite{ElowitzLev2002,EldarElo2010}, signal transaction~\cite{NiepelSpe2009,KlannLap2009}, cell division~\cite{HuhPau2011} and cell movement~\cite{GranerGlazier1992,AndersonQua2008} are intrinsically stochastic. This stochasticity renders stochastic multi-scale~\cite{DadaMen2011,WalpolePap2013,HasenauerJag2015} essential. The analysis and parameterization of these stochastic models is more sophisticated than of their deterministic counterparts. Key reasons are that (i) the simulation of stochastic models is often computationally demanding and that (ii) the likelihood function and its gradients cannot be assessed. The simulation of sophisticated agent-based models of liver regeneration~\cite{HoehmeBru2010} and tumor growth~\cite{AndersonQua2008,Jagiella2012} takes days to months. To assess the expected behavior of models a large number of such stochastic simulations are necessary. Even worst, the evaluation of the likelihood function of the data given the model -- the objective function for parameter optimization -- requires the integration over all possible trajectories of the systems. This is already for simple models infeasible and researchers restores to approximations~\cite{Dargatz2010}. In practice approximations of the likelihood are mostly based on a few realizations of the processes and therefore corrupted by large statistical noise. This statistical noise renders the reliable calculation of mostly infeasible, limiting the use of scalable gradient-based optimization methods~\cite{RaueSch2013}. Instead simple manual line search methods are used in practice (see e.g.~\cite{KarrSan2012,Jagiella2015}). These methods are known to be inefficient, possess convergence problems and do not provide reliable information about the parameter uncertainty.
 
-There is a huge variety of mathematical and computational models available (ref. review Jan). They can be classified by different aspects: spatial/non-spatial, discreet/continuous, macroscopic/microscopic, deterministic/stochastic, etc. In many cases they are even of hybrid and multiscale nature. As recently outlined, not for all models appropriate methods for efficient parameterization exist.
+To infer parameters of stochastic processes, Approximate Bayesian Computation (ABC) algorithms have been developed~\cite{BeaumontZha2002}. These ABC algorithms circumvent the evaluation of the likelihood function by assessing the distance between summary statistics of measured and simulated data. If the distance measure exceeds a threshold the parameter values used to simulate data is rejected otherwise they are accepted. This concept can be used in rejection sampling~\cite{BeaumontZha2002} but as the acceptance rates are generally low, Markov chain Monte Carlo sampling~\cite{MarjoramMol2003} and in sequential Monte Carlo methods~\cite{SissonFan2007}. If the summary statistics are informative enough, samples obtained using ABC algorithms converge to the true posterior as the threshold approaches zero~\cite{MarinPil2014}. A key advantage of ABC methods is that in contrast to other search strategies~\cite{AdraKir2011,KarrWil2015} information about parameter and prediction uncertainties are obtained along with the calculation of the optimal parameter estimates.
 
-In this article we focus on the parameterization of the very difficult class of spatial discrete-continuous hybrid models. In particular, we use the tumor growth model published by [ref. to PLOS article] as a benchmark. It represents cells individually by a cellular automaton and 5 molecular species by a system of partial differential equations. The combination of stochastic behavior (cells), its analytical inaccessibility and computationally expensive model evaluations ($\sim 24h$) makes its parameterization truely challenging.
+ABC algorithms have been used in a multitude of systems biology applications including gene expression and signal transduction~\cite{ToniWel2009,ToniJov2011,LillacciKha2013,LiepeFil2013,LoosMar2015}. The inference of multi-scale models has however not been approached. A potential reason is the large number of necessary simulation, limiting the study of computationally intensive models.
 
-%\textbf{$>>>$ ABC SMC introduction $<<<$}
-
-%This article is structured as following: First we present the parallelized version of the ABC SMC. Then we first show some results fitting artifiicial data, i.e. data produced by the model itself, to study the methods sensitivtiy to measurement noise and sample size. Fitting   and experimental data. And we compare 
-%>>>>>>> Stashed changes:2015-PLOS-JagiellaEtAl.tex
-
-To infer parameters of stochastic processes, Approximate Bayesian Computation (ABC) algorithms have been developed~\cite{BeaumontZha2002}. These ABC algorithms circumvent the evaluation of the likelihood function by assessing the distance between summary statistics of measured and simulated data. If the distance measure exceeds a threshold the parameter values used to simulate data is rejected otherwise they are accepted. This concept can be used in rejection sampling~\cite{BeaumontZha2002} but as the acceptance rates are generally low, Markov chain Monte Carlo sampling~\cite{MarjoramMol2003} and in sequential Monte Carlo methods~\cite{SissonFan2007}. If the summary statistics are informative enough, samples obtained using ABC algorithms converge to the true posterior as the threshold approaches zero~\cite{MarinPil2014}. ABC algorithms have been used in a multitude of systems biology applications including gene expression and signal transtuction~\cite{ToniWel2009,ToniJov2011,LillacciKha2013,LiepeFil2013,LoosMar2015}. The inference of multi-scale models has however not been approached. A potential reason is the large number of necessary simulation, limiting the study of computationally intensive models. 
-
-In this study we introduce a parallel Approximate Bayesian Computations sequential Monte Carlo (pABC SMC) algorithm. This simple extension of ABC SMC facilitates the use of multi-core systems and computing clusters, thereby enabling the analysis of computationally demanding stochastic multi-scale models. Convergences of the samples is ensured by rigorous ordering. Using the pABC SMC algorithm we address parameter inference for the widely used class of hybrid discrete-continuum models~\cite{AndersonQua2008,HoehmeBru2010,Jagiella2012,Jagiella2015} \jh{- MORE WOULD BE BETTER -}. These computational multi-scale models describes cells as interacting agents with intracellular information processing. The dynamics of extracellular substances such as nutrition or extracellular matrix are captured by diffusion reaction equations, namely PDEs. The individual subsystems are coupled via boundary conditions. This model call is highly complex and analytical methods and no analytical methods are available.
+In this study we introduce a parallel Approximate Bayesian Computations sequential Monte Carlo (pABC~SMC) algorithm. This simple extension of ABC~SMC facilitates the use of multi-core systems and computing clusters, thereby enabling the analysis of computationally demanding stochastic multi-scale models. Convergences of the samples is ensured by rigorous ordering. Using the pABC~SMC algorithm we address parameter inference for the widely used class of hybrid discrete-continuum models~\cite{AndersonQua2008,RichmondWal2010,SwatTho2012,HoehmeBru2010,Jagiella2012,StarrussBac2014,Jagiella2015}. These computational multi-scale models describes cells as interacting agents with intracellular information processing. The dynamics of extracellular substances such as nutrition or extracellular matrix are captured by diffusion reaction equations, namely PDEs. The individual subsystems are coupled via boundary conditions. This model call is highly complex and analytical methods and no analytical methods are available.
 
 The performance of the method is demonstrated for models of tumor spheroid growth. In separate studies the parameters of the model influencing tumor growth are inferred from artificial and real experiment data. These studies provide a proof-of-principle that the parameter inference for computationally demanding models with complex internal structure is feasible using ABC methods.
 
@@ -266,30 +256,49 @@ The performance of the method is demonstrated for models of tumor spheroid growt
 %%%%%%
 \section*{Results}
 
+In the following we introduce a parallel implementation of ABC~SMC methods. To assess the properties of this implementation we study 2D and 3D agent-based tumor spheroid models from artificial experimental data. The parameters of these models are inferred artificial and real experimental data, enabling a rigor evaluation as well as the gain of new biological insights.
+
 %%%%%%
 %%%%%%
-\subsection*{ABC implementation for computationally demanding models}
-We used a the well established ABC SMC method for parameter inference (see Material and Methods section). As we want to tackle the parameterization of models with evaluations times of the order of days the ABC SMC methods capacity for parallelization should be largely exploited. One example scenario to illustrate why: If ABC SMC needs at least 30 iterations until convergence and a minimal sample size of $n_{pop} = 100$ particles per generation (as we show later) then - performed in a sequential manner and optimistically assuming high acceptance rates - its termination time would be of the order of decades.  
+\subsection*{Parallelization of ABC~SMC methods}
+To facilitate parameter estimation for computationally demanding hybrid discrete-continuum models we implemented a parallel ABC~SMC algorithm, pABC~SMC. The pipeline is illustrated in Figure~\ref{fig1}. 
 
-From the many possibilities how to parallelize (multi-core, GPU, cluster, etc.) we have chosen a queue-mediated cluster architecture. The pipeline is illustrated by Fig.~\ref{fig1}. Here a master is running the actual ABC SMC routine and is outsourcing the time (CPU) and resource (RAM) consuming model evaluations to slave machines. In our case the work distribution is handled by a queue (Univa grid engine). The number of running (or queued) model evaluations is kept constant at $n_{running}$. I.e. finished jobs are immediately replaced by new ones. The evaluation results are stored in the same order as the corresponding parameters were initially drawn. If at least $n_{pop}$ of the first consecutively finished model evaluations are accepted then the master will stop all still running/queued evaluations and pass on to the next iteration by replacing the current population by the first $n_{pop}$ accepted samples. 
+ABC methods rely on Bayes' theorem and approximate the posterior distribution $p(\theta|\mathcal{D}) \propto p(\mathcal{D}|\theta) p(\theta)$ of the parameter $\theta$ given the data $\mathcal{D}$. To circumvent the evaluation of the likelihood $p(\mathcal{D}|\theta)$, which is intractable for most stochastic models, measured and simulated data are compared directly. A parameter value $\theta$ is accepted if the distance between a corresponding stochastic simulation and the data does not exceed a tolerance $\epsilon$, otherwise the parameter values $\theta$ is rejected. To capture the posterior distribution, stochastic simulations for many proposed parameter values $\theta$ have to be performed, yielding a sample of accepted parameters $\{\theta^{(i)}\}_{i=1}^n$. Simplistic approaches sample the parameter values $\theta$ from the prior $p(\theta)$. To accelerate convergence ABC~SMC construct a series of distributions for decreasing tolerance~$\epsilon_t$, with $\epsilon_0 > \epsilon_1 > \ldots > \epsilon_T$. The samples $\{\theta_t^{(i)}\}_{i=1}^n$ obtained for individual tolerances $\epsilon_t$ is called generation $t$. For $\epsilon_T \rightarrow 0$, generation~$T$ resampled a sample from the posterior distribution.
 
-\begin{figure}[htbp]
+In this work, we parallelized the ABC~SMC methods by parallelizing calculations for the current generation~$t$. For each tolerance~$\epsilon_t$ a sample of at least $n$ accepted parameter values is required. To obtain this sample one has to repeatedly draw a parameter values drawn from the distribution approximation obtained by generation~$t$, (Step~1) simulate the hybrid discrete-continuum model and (Step~2) evaluate the distance between simulation and data. This can easily be parallelized by simultaneously performing the computationally intensive Step~1 \&~2 on several machines.
+
+From the long list of possible implementations (multi-core, GPU, cluster, etc.) we have chosen a queue-mediated cluster architecture. A master was running the ABC~SMC routine and was outsourcing the time (CPU) and resource (RAM) consuming model simulation and distance evaluation to slave machines. In our case the work distribution was handled by a queue (Univa grid engine). The number of running (or queued) model evaluations was kept constant at $m$, i.e. finished jobs are immediately replaced by new ones. The evaluation results were stored in the same order as the corresponding jobs were submitted. As soon as the first $N$ jobs are finished containing $n$ accepted parameters, the Master stops all still running/queued evaluations and continues with the next generation. We note that it was important to not simple wait for $n$ samples to be accepted, but we had to use $n$ in the first $N$ finished jobs. Otherwise, the parameters samples were biased towards regimes for which the computation time was lower {\color{red}(see Example in Supplement Material)}.
+
+To accelerate the parameter estimation further, we intertwined simulation and distance measure evaluation. We used weighted-least squares type distance measures which were strictly increasing as new data becomes available. If the objective function threshold $\epsilon$ was already reached for the data points up to the current simulation time, the simulation was stopped and the corresponding parameter values was rejected. This elimination of unnecessary simulations reduced the computation time significantly without introducing a bias.
+
+For details about the ABC~SMC method and our parallel implementation we refer to the \textit{Materials and Methods} section.
+
+\begin{figure}[t]
 \includegraphics[width=\textwidth]{Figures/Pipeline.pdf}
-\caption{{\bf Pipeline using cluster.}
-The ABC method runs on a master machine. Each iteration $t$ new candidate parameters are drawn from a prior distribution and submitted to a queue. Slaves pick up candidates, simulate the model and calculate the summary statistics / distance to data. Then the master accepts those candidate with distances below a threshold $\epsilon$ and replaces all finished model evaluations with new samples on the queue.}
-\label{fig1}
+\caption{{\bf Flowchart of parallel ABC~SMC methods.}
+pABC~SMC uses a master/slave structure. The master performs the parameter sampling, submits the jobs, collects the results and proceeds to the next generation. Slaves simulate the model for different parameter values, evaluate the distance measure and return the results.
+\jh{$\epsilon_t$!}
+\jh{The simulation and objective function evaluation is actually intertwined. this is not depicted.}
+\jh{We could add an illustration of ABC SMC in general.}
+}
+\label{fig: Pipeline}
 \end{figure}
 
-Waiting for all jobs between the first $n_{pop}$ accepted ones to be finished is essential to avoid a bias towards parameters with faster model simulations. For the same reason all accepted jobs within the first consecutively finished which exceed the population size of $n_{pop}$ have to be ignored. 
+%%%%%%
+%%%%%%
+\subsection*{Evaluation of pABC~SMC on artificial experimental data}
 
-\jh{can we design a simple example in which we see the bias which is introduced if we do not keep track of the order?}
-
-\subsection*{Artificial data (2D)}
-
-In order to assess the performance of ABC SMC we created a toy data set for a reference parameters $\hat{\theta}$ (see Material \& Methods). The model used to create the data is a tumor growth model which considers cell proliferation to be exclusively controlled by available space and extra-cellular matrix (ECM). Fig.~\ref{fig2} shows a sequence of simulation snapshots illustrating the model evolution over time and a respective experimental micrograph. The data consists of growth curves (spheroid radius) over time and histological data about cell proliferation and ECM extracted from the respective marker distributions, Ki67 and ColIV.  
+In order to assess the performance of ABC SMC we created a artificial data set for a reference parameters $\hat{\theta}$ (see Material \& Methods). The model used to create the data is a tumor growth model which considers cell proliferation to be exclusively controlled by available space and extra-cellular matrix (ECM). Fig.~\ref{fig2} shows a sequence of simulation snapshots illustrating the model evolution over time and a respective experimental micrograph. The data consists of growth curves (spheroid radius) over time and histological data about cell proliferation and ECM extracted from the respective marker distributions, Ki67 and ColIV.  
 
 In the following sections we present one inference run in detail and the results of a sensitivity analysis for different population sizes and additive (measurement) noise. 
 
+%%%%%%
+\paragraph{Agent-based model of tumor spheroid growth}
+
+%%%%%%
+\paragraph{Artificial experimental data}
+
+%%%%%%
 \paragraph{Parameter Inference}
 
 
@@ -409,6 +418,9 @@ Fig.~\ref{fig:exp3d}
 \label{fig:exp2dvs3d}
 \end{figure}
 
+%%%%%%
+%%%%%%
+\subsection*{Analysis of tumor spheroid growth using pABC~SMC}
 
 %\begin{table}[!ht]
 %\begin{adjustwidth}{-2.25in}{0in} % Comment out/remove adjustwidth environment if table fits in text column.
@@ -433,8 +445,20 @@ Fig.~\ref{fig:exp3d}
 %%%%%%
 \section*{Discussion}
 
+Compared to the alternative of parallelizing the model simulation directly, the suggested parallelization with respect to the drawn parameters has the advantage that the code used for model evaluation does not have to be touched. Furthermore, communication is minimized as merely the parameters and the calculated objection functions values have to be send over the network.
+
+mention that DREAM 15 parameters, no ABC, the best performing methods applied a trick that the trick that the objective function (which is deterministic) could be optimized directly
 
 spatial moments
+
+Methods directly applicable to inference for models implemented in multi-scale modeling platforms such as FLAME~\cite{RichmondWal2010}, CompuCell3D~\cite{SwatTho2012}, Morpheus~\cite{StarrussBac2014}, EPISIM~\cite{SutterlinKol2013} and Chaste~\cite{MiramsArt2013}.
+
+extension to model selection straight forward -> Toni paper
+but choice of metric becomes even more important
+
+AABC -> BuzbasRos2013
+
+
 
 
 % You may title this section "Methods" or "Models". 
@@ -590,6 +614,11 @@ Wrote the Paper: NJ FJT JH.
 %%%%%%
 \bibliographystyle{plos2015}
 \bibliography{Database,bibliography}
+
+
+\section{ToDo}
+
+\jh{simple example in which we see the bias which is introduced if we do not keep track of the order?}
 
 
 \end{document}
