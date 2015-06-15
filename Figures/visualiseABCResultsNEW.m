@@ -80,8 +80,8 @@ for i=IterationArray
     nx= ceil(n^0.5);
     ny= ceil(n/nx);
     for j=1:n
-        subplot(1,n, j);
-        %subplot(nx,ny, j);
+        %subplot(1,n, j);
+        subplot(nx,ny, j);
         for k=1:size(raw_data,1)
             try
                 plot(raw_data(k,j).x, raw_data(k,j).y, 'color', color_map(i,:),'LineWidth',2); hold on;
@@ -97,8 +97,8 @@ for i=IterationArray
         xlim([min(options.data(j).x), max(options.data(j).x)]);
         idx = (options.data(j).s ~= 0);
         ylim([min(options.data(j).y(idx)), max(options.data(j).y(idx) + options.data(j).s(idx))]);
-        %TODO: xlabel(options.xlabel(j))
-        %TODO: ylabel(options.ylabel(j))
+        xlabel(options.xlabel(j))
+        ylabel(options.ylabel(j))
         hold on;
     end
     

@@ -444,10 +444,10 @@ spatial moments
 \subsection*{Model}
 The test model we use is based on the spatial multi-scale model proposed by \cite{Jagiella2015} to describe in-vitro tumor growth. It is a hybrid approach of an individual-based model for tumor cells and a system of partial differential equations describing the molecular kinetics of extra-cellular matrix (ECM), the key metabolites and waste material from cellular debris of necrotic cells. 
 
-\paragraph{Cell model:} Cells populate a static unstructured lattice (max. 1 cell per lattice site). They can be either \emph{alive} or \emph{necrotic}. Cells can perform a birth and death process, if they are alive, or a lysis process, if they are necrotic. The respective transition rates are defined by the following equations:
+\paragraph{Cell model:} Cells populate a static unstructured lattice (max. 1 cell per lattice site). They can be either \emph{alive} or \emph{necrotic}. If alive, cells can perform a birth and death process, or, in the necrotic case, a lysis process. The respective transition rates are defined by the following equations:
 \begin{align}
-	k_{div}  &= {\color{red}{k_{div}^{max}}} H(e-{\color{red}{e^{crit}}}) H(k^{a}_{pro}) e^{-l/{\color{red}{l^{crit}}}},\\
-	k_{nec} &= {\color{red}{k_{nec}^{max}}} H(k^{a}_{pro}),\\
+	k_{div}  &= {\color{red}{k_{div}^{max}}} H(e-{\color{red}{e^{div}}}) H(p_{ATP}-p^{div}_{ATP}) e^{-L/{\color{red} {L^{div}}}} \alpha(w) \beta(o) H(n_{exp}^{max}-n_{exp}),\\
+	k_{nec} &= {\color{red}{k_{nec}^{max}}} H(p^{nec}_{ATP}-p_{ATP}),\\
 	k_{lys} &= const.
 \end{align}
 and depend on the local molecular concentrations of ECM ($e$), oxygen ($o$), waste ($w$) and the production rate of ATP ($k^{a}_{pro}$). The division rate further depends on the distance $l$ a cell would have to push surrounding cells away toward the closest free lattice site in order to free space for the second daughter cell.
@@ -458,14 +458,30 @@ and depend on the local molecular concentrations of ECM ($e$), oxygen ($o$), was
 {\bf Model parameters.}}
 \begin{tabular}{|l|r|r|r|r|r|}
 \hline
-{\bf Parameter} &{\bf Symbol} &{\bf Unit}  &{\bf Value} &{\bf Range (Setting I)} &{\bf Range (Setting II)}\\ \hline
-division rate &$k_{div}^{max}$\\ \hline
-necrosis rate &$k_{nec}^{max}$\\ \hline
-lysis rate &$k_{lys}$\\ \hline
+\multicolumn{3}{|l|}{\bf } & \multicolumn{2}{|l|}{\bf Parameter value / range}\\ \hline
+{\bf Parameter} &{\bf Symbol} &{\bf Unit} &{\bf Setting I} &{\bf Setting II}\\ \hline
+division rate &$k_{div}^{max}$ & $h^{-1}$ & 0.032 & $0.032 \times 10^{-2...2}$\\ \hline
+division depth &$L^{div}$ & $\mu m$ & 130 & 1.3...13000\\ \hline
+initial population radius &$l^{init}$ & $\mu m$ & 130 & 0.12...1200\\ \hline
+initial quiescent cell fraction & $q_{init}$ &-& 0.75& 0.0075...75\\ \hline
+ECM production rate &$k_{e}^{pro}$  & $h^{-1}$&0.0005 &0.000005...0.05\\ \hline
+ECM gegradation rate &$k_{e}^{deg}$ &$h^{-1}$&0.0033 &0.000033...0.33\\ \hline
+ECM division threshold &$e^{div}$ &- &0.003 &0.00003...0.3\\ \hline
+cell cycle reentrance rate &$k_{re}$ &$h^{-1}$ &0&0.00001...0.1\\ \hline
+necrosis rate &$k_{nec}$ &$h^{-1}$&0&0.0001...1\\ \hline
+lysis rate &$k_{lys}$ &$h^{-1}$&0&0.0001...1\\ \hline
+ATP division threshold &$p^{div}_{ATP}$ &$mM h^{-1}$& 0& 9...90000\\ \hline
+ATP necrosis threshold &$p^{nec}_{ATP}$&$mM h^{-1}$& $\infty$& 6...60000\\ \hline
+lactate division threshold &$l^{div}$  &$mM$&* & 0.2...2000\\ \hline
+lactate necrosis threshold &$l^{nec}$ &$mM$ &* & 0.2...2000\\ \hline
+waste diffusion coefficient &$D_W$& $\mu m^{2} h^{-1}$  &*& $10^{3}...10^{7}$\\ \hline
+waste uptake& $q_W$ &$h^{-1}$ &*& $10^{-8}...10^{-4}$\\ \hline
+waste division threshold &$w^{div}$ &- &*&0.00008...0.8\\ \hline
+waste exposure cell cycle threshold &$n^{max}_{exp}$&-& *& 0.08...800\\ \hline
 \end{tabular}
 \begin{flushleft} The table shows all model parameters with there respective values. For the different parameter inference settings the ranges for those parameters which were .
 \end{flushleft}
-\label{table1}
+\label{tab:model-parameters}
 \end{adjustwidth}
 \end{table}
 
