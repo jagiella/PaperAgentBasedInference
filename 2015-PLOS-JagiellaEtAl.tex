@@ -271,7 +271,7 @@ From the long list of possible implementations (multi-core, GPU, cluster, etc.) 
 
 To accelerate the parameter estimation further, we intertwined simulation and distance measure evaluation. We used weighted-least squares type distance measures which were strictly increasing as new data becomes available. If the objective function threshold $\epsilon$ was already reached for the data points up to the current simulation time, the simulation was stopped and the corresponding parameter values was rejected. This elimination of unnecessary simulations reduced the computation time significantly without introducing a bias.
 
-For details about the ABC~SMC method and our parallel implementation we refer to the \textit{Materials and Methods} section.
+For details regarding the ABC~SMC method and our parallel implementation we refer to the \textit{Materials and Methods} section.
 
 \begin{figure}[t]
 \includegraphics[width=\textwidth]{Figures/Pipeline.pdf}
@@ -288,15 +288,16 @@ pABC~SMC uses a master/slave structure. The master performs the parameter sampli
 %%%%%%
 \subsection*{Evaluation of pABC~SMC on artificial experimental data}
 
-In order to assess the performance of ABC SMC we created a artificial data set for a reference parameters $\hat{\theta}$ (see Material \& Methods). The model used to create the data is a tumor growth model which considers cell proliferation to be exclusively controlled by available space and extra-cellular matrix (ECM). Fig.~\ref{fig2} shows a sequence of simulation snapshots illustrating the model evolution over time and a respective experimental micrograph. The data consists of growth curves (spheroid radius) over time and histological data about cell proliferation and ECM extracted from the respective marker distributions, Ki67 and ColIV.  
+To assess the properties of ABC~SMC methods for biological multi-scale process, we consider 2D and 3D models for in-vitro tumor growth we developed previously~\cite{Jagiella2015}. These hybrid discrete-continuum models exploit an agent-based description for individual cancer cells and a PDE-based description for extracellular metabolites and extracellular matrix components (ECM). The intracellular regulation of cell division and cell death are captured by a combination of continuous time Markov chains (CTMCs) and simple decision rules. For further details we refer to the \textit{Materials and Methods} section.
 
-In the following sections we present one inference run in detail and the results of a sensitivity analysis for different population sizes and additive (measurement) noise. 
-
-%%%%%%
-\paragraph{Agent-based model of tumor spheroid growth}
+The trajectories of the tumor growth models are subject to stochastic fluctuations. In particular during the initial growth phase, which are marked by low cell numbers, stochastic simulations differ greatly. During later phases with higher cell numbers a self-averaging effect occurs. These stochastic dynamics and the multi-scale nature of the models provide an interesting but challenging inference problem.
 
 %%%%%%
 \paragraph{Artificial experimental data}
+
+In order to assess the performance of ABC SMC we created a artificial data set for a reference parameters $\hat{\theta}$ (see Material \& Methods). The model used to create the data is a tumor growth model which considers cell proliferation to be exclusively controlled by available space and extra-cellular matrix (ECM). Fig.~\ref{fig2} shows a sequence of simulation snapshots illustrating the model evolution over time and a respective experimental micrograph. The data consists of growth curves (spheroid radius) over time and histological data about cell proliferation and ECM extracted from the respective marker distributions, Ki67 and ColIV.  
+
+In the following sections we present one inference run in detail and the results of a sensitivity analysis for different population sizes and additive (measurement) noise. 
 
 %%%%%%
 \paragraph{Parameter Inference}
