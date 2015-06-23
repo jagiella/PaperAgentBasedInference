@@ -68,15 +68,56 @@ c=1;
 %IterationArray=[1 10 20 30 40];
 %IterationArray = [1 4 7 10 14];
 IterationArray = round(linspace(1,max_i,5));
-for i=IterationArray
+for i=IterationArray(end)
     
     load( [ prefix num2str(i) '.mat' ], 'raw_data_x', 'raw_data_y', 'raw_data', 'x','f', 'neval' ); 
 
    %10.^mean(x,2)
     
+    figure(10); clf
+    n = size(raw_data,2);
+    nx= ceil(n^0.5);
+    ny= ceil(n/nx);
+
+    for j=1:n
+        subplot(nx,ny, j);
+        raw_Y=[];
+        raw_x=[];
+        for k=1:size(raw_data,1)
+            try
+                %plot(raw_data(k,j).x, raw_data(k,j).y, 'color', color_map(i,:),'LineWidth',2); hold on;
+                raw_Y(k,:) = raw_data(k,j).y;
+                raw_x      = raw_data(k,j).x;
+            catch
+                warning('error reading raw data')
+            end
+        end
+        plotCurveDensity( raw_x, raw_Y');
+        hold on;
+        try
+            num_data_points = length(options.data(j).y);
+            step_size = ceil(num_data_points/20);
+            indices = 1:step_size:num_data_points;
+            errorbar(options.data(j).x(indices,:), options.data(j).y(indices), options.data(j).s(indices), 'k-'); hold off;
+        end
+
+%         xlim([min(options.data(j).x), max(options.data(j).x)]);
+%         idx = (options.data(j).s ~= 0);
+%         ylim([min(options.data(j).y(idx)), max(options.data(j).y(idx) + options.data(j).s(idx))]);
+%         xlabel(options.xlabel(j))
+%         ylabel(options.ylabel(j))
+    end
+end
+%return
+
+ for i=IterationArray
+    
+    load( [ prefix num2str(i) '.mat' ], 'raw_data_x', 'raw_data_y', 'raw_data', 'x','f', 'neval' ); 
+
+  
     %% PLOT RAW SIM DATA
     h_fi = figure(5);
-    n = size(raw_data,2)
+    n = size(raw_data,2);
     nx= ceil(n^0.5);
     ny= ceil(n/nx);
     for j=1:n
@@ -101,7 +142,11 @@ for i=IterationArray
         ylabel(options.ylabel(j))
         hold on;
     end
+
     
+    if( i==IterationArray(end))
+    end
+
 
     %saveas( gcf, [ prefix num2str(i) '_fits.png' ], 'png');
 
