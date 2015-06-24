@@ -243,18 +243,18 @@ hold on;
 
 
 saveas( h_sp, [ prefix '_NEW_scatterPlotMatrix.png' ], 'png');
-plotEPS(h_sp,[ prefix '-scatterPlotMatrix.eps' ],800, 800);
+%plotEPS(h_sp,[ prefix '-scatterPlotMatrix.eps' ],800, 800);
 
 %h_of = figure(2);
 saveas( h_of, [ prefix '_NEW_objFunc.png' ], 'png');
-plotEPS(h_of,[ prefix '-objFunc.eps'],400, 300);
+%plotEPS(h_of,[ prefix '-objFunc.eps'],400, 300);
 
 %h_ar = figure(3);
 saveas( h_ar, [ prefix '_NEW_acceptanceRate.png' ], 'png');
-plotEPS(h_ar,[ prefix '-acceptanceRate.eps'],400, 300);
+%plotEPS(h_ar,[ prefix '-acceptanceRate.eps'],400, 300);
 
 saveas( h_fi, [ prefix '_NEW_fits.png' ], 'png');
-plotEPS(h_fi,[ prefix '-fits.eps'],800, 600/3);
+%plotEPS(h_fi,[ prefix '-fits.eps'],800, 600/3);
 
 saveas( h_fe, [ prefix '_NEW_functionEvaluations.png' ], 'png');
 %plotEPS(h_fi,'/Users/jagiella/Dropbox/Work/PUBLICATIONS/Paper-Helmholtz-ParameterEstimation/Figures/FitToyData1.eps',800, 800/3);

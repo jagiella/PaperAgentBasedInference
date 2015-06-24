@@ -471,12 +471,23 @@ AABC -> BuzbasRos2013
 \subsection*{Model}
 The test model we use is based on the spatial multi-scale model proposed by \cite{Jagiella2015} to describe in-vitro tumor growth. It is a hybrid approach of an individual-based model for tumor cells and a system of partial differential equations describing the molecular kinetics of extra-cellular matrix (ECM), the key metabolites and waste material from cellular debris of necrotic cells. 
 
-\paragraph{Cell model:} Cells populate a static unstructured lattice (max. 1 cell per lattice site). They can be either \emph{dividing}, \emph{quiescent} or \emph{necrotic}. If dividing, cells can perform a birth and death process. After a cell division it can either reenter the cell cycle or become quiescent. A cell in quiescence can perform a death process or reenter the cell cycle and perform a birth process. In the necrotic case, cells perform a lysis process. The respective transition rates are defined by the following equations:
+\paragraph{Cell model:} Cells populate a static unstructured lattice (max. 1 cell per lattice site). They can either progress through the cell cycle, be quiescent or become necrotic. All possible cell states and transitions are shown in Fig.~\ref{fig:cell-states} in the spatial context (Fig.~\ref{fig:cell-states} left) as well as for the internal cell states (Fig.~\ref{fig:cell-states} right). 
+
+\begin{figure}[htbp]
+\includegraphics[width=\textwidth]{Figures/Fig5}
+\caption{{\bf Fitting experimental data: 2d versus 3d model.}
+}
+\label{fig:cell-states}
+\end{figure}
+
+A proliferating cell passes through $m_{d}$ cell cycle steps in a repeating manner increasing an internal counter  by 1 from $M=1$ to $M=m_{d}$ with rate $k_{div,m}$. There are two steps acting as check points which trigger special events: If $M=m_{g}$, then the cell will grow in volume. I.e. the cell will occupy a second randomly chosen free neighbor cell. In case no adjacant lattice site is free, first all cells along the shortest path toward the closest free lattice site will be shifted away. If $M=m_{d}$, the cell is going to divide into two daughter cells. Directly after division each cell decides then whether to proceed in the cell cycle with probability $p_{re}$, setting $M=1$, or to become quiescent with probability $1-p_{re}$. Once quiescent, a cell attempts to reenters the cell cycle with rate $k_{re}$ and might succeed with probability $p_{re}$. Under certain conditions any living cell can become necrotic with rate $k_{nec}$ and in the following is lysed with rate $k_{lys}$ resulting in its removal from the respective lattice site.
+
+All transition rates and probabilities are defined as follows
+
 \begin{align}
-	%k_{div}  &= {\color{red}{k_{div}^{max}}} H(e-{\color{red}{e^{div}}}) H(p_{ATP}-p^{div}_{ATP}) e^{-L/{\color{red} {L^{div}}}} \alpha(w) \beta(o) H(n_{exp}^{max}-n_{exp}),\\
-	%k_{nec} &= {\color{red}{k_{nec}^{max}}} H(p^{nec}_{ATP}-p_{ATP}),\\
-	k_{div}  &= \sI{k_{div}^{max}} \cdot  f_{div}^{a}  \cdot f_{div}^{l}  \cdot  f_{div}^{w}  \cdot f_{div}^{o}  \cdot p_{div} \\
-	k_{qui}  &= \sI{k_{div}^{max}} \cdot  f_{div}^{a} \cdot  f_{div}^{l} \cdot   f_{div}^{w}  \cdot f_{div}^{o}  \cdot  (1-p_{div}) \\
+	p_{div} &= f^{ci}_{div}\cdot f^{e}_{div} \cdot  f_{div}^{a} \cdot  f_{div}^{l}  \cdot  f_{div}^{w,o}\\
+	k_{div,m}  &= \sI{k_{div}^{max}}   \cdot  f_{div}^{w}  \cdot f_{div}^{o} \cdot m_{d} \\
+	k_{re}  &= \sI{k_{re}^{max}}  \cdot   f_{div}^{w}  \cdot f_{div}^{o}\\
 	k_{nec} &= \sII{k_{nec}^{max}}  \cdot                                  f_{nec}^{a} \cdot  f_{nec}^{l}  \\
 	\sII{k_{lys}} &= const.
 \end{align}
@@ -486,16 +497,17 @@ and depend on the local molecular concentrations of ECM ($e$), ATP ($a$), oxygen
 	f_{div}^{e} &= H(e-\sI{e^{div}}), \\
 	f_{div}^{a} &= H(p_{ATP}-\sII{p^{div}_{ATP}}), & f_{nec}^{a}&=H(\sII{p^{nec}_{ATP}}-p_{ATP})\\
 	f_{div}^{l}  &= H(l-\sII{l^{div}}), & f_{nec}^{l}&=l^{2} / (l^{2} + (\sII{l^{nec}})^{2})\\
-	f_{div}^{w} &= (1 - 0.5 \cdot H(w-\sII{w^{div}})) \cdot H(\sII{n^{max}} - n_{w,o}) , \\
-	f_{div}^{o} &= (1 - 0.5 \cdot H(\sII{o^{div}} - o)) \cdot H(\sII{n^{max}} - n_{w,o}),
+	f_{div}^{w} &= (1 - 0.5 \cdot H(w-\sII{w^{div}})), \\
+	f_{div}^{o} &= (1 - 0.5 \cdot H(\sII{o^{div}} - o)), \\
+	f_{div}^{w,o} &= H(\sII{n^{max}} - n_{w,o}),
 \end{align}
 where $p_{ATP}$ is the ATP production rate, $n_{w,o}$ is the number of cell cycles a cell was deprived of oxygen or exposed to waste material, 
 \begin{align}
 	n_{w,o} = \int_{0}^{t}  1 -  H(\sII{w^{div}}-w)H(o - \sII{o^{div}})   d\tau
 \end{align}
-and $e^{div}$, $p_{ATP}^{div}$, $p_{ATP}^{nec}$, $l^{div}$, $l^{nec}$, $w^{div}$, $o^{div}$ and $n^{max}$ are the critical values.
+and $e^{div}$, $p_{ATP}^{div}$, $p_{ATP}^{nec}$, $l^{div}$, $l^{nec}$, $w^{div}$, $o^{div}$ and $n^{max}$ are the critical values where cells will change their behavior.
 
-The division rate further depends on the shortest distance a cell would have to push surrounding cells away in order to free adjacent space for cell growth and division:
+The division probability further depends on the shortest distance a cell would have to push surrounding cells away in order to free adjacent space for cell growth and division:
 \begin{align}
 	f_{div}^{ci} &= e^{-L/\sI{L^{div}}},
 \end{align}
@@ -517,7 +529,7 @@ ECM production rate 			&$k_{e}^{pro}$  & $h^{-1}$&0.0005 &0.000005...0.05\\ \hli
 ECM gegradation rate 			&$k_{e}^{deg}$ &$h^{-1}$&0.0033 &0.000033...0.33\\ \hline
 ECM division threshold 			&$e^{div}$ &- &0.003 &0.00003...0.3\\ \hline
 \hline
-cell cycle reentrance rate 			&$k_{re}$ &$h^{-1}$ &0*&0.00001...0.1\\ \hline
+cell cycle reentrance rate 			&$k^{max}_{re}$ &$h^{-1}$ &0*&0.00001...0.1\\ \hline
 necrosis rate 					&$k_{nec}$ &$h^{-1}$&0*&0.0001...1\\ \hline
 lysis rate 						&$k_{lys}$ &$h^{-1}$&0*&0.0001...1\\ \hline
 ATP division threshold 			&$p^{div}_{ATP}$ &$mM h^{-1}$& 0*& 9...90000\\ \hline
@@ -547,7 +559,27 @@ waste exposure cell cycle threshold 	&$n^{max}_{exp}$&-& $\infty$*& 0.08...800\\
 where $c=1$, if the a living cell is occupying the volume, or $c_{nec}=1$, if a necrotic cell is occupying the same volume. Else $c=c_{nec}=0$.
 
 \paragraph{Initial \& boundary conditions:}
-The initial cell population occupies all lattice sites within a sphere of radius {\color{red}{$l^{init}$}}. A fraction of those cells $\color{red}{q_{init}}$ is quiescent, while the rest enters the cell cycle.
+The initial cell population occupies all lattice sites within a sphere of radius {\color{red}{$l^{init}$}}. A fraction of those cells $\color{red}{q_{init}}$ is quiescent right from the start, while the rest enters the cell cycle with $M=1$. For the molecular concentration we assume Dirichelet boundary conditions. That is to say, that molecular concentrations at the boundary of the domain $\partial \Omega$ are constant (see table \ref{tab:boundary conditions})
+
+\begin{table}[!ht]
+\begin{adjustwidth}{-0.5in}{0in} % Comment out/remove adjustwidth environment if table fits in text column.
+\caption{
+{\bf Boundary conditions.}}
+\begin{tabular}{|l |r |r|r|r|r|}
+\hline
+ 			& {\bf Setting I} & \multicolumn{4}{|c|}{\bf Setting II}\\ \hline
+{\bf Molecule} 	&			&{\bf Condition I} 	&{\bf Condition II} 	&{\bf Condition III} 	&{\bf Condition IV}\\ \hline
+$g$			& * 			& $1mM$			&$5mM$			&$25mM$			&$25mM$\\ \hline
+$o$			& *			& $0.28mM$		&$0.28mM$		&$0.28mM$		&$0.07mM$\\ \hline
+$l$			& *			& $0mM$			&$0mM$			&$0mM$			&$0mM$\\ \hline
+$e$			& 0 			& 0				&0				&0				&0\\ \hline
+$w$			& 0 			& 0				&0				&0				&0\\ \hline
+\end{tabular}
+For setting I some molecule dynamics were not considered (*).
+\label{tab:boundary conditions}
+\end{adjustwidth}
+\end{table}
+
 
 \paragraph{Parameters:} 
 
