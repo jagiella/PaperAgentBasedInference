@@ -474,8 +474,11 @@ The test model we use is based on the spatial multi-scale model proposed by \cit
 \paragraph{Cell model:} Cells populate a static unstructured lattice (max. 1 cell per lattice site). They can either progress through the cell cycle, be quiescent or become necrotic. All possible cell states and transitions are shown in Fig.~\ref{fig:cell-states} in the spatial context (Fig.~\ref{fig:cell-states} left) as well as for the internal cell states (Fig.~\ref{fig:cell-states} right). 
 
 \begin{figure}[htbp]
-\includegraphics[width=\textwidth]{Figures/Fig5}
-\caption{{\bf Fitting experimental data: 2d versus 3d model.}
+%\includegraphics[width=\textwidth]{Figures/Fig5}
+\includegraphics[width=0.45\textwidth]{Figures/SpatialStateTransitions}
+\includegraphics[width=0.55\textwidth]{Figures/InternalStateTransitions}
+\caption{{\bf Scheme of cell states and the biological processes a cell can undergo: cell cycle (including cell growth and division), cell death (apoptosis and necrosis) and lysis.}
+ Left panel: A cycling cell grows by occupying two neighboring lattice sites after a fraction of transitions in the cell cycle. Growing cells can push a certain number of cells aside. A cell dies with rate $k_{nec}$ and is consequently lysed with rate $k_{lys}$. (The schemes in the left panel are 2D for clarity; the simulations however were all in 3D). Right: All processes are modeled as Poisson processes. A cell in the cell cycle undergoes $m_d$ transitions until splitting into two daughter cells. Composed of $m_d$ sub-processes the cell cycle time ends up following an Erlang distribution. Increasing $m_d$ will lead to sharper cell cycle distributions. A cell transitions from one cell cycle state (CCS) to the next with rate $k_{div,m}$. If a cell is in state mg it will grow. If it is in state $m_d$ it will divide into 2 daughter cells during the next transition. Furthermore, the 2 daughter cells will either enter the first CCS with probability $p_{div}$ or become quiescent (G0) with probability $1 - p_{div}$. A cell in quiescence can reenter the cell cycle with rate $k_{re}$ and probability $p_{div}$.
 }
 \label{fig:cell-states}
 \end{figure}
@@ -485,7 +488,7 @@ A proliferating cell passes through $m_{d}$ cell cycle steps in a repeating mann
 All transition rates and probabilities are defined as follows
 
 \begin{align}
-	p_{div} &= f^{ci}_{div}\cdot f^{e}_{div} \cdot  f_{div}^{a} \cdot  f_{div}^{l}  \cdot  f_{div}^{w,o}\\
+	p_{re} &= f^{ci}_{div}\cdot f^{e}_{div} \cdot  f_{div}^{a} \cdot  f_{div}^{l}  \cdot  f_{div}^{w,o}\\
 	k_{div,m}  &= \sI{k_{div}^{max}}   \cdot  f_{div}^{w}  \cdot f_{div}^{o} \cdot m_{d} \\
 	k_{re}  &= \sI{k_{re}^{max}}  \cdot   f_{div}^{w}  \cdot f_{div}^{o}\\
 	k_{nec} &= \sII{k_{nec}^{max}}  \cdot                                  f_{nec}^{a} \cdot  f_{nec}^{l}  \\
@@ -559,7 +562,10 @@ waste exposure cell cycle threshold 	&$n^{max}_{exp}$&-& $\infty$*& 0.08...800\\
 where $c=1$, if the a living cell is occupying the volume, or $c_{nec}=1$, if a necrotic cell is occupying the same volume. Else $c=c_{nec}=0$.
 
 \paragraph{Initial \& boundary conditions:}
-The initial cell population occupies all lattice sites within a sphere of radius {\color{red}{$l^{init}$}}. A fraction of those cells $\color{red}{q_{init}}$ is quiescent right from the start, while the rest enters the cell cycle with $M=1$. For the molecular concentration we assume Dirichelet boundary conditions. That is to say, that molecular concentrations at the boundary of the domain $\partial \Omega$ are constant (see table \ref{tab:boundary conditions})
+The initial cell population occupies all lattice sites within a sphere of radius {\color{red}{$l^{init}$}}. A fraction of those cells $\color{red}{q_{init}}$ is quiescent right from the start, while the rest enters the cell cycle with $M=1$. For the molecular concentration we assume Dirichelet boundary conditions. That is to say, that molecular concentrations at the boundary of the domain $\partial \Omega$ are kept constant (see table \ref{tab:boundary conditions}).
+
+\paragraph{Numerical simulations:}
+The cellular dynamics is treated like a chemical reaction system were each cell and the biological process it can perform can be seen as analogues to a chemical species and reactions. As such one can formulate a master equation and solve it numerically using the Gillespie algorithm \nj{[ref]}.  
 
 \begin{table}[!ht]
 \begin{adjustwidth}{-0.5in}{0in} % Comment out/remove adjustwidth environment if table fits in text column.
