@@ -133,6 +133,8 @@
 \renewcommand{\@biblabel}[1]{\quad#1.}
 \makeatother
 
+\newcommand{\Heaviside}[1]{{\mathrm{H}\!\left[#1\right]}}
+
 \newcommand{\jh}[1]{{\color{red}#1}}
 \newcommand{\nj}[1]{{\color{blue}#1}}
 
@@ -243,17 +245,17 @@ To do.
 %%%%%%
 \section*{Introduction}
 
-Systems and computational biology aims at a mechanistic understanding of biological systems. To achieve this, biological processes on a wide range of time and length scales have to be captured~\cite{HunterBor2003}. This established the need for multi-scale models. World-wide interdisciplinary initiatives have been formed to develop multi-scale models and modeling approaches for basic research, diagnosis and therapy~\cite{PhysiomeProject}. Among the most well-known projects are the whole-heart~\cite{HunterBor2003,Nobel2002,Trayanova2011} and the whole-cell modeling initiatives~\cite{TomitaHas1999,KarrSan2012}. Furthermore, platforms for multiscale modeling of individual cells~\cite{StilesBar2001,SchaffFin1997}, tissues~\cite{RichmondWal2010,SwatTho2012,StarrussBac2014} and organs~\cite{MiramsArt2013} have been developed and made available. This resulted in a tremendous increase of the availability and popularity or multi-scale models. A problem which is however largely unsolved is the parameterization of multi-scale models. To enable truly quantitative predictions, the parameters of multi-scale models have to be inferred from experimental data.
+Systems and computational biology aims at a mechanistic understanding of biological systems. To achieve this, biological processes on a wide range of time and length scales have to be captured~\cite{HunterBor2003}. This established the need for multi-scale models. World-wide interdisciplinary initiatives have been formed to develop multi-scale models and modeling approaches for basic research, diagnosis and therapy. Among the most well-known projects are the whole-heart~\cite{HunterBor2003,Nobel2002,Trayanova2011} and the whole-cell modeling initiatives~\cite{TomitaHas1999,KarrSan2012}. Furthermore, platforms for multiscale modeling of individual cells~\cite{StilesBar2001,SchaffFin1997}, tissues~\cite{RichmondWal2010,SwatTho2012,StarrussBac2014} and organs~\cite{MiramsArt2013} have been developed and made available. This resulted in a tremendous increase of the availability and popularity or multi-scale models. A problem which is however largely unsolved is the parameterization of multi-scale models. To enable truly quantitative predictions, the parameters of multi-scale models have to be inferred from experimental data.
 
 For deterministic multi-scale models obtained by coupling ordinary differential equations (ODEs) and partial differential equations (PDEs) promising successes have be achieved. An integrated physiologically based whole-body model of the glucose-insulin-glucagon regulatory system has been developed and parameterized for individual patients to improve the understanding of type~1 diabetes~\cite{SchallerWil2013}. Similarly, whole-heart models could be used to infer ischemic regions from body surface potential maps to provide early diagnosis of heart infarction~\cite{NielsenLys2013}. These and other applications demonstrated that the automated parameterization of multi-scale models from experiment data is feasible. This is however mostly limited to coupled ODE and PDE models, which are deterministic and allow for efficient gradient-based optimization. The parameterization of computationally demanding stochastic and hybrid stochastic-deterministic models is more challenging~\cite{AdraKir2011,KarrWil2015}.
 
-Biological processes such as gene expression~\cite{ElowitzLev2002,EldarElo2010}, signal transaction~\cite{NiepelSpe2009,KlannLap2009}, cell division~\cite{HuhPau2011} and cell movement~\cite{GranerGlazier1992,AndersonQua2008} are intrinsically stochastic. This stochasticity renders stochastic multi-scale~\cite{DadaMen2011,WalpolePap2013,HasenauerJag2015} essential. The analysis and parameterization of these stochastic models is more sophisticated than of their deterministic counterparts. Key reasons are that (i) the simulation of stochastic models is often computationally demanding and that (ii) the likelihood function and its gradients cannot be assessed. The simulation of sophisticated agent-based models of liver regeneration~\cite{HoehmeBru2010} and tumor growth~\cite{AndersonQua2008,Jagiella2012} takes days to months. To assess the expected behavior of models a large number of such stochastic simulations are necessary. Even worst, the evaluation of the likelihood function of the data given the model -- the objective function for parameter optimization -- requires the integration over all possible trajectories of the systems. This is already for simple models infeasible and researchers restores to approximations~\cite{Dargatz2010}. In practice approximations of the likelihood are mostly based on a few realizations of the processes and therefore corrupted by large statistical noise. This statistical noise renders the reliable calculation of mostly infeasible, limiting the use of scalable gradient-based optimization methods~\cite{RaueSch2013}. Instead simple manual line search methods are used in practice (see e.g.~\cite{KarrSan2012,Jagiella2015}). These methods are known to be inefficient, possess convergence problems and do not provide reliable information about the parameter uncertainty.
+Biological processes such as gene expression~\cite{ElowitzLev2002,EldarElo2010}, signal transaction~\cite{NiepelSpe2009,KlannLap2009}, cell division~\cite{HuhPau2011} and cell movement~\cite{GranerGlazier1992,AndersonQua2008} are intrinsically stochastic. This stochasticity renders stochastic multi-scale~\cite{DadaMen2011,WalpolePap2013,HasenauerJag2015} essential. The analysis and parameterization of these stochastic models is more sophisticated than of their deterministic counterparts. Key reasons are that (i) the simulation of stochastic models is often computationally demanding and that (ii) the likelihood function and its gradients cannot be assessed. The simulation of sophisticated agent-based models of liver regeneration~\cite{HoehmeBru2010} and tumor growth~\cite{AndersonQua2008,Jagiella2012} takes days to months. To assess the expected behavior of models a large number of such stochastic simulations are necessary. Even worst, the evaluation of the likelihood function of the data given the model -- the objective function for parameter optimization -- requires the integration over all possible trajectories of the systems. This is already for simple models infeasible and researchers restores to approximations~\cite{Fuchs2010}. In practice approximations of the likelihood are mostly based on a few realizations of the processes and therefore corrupted by large statistical noise. This statistical noise renders the reliable calculation of mostly infeasible, limiting the use of scalable gradient-based optimization methods~\cite{RaueSch2013}. Instead simple manual line search methods are used in practice (see e.g.~\cite{KarrSan2012,JagiellaMul2015}). These methods are known to be inefficient, possess convergence problems and do not provide reliable information about the parameter uncertainty.
 
 To infer parameters of stochastic processes, Approximate Bayesian Computation (ABC) algorithms have been developed~\cite{BeaumontZha2002}. These ABC algorithms circumvent the evaluation of the likelihood function by assessing the distance between summary statistics of measured and simulated data. If the distance measure exceeds a threshold the parameter values used to simulate data is rejected otherwise they are accepted. This concept can be used in rejection sampling~\cite{BeaumontZha2002} but as the acceptance rates are generally low, Markov chain Monte Carlo sampling~\cite{MarjoramMol2003} and in sequential Monte Carlo methods~\cite{SissonFan2007}. If the summary statistics are informative enough, samples obtained using ABC algorithms converge to the true posterior as the threshold approaches zero~\cite{MarinPil2014}. A key advantage of ABC methods is that in contrast to other search strategies~\cite{AdraKir2011,KarrWil2015} information about parameter and prediction uncertainties are obtained along with the calculation of the optimal parameter estimates.
 
 ABC algorithms have been used in a multitude of systems biology applications including gene expression and signal transduction~\cite{ToniWel2009,ToniJov2011,LillacciKha2013,LiepeFil2013,LoosMar2015}. The inference of multi-scale models has however not been approached. A potential reason is the large number of necessary simulation, limiting the study of computationally intensive models.
 
-In this study we introduce a parallel Approximate Bayesian Computations sequential Monte Carlo (pABC~SMC) algorithm. This simple extension of ABC~SMC facilitates the use of multi-core systems and computing clusters, thereby enabling the analysis of computationally demanding stochastic multi-scale models. Convergences of the samples is ensured by rigorous ordering. Using the pABC~SMC algorithm we address parameter inference for the widely used class of hybrid discrete-continuum models~\cite{AndersonQua2008,RichmondWal2010,SwatTho2012,HoehmeBru2010,Jagiella2012,StarrussBac2014,Jagiella2015}. These computational multi-scale models describes cells as interacting agents with intracellular information processing. The dynamics of extracellular substances such as nutrition or extracellular matrix are captured by diffusion reaction equations, namely PDEs. The individual subsystems are coupled via boundary conditions. This model call is highly complex and analytical methods and no analytical methods are available.
+In this study we introduce a parallel Approximate Bayesian Computations sequential Monte Carlo (pABC~SMC) algorithm. This simple extension of ABC~SMC facilitates the use of multi-core systems and computing clusters, thereby enabling the analysis of computationally demanding stochastic multi-scale models. Convergences of the samples is ensured by rigorous ordering. Using the pABC~SMC algorithm we address parameter inference for the widely used class of hybrid discrete-continuum models~\cite{AndersonQua2008,RichmondWal2010,SwatTho2012,HoehmeBru2010,Jagiella2012,StarrussBac2014,JagiellaMul2015}. These computational multi-scale models describes cells as interacting agents with intracellular information processing. The dynamics of extracellular substances such as nutrition or extracellular matrix are captured by diffusion reaction equations, namely PDEs. The individual subsystems are coupled via boundary conditions. This model call is highly complex and analytical methods and no analytical methods are available.
 
 The performance of the method is demonstrated for models of tumor spheroid growth. In separate studies the parameters of the model influencing tumor growth are inferred from artificial and real experiment data. These studies provide a proof-of-principle that the parameter inference for computationally demanding models with complex internal structure is feasible using ABC methods.
 
@@ -294,7 +296,7 @@ pABC~SMC uses a master/slave structure. The master performs the parameter sampli
 %%%%%%
 \subsection*{Evaluation of pABC~SMC on artificial experimental data}
 
-To assess the properties of ABC~SMC methods for biological multi-scale process, we consider 2D and 3D models for in-vitro tumor growth we developed previously~\cite{Jagiella2015}. These hybrid discrete-continuum models exploit an agent-based description for individual cancer cells and a PDE-based description for extracellular metabolites and extracellular matrix components (ECM). The intracellular regulation of cell division and cell death are captured by a combination of continuous time Markov chains (CTMCs) and simple decision rules. For further details we refer to the \textit{Materials and Methods} section.
+To assess the properties of ABC~SMC methods for biological multi-scale process, we consider 2D and 3D models for in-vitro tumor growth we developed previously~\cite{JagiellaMul2015}. These hybrid discrete-continuum models exploit an agent-based description for individual cancer cells and a PDE-based description for extracellular metabolites and extracellular matrix components (ECM). The intracellular regulation of cell division and cell death are captured by a combination of continuous time Markov chains (CTMCs) and simple decision rules. For further details we refer to the \textit{Materials and Methods} section.
 
 The trajectories of the tumor growth models are subject to stochastic fluctuations. In particular during the initial growth phase, which are marked by low cell numbers, stochastic simulations differ greatly. During later phases with higher cell numbers a self-averaging effect occurs. These stochastic dynamics and the multi-scale nature of the models provide an interesting but challenging inference problem.
 
@@ -461,6 +463,7 @@ but choice of metric becomes even more important
 
 AABC -> BuzbasRos2013
 
+surrogates / Gaussian processes
 
 
 
@@ -468,104 +471,159 @@ AABC -> BuzbasRos2013
 % "Models" is not a valid title for PLoS ONE authors. However, PLoS ONE
 % authors may use "Analysis" 
 \section*{Materials and Methods}
-\subsection*{Model}
-The test model we use is based on the spatial multi-scale model proposed by \cite{Jagiella2015} to describe in-vitro tumor growth. It is a hybrid approach of an individual-based model for tumor cells and a system of partial differential equations describing the molecular kinetics of extra-cellular matrix (ECM), the key metabolites and waste material from cellular debris of necrotic cells. 
 
-\paragraph{Cell model:} Cells populate a static unstructured lattice (max. 1 cell per lattice site). They can either progress through the cell cycle, be quiescent or become necrotic. All possible cell states and transitions are shown in Fig.~\ref{fig:cell-states} in the spatial context (Fig.~\ref{fig:cell-states} left) as well as for the internal cell states (Fig.~\ref{fig:cell-states} right). 
+%%%%
+\subsection*{Agent-based model for tumor spheroid growth}
+In this study we consider a multi-scale model describing \textit{in-vitro} tumor growth. The model exploits an individual-based description of tumor cells and a continuum-based description of key metabolites, extra-cellular matrix and waste material from cellular debris of necrotic cells. Individual cells are modeled by agents which can sense their environment, move, divide and die. Furthermore, these agents interact directly via cell-cell contract and indirectly via uptake/secretion of extracellular substances. The dynamics of extra-cellular matrix, the key metabolites and waste material are modeled using partial differential equations. The model we consider is based on own previous work \cite{JagiellaMul2015} and will be introduced in the following.
+\\[2ex]
+\noindent \textit{Notation:} $\Heaviside{x}$ denotes the Heaviside step function evaluate at $x$, with 
+\begin{equation*}
+\Heaviside{x} =  \left\{\begin{array}{ll}0 & \text{for } x < 0 \\ 1  &\text{for } x > 0. \end{array}\right.
+\end{equation*}
+Furthermore, we denote the second derivative with respect to space -- the Laplace operator -- by $\nabla_x$.
+
+%%%%
+\paragraph{Model for single-cell dynamics:}
+Our model considers proliferating, quiescent and necrotic cells populating a static unstructured lattice. Each lattice site can be occupied by at most one cell. The behavior of a cell located at side $x$ can depend on the time-dependent local concentrations of extra-cellular matrix $e(t,x)$, glucose $g(t,x)$, oxygen $o(t,x)$, lactate $l(t,x)$, adenosine triphosphate $a(x)$ and waste material from debris of necrotic cells $w(t,x)$ as well as the distance $L(t,x)$ to the next vacant lattice side. 
+\begin{itemize}
+%
+\item \textbf{Proliferating cells} progress in a discretized cell cycle with $m_d$ stages, $m = 1,\ldots, m_d$. The transition from stage $m$ to stage $m+1$ occurs with propensity
+\begin{equation*}
+k_{\text{div},m}(t,x)  = \sI{k_{\text{div}}^{\max}} m_{d} \, {\color{green} \exp\!\left[-\tfrac{L(t,x)}{\sI{L^{\text{div}}}}\right]} \!  \left(1 - \tfrac{1}{2} \Heaviside{\sII{o^{\text{div}}} - o(t,x)}\right) \! \left(1 - \tfrac{1}{2} \Heaviside{w(t,x)-\sII{w^{\text{div}}}}\right).
+\end{equation*}
+This transition propensity increases with the availability of oxygen and deceases in the presence of waste and with a large distance to the next vacant lattice site. As stage $m = m_g$ is reached, the cell grows and occupies an adjacent lattice side. If no adjacent lattice site is vacant, the neighing cells are pushed along the shortest path toward the closest vacant lattice site. For $m = m_{d}$, the cell divides into two daughter cells. An individual daughter cell decides to proliferate with probability
+\begin{equation*}
+\begin{aligned}
+p_{\text{re}}(t,x) &= \exp\!\left[-\tfrac{L(t,x)}{\sI{L^{\text{div}}}}\right] \! \Heaviside{e(t,x)-\sI{e^{\text{div}}}} \Heaviside{k_a(t,x)-\sII{k_a^{\text{div}}}} \\
+& \qquad \cdot \Heaviside{l(t,x)-\sII{l^{\text{div}}}} \! \Heaviside{\sII{n^{\max}} - n_{w,o}(t,x){\color{green}?}},
+\end{aligned}
+\end{equation*}
+and becomes otherwise quiescent. Proliferating daughter cells start in the first cell cycle stage, $m = 1$. The probability to become proliferating cell depends on the local concentrations of extracellular matrix and lactate as well as on the time the cell was deprived of oxygen or exposed to waste material $n_{w,o}(x)$ and the ATP synthesis rate $k_a^{\text{div}}(t,x) = {\color{green}2 q_g(t,x) + 34 \min\{q_g(t,x),q_o(t,x)/6\}???}$. The time of oxygen deprivation and waste exposure is
+\begin{equation*}
+	n_{w,o}(t,x) = \int_{0}^{t}  1 -  \mathrm{H}(\sII{w^{\text{div}}}-w(\tau,x(\tau)))\mathrm{H}(o(\tau,x(\tau)) - \sII{o^{\text{div}}}) d\tau,
+\end{equation*}
+in which $x(\tau)$ denotes the previous locations of the cell located at $x$ at $t$. The ATP synthesis rate depends on the local glucose and oxygen consumptions, $q_g(t,x)$ and $q_o(t,x)$, which are defined below.
+%
+\item \textbf{Quiescent cells} are arrested in cell cycle but can reenter cell cycle and become proliferating cells with stage $m = 1$. Quiescent cell attempt to reenter the cell cycle with propensity
+\begin{equation*}
+	k_{\text{re}}(t,x) = \sI{k_{\text{re}}^{\max}} \left(1 - \tfrac{1}{2} \Heaviside{w(t,x)-\sII{w^{\text{div}}}}\right) \! \left(1 - \tfrac{1}{2} \Heaviside{\sII{o^{\text{div}}} - o(t,x)}\right),
+\end{equation*}
+and succeed with probability $p_{\text{re}}(t,x)$.
+%
+\item \textbf{Necrotic cells} emerge from proliferating and quiescent cells with propensity
+\begin{equation*}
+	k_{\text{nec}}(t,x) = \sII{k_{\text{nec}}^{\max}} \Heaviside{\sII{k_a^{\text{nec}}}-k_a(t,x)} \frac{l(t,x)^{2}}{l(t,x)^{2} + (\sII{l^{\text{nec}}})^{2}},
+\end{equation*}
+which at low ATP synthesis levels increases with the local lactate concentration. Necrotic cells are lysed with constant propensity $k_{\text{lys}}$ and afterwards removed from the corresponding lattice site.
+\end{itemize}
+The initial cell population at time point $t = 0$ occupies all lattice sites within a sphere of radius \sI{$L^{\text{init}}$} around the center of the unstructured lattice. The individual cells are quiescent with probability \sI{$q^{\text{init}}$} and proliferating (with $m=1$). 
+
+A visual summary of all cellular processes is provided in Figure~\ref{fig:cell-states}. For a detailed discussion of the transition propensities and reentering probabilities is provided in~\cite{Jagiella2012,JagiellaMul2015}. Precise numerical values for the thresholds ($e^{\text{div}}$, $k_a^{\text{div}}$, $k_a^{\text{nec}}$, $l^{\text{div}}$, $l^{\text{nec}}$, $w^{\text{div}}$, $o^{\text{div}}$, $n^{\max}$ and $L^{\text{div}}$) at which cells change there behavior as well as the properties of the initial cell population (\sI{$L^{\text{init}}$} and \sI{$q^{\text{init}}$}) are mostly unknown. The considered parameter regimes are provided in Table~\ref{tab:model-parameters}.
+
+%%%%
+\paragraph{Model for molecular species:} 
+The dynamics of the molecular species are governed by a system of partial differential equations (PDEs), accounting for different processes.
+\begin{itemize}
+%
+\item \textbf{Glucose and oxygen}, the primary energy sources, are subject to diffusive transport and consumption,
+\begin{equation*}
+\begin{aligned}
+	\frac{\partial g(t,x)}{\partial t} &= D_g \nabla_x g(t,x) - q_g(t,x) c(t,x), \text{ with } q_g(t,x) = V_{m,g}(t,x) \frac{g(t,x)}{g(t,x)+k_{m,g}},\\
+	\frac{\partial o(t,x)}{\partial t} &= D_o \nabla_x o(t,x) - q_o(t,x) c(t,x), \text{ with } q_o(t,x) = V_{m,o}(t,x) \frac{o(t,x)}{o(t,x)+k_{m,o}}.\\
+\end{aligned}
+\end{equation*}
+Due to the cellular metabolism the maximum consumption rates of glucose $V_{m,g}(x)$ and oxygen $V_{m,o}(x)$ is constrained by the over metabolite,
+\begin{equation*}
+\begin{aligned}
+V_{m,g}(t,x) &= q_g^{\max} \left(1 - \left(1- \frac{q_g^{\min}}{q_g^{\max}} \right) \frac{o(t,x)}{o(t,x) + k_o} \right) \\
+V_{m,o}(t,x) &= q_o^{\max} \left(1 - \left(1- \frac{q_o^{\min}}{q_o^{\max}} \right) \frac{g(t,x)}{g(t,x) + k_g} \right).
+\end{aligned}
+\end{equation*}
+As glucose and oxygen is merely consumed by proliferating and quiescent cells, we introduce the indicator function $c(t,x)$ which is 1 if a proliferating or a quiescent cell occupies $x$ at time point $t$ and 0 otherwise. The diffusion coefficient $D_g$ and $D_o$ as well as the consumption parameters $q_g^{\min}$, $q_g^{\max}$, $k_g$, $k_{m,g}$, $q_o^{\min}$, $q_o^{\max}$, $k_o$ and $k_{m,o}$ are available from the literature (see \cite{Jagiella2012} and references therein) and listed in Table~\ref{tab:model-parameters}.
+
+Glucose and oxygen enter the simulation domain $\Omega$ from the surrounding medium and we assume Dirichlet boundary condition, $g(t,x) = g_0$ and $o(t,x) = o_0$ for $x \in \partial\Omega$. Initially, glucose and oxygen concentrations is equivalent to this boundary conditions, $g(0,x) = g_0$ and $o(0,x) = o_0$ for $x \in \Omega$. 
+%
+\item \textbf{Lactate} is a by-product of the anaerobe energy metabolism. It is produced by proliferating and quiescent cells with rate $2 q_g(t,x) + 2 \min\{q_g(t,x), q_o(t,x)/6\}$ and diffuses. This leads to the model
+\begin{equation*}
+	\frac{\partial l(t,x)}{\partial t} = D_l \nabla_x l(t,x) + \left(2 q_g(t,x) + 2 \min\{q_g(t,x), q_o(t,x)/6\}\right) c(t,x).
+\end{equation*}
+
+We assume that lactate dilutes and zero Dirichlet boundary conditions, $l(t,x) = l_0$ for $x \in \partial\Omega$. At the state of the experiment, the lactate concentration is zero everywhere,  $l(0,x) = 0$ for $x \in \Omega$.
+%
+\item \textbf{Extra-cellular matrix} provides structural support for cells and is involved in cell adhesion as well as cell-to-cell communication. The components of the extra-cellular matrix are synthesized and secreted by cells and can be degraded. This yields the governing equations for the dynamics of the concentration of extra-cellular matrix,
+\begin{equation*}
+	\frac{\partial e(t,x)}{\partial t} = {\color{red}{k^{e}_{\text{pro}}}} c(t,x) - {\color{red}{k^{e}_{\text{deg}}}} e(t,x).
+\end{equation*}
+The production rate {\color{red}$k^{e}_{\text{pro}}$} and degradation rate {\color{red}$k^{e}_{\text{deg}}$} are assumed to be constant.
+
+The boundary and initial concentration of extra-cellular matrix are assumed to be zero, $e(t,x) = 0$ for $x \in \partial\Omega$ and $e(0,x) = 0$ for $x \in \Omega$.
+%
+\item \textbf{Waste materials} are produced by necrotic cells and degraded with a constant rate. Accordingly, the evolution equation for the waste concentration is 
+\begin{equation*}
+	\frac{\partial w(t,x)}{\partial t} = {\color{red}{k^{w}_{\text{pro}}}} c_{\text{nec}}(t,x) - {\color{red}{k^{w}_{\text{deg}}}} w(t,x),
+\end{equation*}
+with the indicator function $c_{\text{nec}}(t,x)$ being 1 if a necrotic cell occupies $x$ at time point $t$ and 0 otherwise.
+
+As initially merely proliferation and quiescent cells are present, the initial waste concentration is zero, $w(0,x) = 0$ for $x \in \Omega$. Furthermore, as waste is not transported ad as no cells are at the boundary, we use zero Dirichlet boundary conditions, $w(t,x) = 0$ for $x \in \partial\Omega$.
+\end{itemize}
+A detailed list of the boundary conditions for the different scenarios and experimental conditions is provided in Table~\ref{tab:boundary conditions}.
+
+%%%%
+\paragraph{Numerical simulations:}
+To simulate the individual scenarios we exploit a hybrid approach. The cellular dynamics are simulated using Gillespies algorithms~\cite{Gillespie1977}, which accounts for the stochasticity of cellular processes and decision making. The PDEs governing the spatio-temporal evolution of glucose, oxygen, lactate, extra-cellular matrix and waste concentration are discretized using finite differences and solved using an implicit scheme.
+\\[1ex]
+\noindent We use this hybrid simulation approach to study two scenarios:
+\begin{itemize}
+%
+\item \textbf{Scenario 1 -- no nutrition limitation:} Glucose and oxygen are assumed to be available in excess. Hence, neither lactate nor waste material is produced. Extra-cellular matrix dynamics are sill modeled using the aforementioned PDE. To capture this scenario, different parameters are set to zero or infinity (see Table~\ref{tab:model-parameters} and~\ref{tab:boundary conditions}), effectively reducing the dimensionality of the PDE system.
+%
+\item \textbf{Scenario 2 -- nutrition limitation:} Glucose and oxygen are potentially limiting and all afore-described variables are simulated. We considered four experimental conditions with different glucose and oxygen concentrations (Table~\ref{tab:boundary conditions}). 
+\end{itemize}
+For details regarding the presented agent-based model, we refer to~\cite{Jagiella2012}.
 
 \begin{figure}[htbp]
 %\includegraphics[width=\textwidth]{Figures/Fig5}
-\includegraphics[width=0.45\textwidth]{Figures/SpatialStateTransitions}
-\includegraphics[width=0.55\textwidth]{Figures/InternalStateTransitions}
+%\includegraphics[width=0.45\textwidth]{Figures/SpatialStateTransitions}
+%\includegraphics[width=0.55\textwidth]{Figures/InternalStateTransitions}
 \caption{{\bf Scheme of cell states and the biological processes a cell can undergo: cell cycle (including cell growth and division), cell death (apoptosis and necrosis) and lysis.}
- Left panel: A cycling cell grows by occupying two neighboring lattice sites after a fraction of transitions in the cell cycle. Growing cells can push a certain number of cells aside. A cell dies with rate $k_{nec}$ and is consequently lysed with rate $k_{lys}$. (The schemes in the left panel are 2D for clarity; the simulations however were all in 3D). Right: All processes are modeled as Poisson processes. A cell in the cell cycle undergoes $m_d$ transitions until splitting into two daughter cells. Composed of $m_d$ sub-processes the cell cycle time ends up following an Erlang distribution. Increasing $m_d$ will lead to sharper cell cycle distributions. A cell transitions from one cell cycle state (CCS) to the next with rate $k_{div,m}$. If a cell is in state mg it will grow. If it is in state $m_d$ it will divide into 2 daughter cells during the next transition. Furthermore, the 2 daughter cells will either enter the first CCS with probability $p_{div}$ or become quiescent (G0) with probability $1 - p_{div}$. A cell in quiescence can reenter the cell cycle with rate $k_{re}$ and probability $p_{div}$.
+ Left panel: A cycling cell grows by occupying two neighboring lattice sites after a fraction of transitions in the cell cycle. Growing cells can push a certain number of cells aside. A cell dies with rate $k_{\text{nec}}$ and is consequently lysed with rate $k_{lys}$. (The schemes in the left panel are 2D for clarity; the simulations however were all in 3D). Right: All processes are modeled as Poisson processes. A cell in the cell cycle undergoes $m_d$ transitions until splitting into two daughter cells. Composed of $m_d$ sub-processes the cell cycle time ends up following an Erlang distribution. Increasing $m_d$ will lead to sharper cell cycle distributions. A cell transitions from one cell cycle state (CCS) to the next with rate $k_{div,m}$. If a cell is in state mg it will grow. If it is in state $m_d$ it will divide into 2 daughter cells during the next transition. Furthermore, the 2 daughter cells will either enter the first CCS with probability $p_{\text{div}}$ or become quiescent (G0) with probability $1 - p_{\text{div}}$. A cell in quiescence can reenter the cell cycle with rate $k_{\text{re}}$ and probability $p_{\text{div}}$.
 }
 \label{fig:cell-states}
 \end{figure}
 
-A proliferating cell passes through $m_{d}$ cell cycle steps in a repeating manner increasing an internal counter  by 1 from $M=1$ to $M=m_{d}$ with rate $k_{div,m}$. There are two steps acting as check points which trigger special events: If $M=m_{g}$, then the cell will grow in volume. I.e. the cell will occupy a second randomly chosen free neighbor cell. In case no adjacant lattice site is free, first all cells along the shortest path toward the closest free lattice site will be shifted away. If $M=m_{d}$, the cell is going to divide into two daughter cells. Directly after division each cell decides then whether to proceed in the cell cycle with probability $p_{re}$, setting $M=1$, or to become quiescent with probability $1-p_{re}$. Once quiescent, a cell attempts to reenters the cell cycle with rate $k_{re}$ and might succeed with probability $p_{re}$. Under certain conditions any living cell can become necrotic with rate $k_{nec}$ and in the following is lysed with rate $k_{lys}$ resulting in its removal from the respective lattice site.
-
-All transition rates and probabilities are defined as follows
-
-\begin{align}
-	p_{re} &= f^{ci}_{div}\cdot f^{e}_{div} \cdot  f_{div}^{a} \cdot  f_{div}^{l}  \cdot  f_{div}^{w,o}\\
-	k_{div,m}  &= \sI{k_{div}^{max}}   \cdot  f_{div}^{w}  \cdot f_{div}^{o} \cdot m_{d} \\
-	k_{re}  &= \sI{k_{re}^{max}}  \cdot   f_{div}^{w}  \cdot f_{div}^{o}\\
-	k_{nec} &= \sII{k_{nec}^{max}}  \cdot                                  f_{nec}^{a} \cdot  f_{nec}^{l}  \\
-	\sII{k_{lys}} &= const.
-\end{align}
-and depend on the local molecular concentrations of ECM ($e$), ATP ($a$), oxygen ($o$), waste ($w$) and lactate ($l$) in the following manner:
-
-\begin{align}
-	f_{div}^{e} &= H(e-\sI{e^{div}}), \\
-	f_{div}^{a} &= H(p_{ATP}-\sII{p^{div}_{ATP}}), & f_{nec}^{a}&=H(\sII{p^{nec}_{ATP}}-p_{ATP})\\
-	f_{div}^{l}  &= H(l-\sII{l^{div}}), & f_{nec}^{l}&=l^{2} / (l^{2} + (\sII{l^{nec}})^{2})\\
-	f_{div}^{w} &= (1 - 0.5 \cdot H(w-\sII{w^{div}})), \\
-	f_{div}^{o} &= (1 - 0.5 \cdot H(\sII{o^{div}} - o)), \\
-	f_{div}^{w,o} &= H(\sII{n^{max}} - n_{w,o}),
-\end{align}
-where $p_{ATP}$ is the ATP production rate, $n_{w,o}$ is the number of cell cycles a cell was deprived of oxygen or exposed to waste material, 
-\begin{align}
-	n_{w,o} = \int_{0}^{t}  1 -  H(\sII{w^{div}}-w)H(o - \sII{o^{div}})   d\tau
-\end{align}
-and $e^{div}$, $p_{ATP}^{div}$, $p_{ATP}^{nec}$, $l^{div}$, $l^{nec}$, $w^{div}$, $o^{div}$ and $n^{max}$ are the critical values where cells will change their behavior.
-
-The division probability further depends on the shortest distance a cell would have to push surrounding cells away in order to free adjacent space for cell growth and division:
-\begin{align}
-	f_{div}^{ci} &= e^{-L/\sI{L^{div}}},
-\end{align}
-where $L$ is the distance between the cell and its closest free lattice site, and $L^{div}$ is a reference distance.
-
 \begin{table}[!ht]
-\begin{adjustwidth}{-0in}{0in} % Comment out/remove adjustwidth environment if table fits in text column.
+\begin{adjustwidth}{-1in}{0in} % Comment out/remove adjustwidth environment if table fits in text column.
 \caption{
-{\bf Model parameters.}}
+{\bf Model parameters.} The table shows all model parameters with there respective values and ranges. For the different parameter inference settings (I: no nutriement limitation, II: nutriment limitation) the ranges for those parameters differ accordingly. For setting I some parameters were not subject to inference (*).}
 \begin{tabular}{|l|r|r|r|r|r|}
 \hline
 \multicolumn{3}{|l|}{\bf } & \multicolumn{2}{|l|}{\bf Parameter value / range}\\ \hline
-{\bf Parameter} 					&{\bf Symbol} &{\bf Unit} &\sI{\bf Setting I} &\sII{\bf Setting II}\\ \hline
-division rate 					&$k_{div}^{max}$ & $h^{-1}$ & 0.032 & $0.032 \times 10^{-2...2}$\\ \hline
-division depth 					&$L^{div}$ & $\mu m$ & 130 & 1.3...13000\\ \hline
-initial population radius 			&$L^{init}$ & $\mu m$ & 130 & 0.12...1200\\ \hline
-initial quiescent cell fraction 		& $q_{init}$ &-& 0.75& 0.0075...75\\ \hline
-ECM production rate 			&$k_{e}^{pro}$  & $h^{-1}$&0.0005 &0.000005...0.05\\ \hline
-ECM gegradation rate 			&$k_{e}^{deg}$ &$h^{-1}$&0.0033 &0.000033...0.33\\ \hline
-ECM division threshold 			&$e^{div}$ &- &0.003 &0.00003...0.3\\ \hline
+{\bf Parameter} 					&{\bf Symbol} &{\bf Unit} &\sI{\bf Scenario I} &\sII{\bf Scenario II}\\ \hline
+division rate 					&$k_{\text{div}}^{\max}$ & 1/h & 0.032 & $0.032 \times 10^{-2...2}$\\ \hline
+division depth 					&$L^{\text{div}}$ & $\mu$m & 130 & 1.3...13000\\ \hline
+initial population radius 			&$L^{\text{init}}$ & $\mu$m & 130 & 0.12...1200\\ \hline
+initial quiescent cell fraction 		& $q{\text{init}}$ &-& 0.75& 0.0075...75\\ \hline
+ECM production rate 			&$k_{e}^{\text{pro}}$  & {\color{green}mM}/h&0.0005 &0.000005...0.05\\ \hline
+ECM degradation rate 			&$k_{e}^{\text{deg}}$ &1/h&0.0033 &0.000033...0.33\\ \hline
+ECM division threshold 			&$e^{\text{div}}$ &{\color{green}mM} &0.003 &0.00003...0.3\\ \hline
 \hline
-cell cycle reentrance rate 			&$k^{max}_{re}$ &$h^{-1}$ &0*&0.00001...0.1\\ \hline
-necrosis rate 					&$k_{nec}$ &$h^{-1}$&0*&0.0001...1\\ \hline
-lysis rate 						&$k_{lys}$ &$h^{-1}$&0*&0.0001...1\\ \hline
-ATP division threshold 			&$p^{div}_{ATP}$ &$mM h^{-1}$& 0*& 9...90000\\ \hline
-ATP necrosis threshold 			&$p^{nec}_{ATP}$&$mM h^{-1}$& 0*& 6...60000\\ \hline
-lactate division threshold 			&$l^{div}$  &$mM$&$\infty$* & 0.2...2000\\ \hline
-lactate necrosis threshold 			&$l^{nec}$ &$mM$ &$\infty$* & 0.2...2000\\ \hline
-waste diffusion coefficient 			&$D_W$& $\mu m^{2} h^{-1}$  &$\infty$*& $10^{3}...10^{7}$\\ \hline
-waste uptake					& $q_W$ &$h^{-1}$ &$0$*& $10^{-8}...10^{-4}$\\ \hline
-waste division threshold 			&$w^{div}$ &- &$\infty$*&0.00008...0.8\\ \hline
-waste exposure cell cycle threshold 	&$n^{max}_{exp}$&-& $\infty$*& 0.08...800\\ \hline
+cell cycle reentrance rate 			&$k^{\max}_{\text{re}}$ &1/h &0*{\color{green}??}&0.00001...0.1\\ \hline
+necrosis rate 					&$k_{\text{nec}}$ &1/h&0*&0.0001...1\\ \hline
+lysis rate 						&$k_{\text{lys}}$ &1/h&0*&0.0001...1\\ \hline
+ATP synthesis division threshold 			&$k_a^{\text{div}}$ &mM/h& 0*& 9...90000\\ \hline
+ATP synthesis necrosis threshold 			&$k_a^{\text{nec}}$ &mM/h& 0*& 6...60000\\ \hline
+lactate division threshold 			&$l^{\text{div}}$  &mM&$\infty$* & 0.2...2000\\ \hline
+lactate necrosis threshold 			&$l^{\text{nec}}$ &mM &$\infty$* & 0.2...2000\\ \hline
+{\color{green}oxygen diffusion coefficient?} 			&$D_o$&  &  &  \\ \hline
+{\color{green}glucose diffusion coefficient?} 			&$D_g$&  &  &  \\ \hline
+waste diffusion coefficient 			&$D_W$& $\mu$m$^{2}$/h&$\infty$*& $10^{3}...10^{7}$\\ \hline
+waste degradation rate					& $k^w_{\text{deg}}$ &1/h &$0$*& $10^{-8}...10^{-4}$\\ \hline
+waste division threshold 			&$w^{\text{div}}$ &{\color{green}mM} &$\infty$*&0.00008...0.8\\ \hline
+waste exposure cell cycle threshold {\color{green}oxygen?} 	&$n_{o,w}$&{\color{green}mM}& $\infty$*& 0.08...800\\ \hline
 \end{tabular}
-\begin{flushleft} The table shows all model parameters with there respective values and ranges. For the different parameter inference settings (I: no nutriement limitation, II: nutriment limitation) the ranges for those parameters differ accordingly. For setting I some parameters were not subject to inference (*).
-\end{flushleft}
 \label{tab:model-parameters}
 \end{adjustwidth}
 \end{table}
-
-
-\paragraph{Molecular model:} The molecular dynamics is described by system of partial differential equations as follows:
-\begin{align}
-	\partial_{t} e &= {\color{red}{k^{e}_{pro}}} c - {\color{red}{k^{e}_{deg}}} e,\\
-	\partial_{t} g &= D \nabla g - k^{g}_{con} c,\\
-	\partial_{t} o &= D \nabla o - k^{o}_{con} c,\\
-	\partial_{t} a &=k^{a}_{pro}c - k^{a}_{con} c, k^{a}_{pro} =  2k^{g}_{con} c + 17/3 k^{o}_{con},\\
-	\partial_{t} w &= {\color{red}{k^{w}_{pro}}} c_{nec} - {\color{red}{k^{w}_{deg}}} w,\\
-\end{align}
-where $c=1$, if the a living cell is occupying the volume, or $c_{nec}=1$, if a necrotic cell is occupying the same volume. Else $c=c_{nec}=0$.
-
-\paragraph{Initial \& boundary conditions:}
-The initial cell population occupies all lattice sites within a sphere of radius {\color{red}{$l^{init}$}}. A fraction of those cells $\color{red}{q_{init}}$ is quiescent right from the start, while the rest enters the cell cycle with $M=1$. For the molecular concentration we assume Dirichelet boundary conditions. That is to say, that molecular concentrations at the boundary of the domain $\partial \Omega$ are kept constant (see table \ref{tab:boundary conditions}).
-
-\paragraph{Numerical simulations:}
-The cellular dynamics is treated like a chemical reaction system were each cell and the biological process it can perform can be seen as analogues to a chemical species and reactions. As such one can formulate a master equation and solve it numerically using the Gillespie algorithm \nj{[ref]}.  
 
 \begin{table}[!ht]
 \begin{adjustwidth}{-0.5in}{0in} % Comment out/remove adjustwidth environment if table fits in text column.
@@ -573,13 +631,13 @@ The cellular dynamics is treated like a chemical reaction system were each cell 
 {\bf Boundary conditions.}}
 \begin{tabular}{|l |r |r|r|r|r|}
 \hline
- 			& {\bf Setting I} & \multicolumn{4}{|c|}{\bf Setting II}\\ \hline
-{\bf Molecule} 	&			&{\bf Condition I} 	&{\bf Condition II} 	&{\bf Condition III} 	&{\bf Condition IV}\\ \hline
-$g$			& * 			& $1mM$			&$5mM$			&$25mM$			&$25mM$\\ \hline
-$o$			& *			& $0.28mM$		&$0.28mM$		&$0.28mM$		&$0.07mM$\\ \hline
-$l$			& *			& $0mM$			&$0mM$			&$0mM$			&$0mM$\\ \hline
-$e$			& 0 			& 0				&0				&0				&0\\ \hline
-$w$			& 0 			& 0				&0				&0				&0\\ \hline
+ 			& {\bf Scenario I} & \multicolumn{4}{|c|}{\bf Scenario II}\\ \hline
+{\bf Molecule} 	&				&{\bf Condition I} 	&{\bf Condition II} 	&{\bf Condition III} 	&{\bf Condition IV}\\ \hline
+$g$			& * 				& $1$ mM			& $5$ mM			& $25$ mM			&$25$ mM\\ \hline
+$o$			& *				& $0.28$ mM		& $0.28$ mM		& $0.28$ mM			&$0.07$ mM\\ \hline
+$l$				& *				& $0$ mM			& $0$ mM			& $0$ mM				& $0$ mM\\ \hline
+$e$			& $0$ mM		& $0$ mM			& $0$ mM			& $0$ mM				& $0$ mM\\ \hline
+$w$			& $0$ mM		& $0$ mM			& $0$ mM			& $0$ mM				& $0$ mM\\ \hline
 \end{tabular}
 For setting I some molecule dynamics were not considered (*).
 \label{tab:boundary conditions}
@@ -595,7 +653,7 @@ The resulting model is stochastic and only numerically solvable. Here we use the
 We used two types of data: the growth curves of multi-cellular spheroids over time and histological information on the spatial distribution of proliferating cells and extra-cellular matrix at a certain moment of the experiment.
 
 \subsection*{ABC}
-The ABC SMC method used in this paper is based on Toni et al. \cite{Toni2009}. The idea can be briefly summarised as the following: 
+The ABC SMC method used in this paper is based on Toni et al. \cite{ToniWel2009}. The idea can be briefly summarised as the following: 
 
 \begin{itemize}
 \item[S1)] initialize: $t=1, p_{1}(\theta) = \pi(\theta)$, $\epsilon_{1} = \infty$
@@ -608,6 +666,7 @@ The ABC SMC method used in this paper is based on Toni et al. \cite{Toni2009}. T
 
 Each iteration $t \ge 1$ we sample candidate parameter vectors $\theta^*$ from a prior distribution $p^{(t)}(\theta)$ and evaluate the model $y^{*} = f(x, \theta^*)$. If the corresponding  objective function value is $\delta(y^{*}, y) < \varepsilon^{(t)}$, then $\theta^*$ will be accepted and added to $\Theta^{(t)}$. If a minimal number of $n$ accepted parameter vectors is reached, then the algorithm will proceed to the next iteration, $t = t+1$. The main extension of ABC SMC compared to ABC is to itertively adapt both, the prior distribution $p^{(t)}(\theta)$ and the acceptance threshold $\varepsilon^{(t)}$.
 
+{\color{red}
 \paragraph{Choice of Prior Distribution $p^{(t)}(\theta)$}
 Here we chose a Gaussian perturbation kernel:
 \begin{equation}
@@ -618,9 +677,7 @@ where $\mu$ is the mean and $\Sigma$ is the standard deviation of the current po
 \begin{equation}
 	\epsilon^{(t)} = \text{median} \{ \theta^{(t)} \}
 \end{equation}
-
-
-\paragraph{(Surrogate Approximation)}
+}
 
 
 
@@ -676,13 +733,7 @@ Wrote the Paper: NJ FJT JH.
 %%%%%%
 %%%%%%
 %%%%%%
-\bibliographystyle{plos2015}
-\bibliography{Database,bibliography}
-
-
-\section{ToDo}
-
-\jh{simple example in which we see the bias which is introduced if we do not keep track of the order?}
+\bibliography{Database}
 
 
 \end{document}
