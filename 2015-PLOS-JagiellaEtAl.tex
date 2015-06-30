@@ -348,7 +348,7 @@ Further more, we observe, that the acceptance rate of candidate samples (Fig.~\r
 %%%%%%
 %%%%%%
 \paragraph{Sensitivity to Population/Sample Size}
-In the following we varied the population size $n$ to explore the methods sensitivity on the sample size requirement. Fig.~\ref{fig4} summarizes nicely, that the population size has in deed a critical impact on the convergence of the algorithm. If the population size is chosen too small, in our case 20, then convergence can not be assured. On the other hand, we observe no significant improvement for an increase from 100 to 200. So for the means of limiting the cluster load per iteration all following parameter inference runs will be done with a population size of 100.
+In the following we varied the population size $n$ to explore the methods sensitivity on the sample size requirement. Fig.~\ref{fig4} summarizes nicely, that the population size has in deed a critical impact on the convergence of the algorithm. If the population size is chosen too small, in our case 20, then convergence can not be assured. On the other hand, we observe no significant improvement for an increase from 100 to 200. The objective function values as well as the number of function evaluations develop similarly with increasing number of iterations. So for the means of limiting the cluster load per iteration all following parameter inference runs will be done with a population size of 100.
 
 \begin{figure}[htbp]
 \textbf{A} \hspace{180pt} \textbf{B} \\
@@ -366,9 +366,9 @@ In the following we varied the population size $n$ to explore the methods sensit
 
 %%%%%%
 %%%%%%
-\subsection*{Experimental data (2D)} For artificial data all identifiable parameters should be inferable accurately to a certain extend depending on the model-inherent stochsticity by fitting the model to data produced by the model itself. For real data one can apriori not be sure that the model is mechanistically able to reproduce the biological system which lead to a data set. 
+\subsection*{Experimental data (2D)} For artificial data all identifiable parameters should be inferable accurately to a certain extend depending on the model-inherent stochsticity by fitting the model to data produced by the model itself. For real data one can apriori not be sure that the model is mechanistically able to reproduce the behaviour of the biological system which lead to a data set. 
 
-Here we study the identifiability of the same model parameters using the same model setting I (see Tab.~\ref{tab:model-parameters}) as in the previous section. The special focus lied on how the identifiability or even infered parameter values change with the amount / type of experimental data at hand. As the growth curves are the easiest information to experimentally measure compared to histological information, they will be part of all inference runs. So we test all 4 combinations of including / excluding the histological data on cell proliferation (Ki67) and extra-cellular matrix (ECM).
+In the following we study the parameter identifiability using the same model setting I as in the previous section (see Tab.~\ref{tab:model-parameters}). The special focus lied on how the parameter va identifiability or even infered parameter values change with the amount / type of experimental data at hand. As the growth curves are the easiest information to experimentally measure compared to histological information, they will be part of all inference runs. So we test all 4 combinations of including / excluding the histological data on cell proliferation (Ki67) and extra-cellular matrix (ECM).
 
 Fig.~\ref{fig:exp2d} 
 
@@ -624,6 +624,27 @@ waste exposure cell cycle threshold {\color{green}oxygen?} 	&$n_{o,w}$&{\color{g
 \label{tab:model-parameters}
 \end{adjustwidth}
 \end{table}
+
+
+
+%\paragraph{Molecular model:} The molecular dynamics is described by system of partial differential equations as follows:
+%\begin{align}
+%	\partial_{t} e &= {\color{red}{k^{e}_{pro}}} c - {\color{red}{k^{e}_{deg}}} e,\\
+%	\partial_{t} g &= D \nabla g - k^{g}_{con} c,\\
+%	\partial_{t} o &= D \nabla o - k^{o}_{con} c,\\
+%	\partial_{t} a &=k^{a}_{pro}c - k^{a}_{con} c, k^{a}_{pro} =  2k^{g}_{con} c + 17/3 k^{o}_{con},\\
+%	\partial_{t} w &= {\color{red}{k^{w}_{pro}}} c_{nec} - {\color{red}{k^{w}_{deg}}} w,\\
+%\end{align}
+%where $c=1$, if the a living cell is occupying the volume, or $c_{nec}=1$, if a necrotic cell is occupying the same volume. Else $c=c_{nec}=0$.
+%
+%consumption rates
+%
+%\paragraph{Initial \& boundary conditions:}
+%The initial cell population occupies all lattice sites within a sphere of radius {\color{red}{$l^{init}$}}. A fraction of those cells $\color{red}{q_{init}}$ is quiescent right from the start, while the rest enters the cell cycle with $M=1$. For the molecular concentration we assume Dirichelet boundary conditions. That is to say, that molecular concentrations at the boundary of the domain $\partial \Omega$ are kept constant (see table \ref{tab:boundary conditions}).
+%
+%\paragraph{Numerical simulations:}
+%The cellular dynamics is treated like a chemical reaction system were each cell and the biological process it can perform can be seen as analogues to a chemical species and reactions. As such one can formulate a master equation and solve it numerically using the Gillespie algorithm \nj{[ref]}.  
+
 
 \begin{table}[!ht]
 \begin{adjustwidth}{-0.5in}{0in} % Comment out/remove adjustwidth environment if table fits in text column.
