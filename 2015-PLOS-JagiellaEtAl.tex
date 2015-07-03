@@ -489,16 +489,16 @@ Our model considers proliferating, quiescent and necrotic cells populating a sta
 %
 \item \textbf{Proliferating cells} progress in a discretized cell cycle with $m_d$ stages, $m = 1,\ldots, m_d$. The transition from stage $m$ to stage $m+1$ occurs with propensity
 \begin{equation*}
-k_{\text{div},m}(t,x)  = \sI{k_{\text{div}}^{\max}} m_{d} \, {\color{green} \exp\!\left[-\tfrac{L(t,x)}{\sI{L^{\text{div}}}}\right]} \!  \left(1 - \tfrac{1}{2} \Heaviside{\sII{o^{\text{div}}} - o(t,x)}\right) \! \left(1 - \tfrac{1}{2} \Heaviside{w(t,x)-\sII{w^{\text{div}}}}\right).
+k_{\text{div},m}(t,x)  = \sI{k_{\text{div}}^{\max}} m_{d} \,  \!  \left(1 - \tfrac{1}{2} \Heaviside{\sII{o^{\text{div}}} - o(t,x)}\right) \! \left(1 - \tfrac{1}{2} \Heaviside{w(t,x)-\sII{w^{\text{div}}}}\right).
 \end{equation*}
 This transition propensity increases with the availability of oxygen and deceases in the presence of waste and with a large distance to the next vacant lattice site. As stage $m = m_g$ is reached, the cell grows and occupies an adjacent lattice side. If no adjacent lattice site is vacant, the neighing cells are pushed along the shortest path toward the closest vacant lattice site. For $m = m_{d}$, the cell divides into two daughter cells. An individual daughter cell decides to proliferate with probability
 \begin{equation*}
 \begin{aligned}
 p_{\text{re}}(t,x) &= \exp\!\left[-\tfrac{L(t,x)}{\sI{L^{\text{div}}}}\right] \! \Heaviside{e(t,x)-\sI{e^{\text{div}}}} \Heaviside{k_a(t,x)-\sII{k_a^{\text{div}}}} \\
-& \qquad \cdot \Heaviside{l(t,x)-\sII{l^{\text{div}}}} \! \Heaviside{\sII{n^{\max}} - n_{w,o}(t,x){\color{green}?}},
+& \qquad \cdot \Heaviside{l(t,x)-\sII{l^{\text{div}}}} \! \Heaviside{\sII{n^{\max}} - n_{w,o}(t,x)},
 \end{aligned}
 \end{equation*}
-and becomes otherwise quiescent. Proliferating daughter cells start in the first cell cycle stage, $m = 1$. The probability to become proliferating cell depends on the local concentrations of extracellular matrix and lactate as well as on the time the cell was deprived of oxygen or exposed to waste material $n_{w,o}(x)$ and the ATP synthesis rate $k_a^{\text{div}}(t,x) = {\color{green}2 q_g(t,x) + 34 \min\{q_g(t,x),q_o(t,x)/6\}???}$. The time of oxygen deprivation and waste exposure is
+and becomes otherwise quiescent. Proliferating daughter cells start in the first cell cycle stage, $m = 1$. The probability to become proliferating cell depends on the local concentrations of extracellular matrix and lactate as well as on the time the cell was deprived of oxygen or exposed to waste material $n_{w,o}(x)$ and the ATP synthesis rate $k_a^{\text{div}}(t,x) = 2 q_g(t,x) + \frac{17}{3} q_o(t,x)$. The time of oxygen deprivation and waste exposure is
 \begin{equation*}
 	n_{w,o}(t,x) = \int_{0}^{t}  1 -  \mathrm{H}(\sII{w^{\text{div}}}-w(\tau,x(\tau)))\mathrm{H}(o(\tau,x(\tau)) - \sII{o^{\text{div}}}) d\tau,
 \end{equation*}
@@ -532,7 +532,7 @@ The dynamics of the molecular species are governed by a system of partial differ
 	\frac{\partial o(t,x)}{\partial t} &= D_o \nabla_x o(t,x) - q_o(t,x) c(t,x), \text{ with } q_o(t,x) = V_{m,o}(t,x) \frac{o(t,x)}{o(t,x)+k_{m,o}}.\\
 \end{aligned}
 \end{equation*}
-Due to the cellular metabolism the maximum consumption rates of glucose $V_{m,g}(x)$ and oxygen $V_{m,o}(x)$ is constrained by the over metabolite,
+Cells which are lacking one of the metabolites, glucose or oxygen, were observed to compensate for it by up-regulating the consumption rates of the other one in order to keep the net production of ATP molecules constant. The maximum consumption rates of glucose $V_{m,g}(x)$ and oxygen $V_{m,o}(x)$ account for these cross-dependencies,
 \begin{equation*}
 \begin{aligned}
 V_{m,g}(t,x) &= q_g^{\max} \left(1 - \left(1- \frac{q_g^{\min}}{q_g^{\max}} \right) \frac{o(t,x)}{o(t,x) + k_o} \right) \\
@@ -545,7 +545,7 @@ Glucose and oxygen enter the simulation domain $\Omega$ from the surrounding med
 %
 \item \textbf{Lactate} is a by-product of the anaerobe energy metabolism. It is produced by proliferating and quiescent cells with rate $2 q_g(t,x) + 2 \min\{q_g(t,x), q_o(t,x)/6\}$ and diffuses. This leads to the model
 \begin{equation*}
-	\frac{\partial l(t,x)}{\partial t} = D_l \nabla_x l(t,x) + \left(2 q_g(t,x) + 2 \min\{q_g(t,x), q_o(t,x)/6\}\right) c(t,x).
+	\frac{\partial l(t,x)}{\partial t} = D_l \nabla_x l(t,x) + 2 \left( q_g(t,x) - q_o(t,x)/6\right) c(t,x).
 \end{equation*}
 
 We assume that lactate dilutes and zero Dirichlet boundary conditions, $l(t,x) = l_0$ for $x \in \partial\Omega$. At the state of the experiment, the lactate concentration is zero everywhere,  $l(0,x) = 0$ for $x \in \Omega$.
@@ -558,9 +558,9 @@ The production rate {\color{red}$k^{e}_{\text{pro}}$} and degradation rate {\col
 
 The boundary and initial concentration of extra-cellular matrix are assumed to be zero, $e(t,x) = 0$ for $x \in \partial\Omega$ and $e(0,x) = 0$ for $x \in \Omega$.
 %
-\item \textbf{Waste materials} are produced by necrotic cells and degraded with a constant rate. Accordingly, the evolution equation for the waste concentration is 
+\item \textbf{Waste materials} are produced by necrotic cells and absorbed by living cells with a constant rate. Accordingly, the evolution equation for the waste concentration is 
 \begin{equation*}
-	\frac{\partial w(t,x)}{\partial t} = {\color{red}{k^{w}_{\text{pro}}}} c_{\text{nec}}(t,x) - {\color{red}{k^{w}_{\text{deg}}}} w(t,x),
+	\frac{\partial w(t,x)}{\partial t} = {\color{red}{k^{w}_{\text{pro}}}} c_{\text{nec}}(t,x) - {\color{red}{k^{w}_{\text{upt}}}} w(t,x) c(t,x),
 \end{equation*}
 with the indicator function $c_{\text{nec}}(t,x)$ being 1 if a necrotic cell occupies $x$ at time point $t$ and 0 otherwise.
 
@@ -575,18 +575,18 @@ To simulate the individual scenarios we exploit a hybrid approach. The cellular 
 \noindent We use this hybrid simulation approach to study two scenarios:
 \begin{itemize}
 %
-\item \textbf{Scenario 1 -- no nutrition limitation:} Glucose and oxygen are assumed to be available in excess. Hence, neither lactate nor waste material is produced. Extra-cellular matrix dynamics are sill modeled using the aforementioned PDE. To capture this scenario, different parameters are set to zero or infinity (see Table~\ref{tab:model-parameters} and~\ref{tab:boundary conditions}), effectively reducing the dimensionality of the PDE system.
+\item \textbf{Scenario 1 -- no nutrition limitation:} Glucose and oxygen are assumed to be available in excess. Hence, neither lactate nor waste material is produced. Extra-cellular matrix dynamics are still modelled using the aforementioned PDE. Cells which which become quiescent are assumed to be permanently arrested in G0 phase. To capture this scenario, different parameters are set to zero or infinity (see Table~\ref{tab:model-parameters} and~\ref{tab:boundary conditions}), effectively reducing the dimensionality of the PDE system.
 %
-\item \textbf{Scenario 2 -- nutrition limitation:} Glucose and oxygen are potentially limiting and all afore-described variables are simulated. We considered four experimental conditions with different glucose and oxygen concentrations (Table~\ref{tab:boundary conditions}). 
+\item \textbf{Scenario 2 -- nutrition limitation:} Glucose and oxygen are potentially limiting and all afore-described variables are simulated. Due to more possible reasons for cell to end up in G0, we in addition allow them to reenter the cell cycle with rate $k_{re}$. We considered four experimental conditions with different glucose and oxygen concentrations (Table~\ref{tab:boundary conditions}). 
 \end{itemize}
 For details regarding the presented agent-based model, we refer to~\cite{Jagiella2012}.
 
 \begin{figure}[htbp]
 %\includegraphics[width=\textwidth]{Figures/Fig5}
-%\includegraphics[width=0.45\textwidth]{Figures/SpatialStateTransitions}
-%\includegraphics[width=0.55\textwidth]{Figures/InternalStateTransitions}
+\includegraphics[width=0.45\textwidth]{Figures/SpatialStateTransitions}
+\includegraphics[width=0.55\textwidth]{Figures/InternalStateTransitions}
 \caption{{\bf Scheme of cell states and the biological processes a cell can undergo: cell cycle (including cell growth and division), cell death (apoptosis and necrosis) and lysis.}
- Left panel: A cycling cell grows by occupying two neighboring lattice sites after a fraction of transitions in the cell cycle. Growing cells can push a certain number of cells aside. A cell dies with rate $k_{\text{nec}}$ and is consequently lysed with rate $k_{lys}$. (The schemes in the left panel are 2D for clarity; the simulations however were all in 3D). Right: All processes are modeled as Poisson processes. A cell in the cell cycle undergoes $m_d$ transitions until splitting into two daughter cells. Composed of $m_d$ sub-processes the cell cycle time ends up following an Erlang distribution. Increasing $m_d$ will lead to sharper cell cycle distributions. A cell transitions from one cell cycle state (CCS) to the next with rate $k_{div,m}$. If a cell is in state mg it will grow. If it is in state $m_d$ it will divide into 2 daughter cells during the next transition. Furthermore, the 2 daughter cells will either enter the first CCS with probability $p_{\text{div}}$ or become quiescent (G0) with probability $1 - p_{\text{div}}$. A cell in quiescence can reenter the cell cycle with rate $k_{\text{re}}$ and probability $p_{\text{div}}$.
+ Left panel: A cycling cell grows by occupying two neighboring lattice sites after a fraction of transitions in the cell cycle. Growing cells can push a certain number of cells aside. A cell dies with rate $k_{\text{nec}}$ and is consequently lysed with rate $k_{lys}$. (The schemes in the left panel are 2D for clarity; the simulations however were all in 3D). Right: All processes are modeled as Poisson processes. A cell in the cell cycle undergoes $m_d$ transitions until splitting into two daughter cells. Composed of $m_d$ sub-processes the cell cycle time ends up following an Erlang distribution. Increasing $m_d$ will lead to sharper cell cycle distributions. A cell transitions from one cell cycle state (CCS) to the next with rate $k_{div,m}$. If a cell is in state mg it will grow. If it is in state $m_d$ it will divide into 2 daughter cells during the next transition. Furthermore, the 2 daughter cells will either enter the first CCS with probability $p_{\text{re}}$ or become quiescent (G0) with probability $1 - p_{\text{re}}$. A cell in quiescence can reenter the cell cycle with rate $k_{\text{re}}$ and probability $p_{\text{re}}$.
 }
 \label{fig:cell-states}
 \end{figure}
@@ -594,8 +594,8 @@ For details regarding the presented agent-based model, we refer to~\cite{Jagiell
 \begin{table}[!ht]
 \begin{adjustwidth}{-1in}{0in} % Comment out/remove adjustwidth environment if table fits in text column.
 \caption{
-{\bf Model parameters.} The table shows all model parameters with there respective values and ranges. For the different parameter inference settings (I: no nutriement limitation, II: nutriment limitation) the ranges for those parameters differ accordingly. For setting I some parameters were not subject to inference (*).}
-\begin{tabular}{|l|r|r|r|r|r|}
+{\bf Model parameters.} The table shows all model parameters with there respective values and ranges. For the different parameter inference settings (I: no nutriement limitation, II: nutriment limitation) the ranges for those parameters differ accordingly. }
+\begin{tabular}{|p{6cm}|r|r|r|r|r|}
 \hline
 \multicolumn{3}{|l|}{\bf } & \multicolumn{2}{|l|}{\bf Parameter value / range}\\ \hline
 {\bf Parameter} 					&{\bf Symbol} &{\bf Unit} &\sI{\bf Scenario I} &\sII{\bf Scenario II}\\ \hline
@@ -607,20 +607,23 @@ ECM production rate 			&$k_{e}^{\text{pro}}$  & {\color{green}mM}/h&0.0005 &0.00
 ECM degradation rate 			&$k_{e}^{\text{deg}}$ &1/h&0.0033 &0.000033...0.33\\ \hline
 ECM division threshold 			&$e^{\text{div}}$ &{\color{green}mM} &0.003 &0.00003...0.3\\ \hline
 \hline
-cell cycle reentrance rate 			&$k^{\max}_{\text{re}}$ &1/h &0*{\color{green}??}&0.00001...0.1\\ \hline
+cell cycle reentrance rate 			&$k^{\max}_{\text{re}}$ &1/h &0*&0.00001...0.1\\ \hline
 necrosis rate 					&$k_{\text{nec}}$ &1/h&0*&0.0001...1\\ \hline
 lysis rate 						&$k_{\text{lys}}$ &1/h&0*&0.0001...1\\ \hline
 ATP synthesis division threshold 			&$k_a^{\text{div}}$ &mM/h& 0*& 9...90000\\ \hline
 ATP synthesis necrosis threshold 			&$k_a^{\text{nec}}$ &mM/h& 0*& 6...60000\\ \hline
 lactate division threshold 			&$l^{\text{div}}$  &mM&$\infty$* & 0.2...2000\\ \hline
 lactate necrosis threshold 			&$l^{\text{nec}}$ &mM &$\infty$* & 0.2...2000\\ \hline
-{\color{green}oxygen diffusion coefficient?} 			&$D_o$&  &  &  \\ \hline
-{\color{green}glucose diffusion coefficient?} 			&$D_g$&  &  &  \\ \hline
 waste diffusion coefficient 			&$D_W$& $\mu$m$^{2}$/h&$\infty$*& $10^{3}...10^{7}$\\ \hline
 waste degradation rate					& $k^w_{\text{deg}}$ &1/h &$0$*& $10^{-8}...10^{-4}$\\ \hline
 waste division threshold 			&$w^{\text{div}}$ &{\color{green}mM} &$\infty$*&0.00008...0.8\\ \hline
-waste exposure cell cycle threshold {\color{green}oxygen?} 	&$n_{o,w}$&{\color{green}mM}& $\infty$*& 0.08...800\\ \hline
+maximum number of cell cycles under waste exposure / oxygen deprivation  	&$n_{o,w}$&-& $\infty$*& 0.08...800\\ \hline
+\hline
+oxygen diffusion coefficient		&$D_o$&  $\mu$m$^{2}$/h&  $\infty$*& 6300000* \\ \hline
+glucose diffusion coefficient		&$D_g$&  $\mu$m$^{2}$/h&  $\infty$*&  378000*\\ \hline
+lactate diffusion coefficient		&$D_l$&  $\mu$m$^{2}$/h&  $\infty$*&  756000*\\ \hline
 \end{tabular}
+Some parameters are set to a fix value and are not subject to inference (*).
 \label{tab:model-parameters}
 \end{adjustwidth}
 \end{table}

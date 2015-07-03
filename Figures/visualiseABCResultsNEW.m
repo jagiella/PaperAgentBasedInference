@@ -241,7 +241,8 @@ hold on;
 %     annotation('arrow', [i], [0]);
 % end
 
-
+[d,n] = size(x);
+h_sp.Position = [0 0 1 1]*d*100
 saveas( h_sp, [ prefix '_NEW_scatterPlotMatrix.png' ], 'png');
 %plotEPS(h_sp,[ prefix '-scatterPlotMatrix.eps' ],800, 800);
 
