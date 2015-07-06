@@ -111,6 +111,10 @@
 \usepackage{grffile}
 %\usepackage{minitoc}
 
+%\usepackage[]{algorithm2e}
+%\usepackage[lined,boxed,commentsnumbered]{algorithm2e}
+
+
 % Remove comment for double spacing
 %\usepackage{setspace} 
 %\doublespacing
@@ -271,11 +275,11 @@ In the following we introduce a parallel implementation of ABC~SMC methods. To a
 \subsection*{Parallelization of ABC~SMC methods}
 To facilitate parameter estimation for computationally demanding hybrid discrete-continuum models we implemented a parallel ABC~SMC algorithm, pABC~SMC. The pipeline is illustrated in Fig.~\ref{fig:Pipeline}. 
 
-ABC methods rely on Bayes' theorem and approximate the posterior distribution $p(\theta|\mathcal{D}) \propto p(\mathcal{D}|\theta) p(\theta)$ of the parameter $\theta$ given the data $\mathcal{D}$. To circumvent the evaluation of the likelihood $p(\mathcal{D}|\theta)$, which is intractable for most stochastic models, measured and simulated data are compared directly. A parameter value $\theta$ is accepted if the distance between a corresponding stochastic simulation and the data does not exceed a tolerance $\epsilon$, otherwise the parameter values $\theta$ is rejected. To capture the posterior distribution, stochastic simulations for many proposed parameter values $\theta$ have to be performed, yielding a sample of accepted parameters $\{\theta^{(i)}\}_{i=1}^n$. Simplistic approaches sample the parameter values $\theta$ from the prior $p(\theta)$. To accelerate convergence ABC~SMC construct a series of distributions for decreasing tolerance~$\epsilon_t$, with $\epsilon_0 > \epsilon_1 > \ldots > \epsilon_T$. The samples $\{\theta_t^{(i)}\}_{i=1}^n$ obtained for individual tolerances $\epsilon_t$ is called generation $t$. For $\epsilon_T \rightarrow 0$, generation~$T$ resampled a sample from the posterior distribution.
+ABC methods rely on Bayes' theorem and approximate the posterior distribution $p(\theta|\mathcal{D}) \propto p(\mathcal{D}|\theta) p(\theta)$ of the parameter $\theta$ given the data $\mathcal{D}$. To circumvent the evaluation of the likelihood $p(\mathcal{D}|\theta)$, which is intractable for most stochastic models, measured and simulated data are compared directly. A parameter value $\theta$ is accepted if the distance between a corresponding stochastic simulation and the data does not exceed a tolerance $\epsilon$, otherwise the parameter values $\theta$ is rejected. To capture the posterior distribution, stochastic simulations for many proposed parameter values $\theta$ have to be performed, yielding a sample of accepted parameters $\{\theta^{(i)}\}_{i=1}^N$. Simplistic approaches sample the parameter values $\theta$ from the prior $p(\theta)$. To accelerate convergence ABC~SMC construct a series of distributions for decreasing tolerance~$\epsilon_t$, with $\epsilon_0 > \epsilon_1 > \ldots > \epsilon_{T-1}$. The sample $\{\theta_t^{(i)}\}_{i=1}^N$ obtained for the tolerance $\epsilon_t$ is called generation $t$. For $\epsilon_{T-1} \rightarrow 0$, the final sample resembles the posterior distribution.
 
-In this work, we parallelized the ABC~SMC methods by parallelizing calculations for the current generation~$t$. For each tolerance~$\epsilon_t$ a sample of at least $n$ accepted parameter values is required. To obtain this sample one has to repeatedly draw a parameter values drawn from the distribution approximation obtained by generation~$t$, (Step~1) simulate the hybrid discrete-continuum model and (Step~2) evaluate the distance between simulation and data. This can easily be parallelized by simultaneously performing the computationally intensive Step~1 \&~2 on several machines.
+In this work, we parallelized the ABC~SMC methods by parallelizing calculations for the current generation~$t$. For each tolerance~$\epsilon_t$ a sample of at least $N$ accepted parameter values is required. To obtain this sample one has to repeatedly draw a parameter values drawn from the distribution approximation obtained by generation~$t$, (Step~1) simulate the hybrid discrete-continuum model and (Step~2) evaluate the distance between simulation and data. This can easily be parallelized by simultaneously performing the computationally intensive Step~1 \&~2 on several machines.
 
-From the long list of possible implementations (multi-core, GPU, cluster, etc.) we have chosen a queue-mediated cluster architecture. A master was running the ABC~SMC routine and was outsourcing the time (CPU) and resource (RAM) consuming model simulation and distance evaluation to slave machines. In our case the work distribution was handled by a queue (Univa grid engine). The number of running (or queued) model evaluations was kept constant at $m$, i.e. finished jobs are immediately replaced by new ones. The evaluation results were stored in the same order as the corresponding jobs were submitted. As soon as the first $N$ jobs are finished containing $n$ accepted parameters, the Master stops all still running/queued evaluations and continues with the next generation. We note that it was important to not simple wait for $n$ samples to be accepted, but we had to use $n$ in the first $N$ finished jobs. Otherwise, the parameters samples were biased towards regimes for which the computation time was lower \nj{(see Example in Supplement Material)}.
+From the long list of possible implementations (multi-core, GPU, cluster, etc.) we have chosen a queue-mediated cluster architecture. A master was running the ABC~SMC routine and was outsourcing the time (CPU) and resource (RAM) consuming model simulation and distance evaluation to slave machines. In our case the work distribution was handled by a queue (Univa grid engine). The number of running (or queued) model evaluations was kept constant at $m$, i.e. finished jobs are immediately replaced by new ones. The evaluation results were stored in the same order as the corresponding jobs were submitted. As soon as the first $J$ jobs are finished containing $N$ accepted parameters, the Master stops all still running/queued evaluations and continues with the next generation. We note that it was important to not simple wait for $N$ samples to be accepted, but we had to use $J$ in the first $N$ finished jobs. Otherwise, the parameters samples were biased towards regimes for which the computation time was lower \nj{(see Example in Supplement Material)}.
 
 To accelerate the parameter estimation further, we intertwined simulation and distance measure evaluation. We used weighted-least squares type distance measures which were strictly increasing as new data becomes available. If the objective function threshold $\epsilon$ was already reached for the data points up to the current simulation time, the simulation was stopped and the corresponding parameter values was rejected. This elimination of unnecessary simulations reduced the computation time significantly without introducing a bias.
 
@@ -301,25 +305,24 @@ To assess the properties of ABC~SMC methods for biological multi-scale process, 
 The trajectories of the tumor growth models are subject to stochastic fluctuations. In particular during the initial growth phase, which are marked by low cell numbers, stochastic simulations differ greatly. During later phases with higher cell numbers a self-averaging effect occurs. These stochastic dynamics and the multi-scale nature of the models provide an interesting but challenging inference problem.
 
 %%%%%%
-\paragraph{Artificial experimental data}
+\paragraph{Artificial experimental data:}
+To assess the performance of ABC SMC we created an artificial dataset for a reference parameter $\hat{\theta}$ (see Tab.~\ref{tab:model-parameters}, Scenario~I). For the parameter, cell proliferation is exclusively controlled by available space and ECM abundance. Nutritions are not limiting, which simplifies the model.
 
-In order to assess the performance of ABC SMC we created an artificial data set for a reference parameters $\hat{\theta}$ (see Material \& Methods). The model used to create the data is a tumor growth model which considers cell proliferation to be exclusively controlled by available space and extra-cellular matrix (ECM) (see Tab.~\ref{tab:model-parameters}, setting I). 
+The artificial dataset closely resembles the experimental data used in later and provides growth curves and histological information. Fig.~\ref{fig2} depicts a sequence of simulation snapshots illustrating the model evolution over time and a respective experimental micrograph. The color-coding indicates that the proliferative activity is limited to an outer rim, while cells further in the interior are mostly quiescent. Because the spheroids expand outwards into zones where no ECM previously exists, one can observe a ECM gradient from the outer border toward the interior. These images provide the fraction of proliferation and relative ECM abundance and complimentary growth curves provide the time-dependent spheroid radius. All these information are in the following used for inference.
 
-Fig.~\ref{fig2} shows a sequence of simulation snapshots illustrating the model evolution over time and a respective experimental micrograph.  From the snapshots one can see that proliferative activity is limited to an outer rim of apparently constant thickness, while cells further in the interior are mostly quiescent. Because the spheroids expand outwards into zones where no ECM previously exists, one can observe a ECM gradient from the outer border toward the interior. The data used for parameter inference consists of the growth curves (spheroid radius) over time and histological data about cell proliferation and ECM estimated from the respective marker distributions, Ki67 and ColIV.
-
-\begin{figure}[!h]
+\begin{figure}[!t]
 \includegraphics[width=\textwidth]{Figures/SimulationSnapshots}
-\caption{{\bf Histological information in in-silicio and in-vitro data.}
-The cross sections show cell stained with DAPI for cell nucleus (blue), Ki67 for proliferation (red), and ColIV  for extra-cellular matrix (green).}
+\caption{{\bf Histological images of \textit{in-silicio} simulations and \textit{in-vitro} experiments.}
+The cross sections depicted DAPI-stained cell nucleus (blue), Ki67-stained proliferating cells (red), and ColIV-stained extracellular matrix staining (green).}
 \label{fig2}
 \end{figure}
 
-In the following sections we present one inference run in detail and the results of a sensitivity analysis for different population sizes and additive (measurement) noise. 
+%In the following sections we present one inference run in detail and the results of a sensitivity analysis for different population sizes and additive (measurement) noise. 
 
 %%%%%%
-\paragraph{Parameter Inference}
+\paragraph{Parameter inference:}
 
-Fig.~\ref{fig3}D shows the comparison between data and model prediction for the parameter population evolving over generations ($t=1,11,22,33,44$). One can clearly see, that the initial population spreads rather widely across the state space. With growing generations pedictions resemble more and more the experimental observations for the whole population of parameters. For the final population all predicted trajectories are even mostly confined within the errorbars.
+Fig.~\ref{fig3}D shows the comparison between data and model prediction for the parameter population evolving over generations ($t=1,11,22,33,44$). One can clearly see, that the initial population spreads rather widely across the state space. With growing generations predictions resemble more and more the experimental observations for the whole population of parameters. For the final population all predicted trajectories are even mostly confined within the error bars.
 
 As the scatter plot matrix in Fig.~\ref{fig3}C indicates, all model parameters, that were used to create the artificial data (see Tab.~\ref{tab:model-parameters}), could be identified. Nevertheless, the coupling parameter between cellular model and extracellular matrix, $e^{crit}$, needs a lot of evaluations and remains with a very large uncertainty. 
 
@@ -350,28 +353,18 @@ Further more, we observe, that the acceptance rate of candidate samples (Fig.~\r
 \paragraph{Sensitivity to Population/Sample Size}
 In the following we varied the population size $n$ to explore the methods sensitivity on the sample size requirement. Fig.~\ref{fig4} summarizes nicely, that the population size has in deed a critical impact on the convergence of the algorithm. If the population size is chosen too small, in our case 20, then convergence can not be assured. On the other hand, we observe no significant improvement for an increase from 100 to 200. The objective function values as well as the number of function evaluations develop similarly with increasing number of iterations. So for the means of limiting the cluster load per iteration all following parameter inference runs will be done with a population size of 100.
 
-\begin{figure}[htbp]
-\textbf{A} \hspace{180pt} \textbf{B} \\
-\includegraphics[width=0.49\textwidth]{Data/TumorToyData2D_0.001merr_XXX0pop_GCKI67ECMfunctionEvaluations}
-\includegraphics[width=0.49\textwidth]{Data/TumorToyData2D_0.001merr_XXX0pop_GCKI67ECMobjectiveFunction}\\
- \textbf{C} \\
-\includegraphics[width=\textwidth]{Data/TumorToyData2D_0.001merr_XXX0pop_GCKI67ECMindependentBoxplots}\\
- \textbf{D} \\
-\includegraphics[width=\textwidth]{Data/TumorToyData2D_0.001merr_XXX0pop_GCKI67ECMfit}\\
-\caption{{\bf Sensitivity to Population/Sample Size.}
-\textbf{A}  number of function evaluations over iteration; \textbf{B} threshold over iteration; \textbf{C} box plot of final sample for different population sizes. \textbf{D} final fits.}
-\label{fig4}
-\end{figure}
-
 
 %%%%%%
 %%%%%%
 \subsection*{Experimental data (2D)} For artificial data all identifiable parameters should be inferable accurately to a certain extend depending on the model-inherent stochsticity by fitting the model to data produced by the model itself. For real data one can apriori not be sure that the model is mechanistically able to reproduce the behaviour of the biological system which lead to a data set. 
 
+In the following we study the parameter identifiability using the same model, scenario I, as in the previous section (see Tab.~\ref{tab:model-parameters}). The special focus lied on how the parameter va identifiability or even inferred parameter values change with the amount / type of experimental data at hand. As the growth curves are the easiest information to experimentally measure compared to histological information, they will be part of all inference runs. So we test all 4 combinations of including / excluding the histological data on cell proliferation (Ki67) and extra-cellular matrix (ECM).
 In the following we study the parameter identifiability using the same model setting I as in the previous section (see Tab.~\ref{tab:model-parameters}). The special focus lied on how the parameter va identifiability or even infered parameter values change with the amount / type of experimental data at hand. As the growth curves are the easiest information to experimentally measure compared to histological information, they will be part of all inference runs. So we test all 4 combinations of including / excluding the histological data on cell proliferation (Ki67) and extra-cellular matrix (ECM).
 
-Fig.~\ref{fig:exp2d} 
+%Fig.~\ref{fig:exp2d} 
 
+Fig.~\ref{fig:exp2d} indicates, that all data sets (growth curve, Ki67, ECM) have to be included into the objective function in order to fit all three of them. In case no histological information on Ki67-stained cells is available the inferred values of those parameters controlling the distribution of proliferating cells, $L^{div}$ and $e^{div}$ predict a too large number of proliferating cells which are partly compensated for by the growth rate being underestimated. So here the growth curves seem to bias the parameter estimation without additional histological information.
+On the other hand leaving out the ColV-staining data will mainly render the kinetic ECM parameters, $k^{e}_{pro}$ and $k^{e}_{deg}$, as well as the coupling parameter of ECM and cells unidentifiable. 
 no histological info on proliferation (Ki67) leads to wrong predictions cellular kinetic param.
 kinetic ECM param. not identifiable without hist. info. on ECM (ColV)
 
@@ -395,6 +388,7 @@ kinetic ECM param. not identifiable without hist. info. on ECM (ColV)
 %%%%%%
 %%%%%%
 \subsection*{Experimental data (3D)}
+While all previous sections were referring to the two-dimensional model, Fig.~\ref{fig:exp3d} shows the parameter inference results using the three-dimensional model and applying the conclusions gained from the former sensitivity analysis. The fits (Fig.~\ref{fig:exp3d} D) and parameter identifiability (Fig.~\ref{fig:exp3d} C) confirm the 2D results. The inferred parameter ranges are even very close to identical as the comparison in Fig.~\ref{fig:exp2dvs3d} illustrates. 
 Fig.~\ref{fig:exp3d} 
 
 \begin{figure}[htbp]
@@ -426,6 +420,7 @@ Fig.~\ref{fig:exp3d}
 %%%%%%
 %%%%%%
 \subsection*{Analysis of tumor spheroid growth using pABC~SMC}
+$sum_{k=1}^n ((y(t_k)-y_sim(t_k))/(1/n sum_{k=1}^n y_sim(t_k)))^2$
 
 %\begin{table}[!ht]
 %\begin{adjustwidth}{-2.25in}{0in} % Comment out/remove adjustwidth environment if table fits in text column.
@@ -460,6 +455,8 @@ Methods directly applicable to inference for models implemented in multi-scale m
 
 extension to model selection straight forward -> Toni paper
 but choice of metric becomes even more important
+
+NunesBal2010 - On optimal selection of summary statistics for approximate {B}ayesian computation 
 
 AABC -> BuzbasRos2013
 
@@ -547,14 +544,13 @@ Glucose and oxygen enter the simulation domain $\Omega$ from the surrounding med
 \begin{equation*}
 	\frac{\partial l(t,x)}{\partial t} = D_l \nabla_x l(t,x) + 2 \left( q_g(t,x) - q_o(t,x)/6\right) c(t,x).
 \end{equation*}
-
 We assume that lactate dilutes and zero Dirichlet boundary conditions, $l(t,x) = l_0$ for $x \in \partial\Omega$. At the state of the experiment, the lactate concentration is zero everywhere,  $l(0,x) = 0$ for $x \in \Omega$.
 %
 \item \textbf{Extra-cellular matrix} provides structural support for cells and is involved in cell adhesion as well as cell-to-cell communication. The components of the extra-cellular matrix are synthesized and secreted by cells and can be degraded. This yields the governing equations for the dynamics of the concentration of extra-cellular matrix,
 \begin{equation*}
 	\frac{\partial e(t,x)}{\partial t} = {\color{red}{k^{e}_{\text{pro}}}} c(t,x) - {\color{red}{k^{e}_{\text{deg}}}} e(t,x).
 \end{equation*}
-The production rate {\color{red}$k^{e}_{\text{pro}}$} and degradation rate {\color{red}$k^{e}_{\text{deg}}$} are assumed to be constant.
+The production rate {\color{red}$k^{e}_{\text{pro}}$} and degradation rate {\color{red}$k^{e}_{\text{deg}}$} are assumed to be constant. Note that the production rate {\color{red}$k^{e}_{\text{pro}}$} as well as the division threshold {\color{red}$k^{e}_{\text{div}}$} is in units of intensity, as the absolute extracellular matrix concentration cannot be assessed experimentally.
 
 The boundary and initial concentration of extra-cellular matrix are assumed to be zero, $e(t,x) = 0$ for $x \in \partial\Omega$ and $e(0,x) = 0$ for $x \in \Omega$.
 %
@@ -592,7 +588,7 @@ For details regarding the presented agent-based model, we refer to~\cite{Jagiell
 \end{figure}
 
 \begin{table}[!ht]
-\begin{adjustwidth}{-1in}{0in} % Comment out/remove adjustwidth environment if table fits in text column.
+\begin{adjustwidth}{-0.5in}{0in} % Comment out/remove adjustwidth environment if table fits in text column.
 \caption{
 {\bf Model parameters.} The table shows all model parameters with there respective values and ranges. For the different parameter inference settings (I: no nutriement limitation, II: nutriment limitation) the ranges for those parameters differ accordingly. }
 \begin{tabular}{|p{6cm}|r|r|r|r|r|}
@@ -603,9 +599,9 @@ division rate 					&$k_{\text{div}}^{\max}$ & 1/h & 0.032 & $0.032 \times 10^{-2
 division depth 					&$L^{\text{div}}$ & $\mu$m & 130 & 1.3...13000\\ \hline
 initial population radius 			&$L^{\text{init}}$ & $\mu$m & 130 & 0.12...1200\\ \hline
 initial quiescent cell fraction 		& $q{\text{init}}$ &-& 0.75& 0.0075...75\\ \hline
-ECM production rate 			&$k_{e}^{\text{pro}}$  & {\color{green}mM}/h&0.0005 &0.000005...0.05\\ \hline
+ECM production rate 			&$k_{e}^{\text{pro}}$  & {\color{green}UI}/h&0.0005 &0.000005...0.05\\ \hline
 ECM degradation rate 			&$k_{e}^{\text{deg}}$ &1/h&0.0033 &0.000033...0.33\\ \hline
-ECM division threshold 			&$e^{\text{div}}$ &{\color{green}mM} &0.003 &0.00003...0.3\\ \hline
+ECM division threshold 			&$e^{\text{div}}$ &{\color{green}UI} &0.003 &0.00003...0.3\\ \hline
 \hline
 cell cycle reentrance rate 			&$k^{\max}_{\text{re}}$ &1/h &0*&0.00001...0.1\\ \hline
 necrosis rate 					&$k_{\text{nec}}$ &1/h&0*&0.0001...1\\ \hline
@@ -614,6 +610,8 @@ ATP synthesis division threshold 			&$k_a^{\text{div}}$ &mM/h& 0*& 9...90000\\ \
 ATP synthesis necrosis threshold 			&$k_a^{\text{nec}}$ &mM/h& 0*& 6...60000\\ \hline
 lactate division threshold 			&$l^{\text{div}}$  &mM&$\infty$* & 0.2...2000\\ \hline
 lactate necrosis threshold 			&$l^{\text{nec}}$ &mM &$\infty$* & 0.2...2000\\ \hline
+{\color{green}oxygen diffusion coefficient?} 			&$D_o$&  &  &  \\ \hline
+{\color{green}glucose diffusion coefficient?} 			&$D_g$&  &  &  \\ \hline
 waste diffusion coefficient 			&$D_W$& $\mu$m$^{2}$/h&$\infty$*& $10^{3}...10^{7}$\\ \hline
 waste degradation rate					& $k^w_{\text{deg}}$ &1/h &$0$*& $10^{-8}...10^{-4}$\\ \hline
 waste division threshold 			&$w^{\text{div}}$ &{\color{green}mM} &$\infty$*&0.00008...0.8\\ \hline
@@ -668,49 +666,140 @@ For setting I some molecule dynamics were not considered (*).
 \end{adjustwidth}
 \end{table}
 
+%%%%
+%%%%
+\subsection*{Experimental Data}
+In this study we considered two data types: growth curves and histological imaging data. Growth curves provide the measured radius of spheroids $r^m(t_k)$ at time points $t_1, \ldots, t_{n_g}$. Histological imaging data provide the fraction of proliferating cells $f^m(t_k,d_l)$ and the extracellular matrix distribution $e^m(t_k,d_l)$ at distances $d_1, \ldots d_{n_d}$ from the spheroid border and time points $t_1, \ldots, t_{n_h}$. The experimental data were collected under up to four experimental conditions with different glucose and oxygen concentrations and processed by Jagiella et al. \cite{JagiellaMul2015}. For further details we refer to the original publication.
 
-\paragraph{Parameters:} 
-
-The resulting model is stochastic and only numerically solvable. Here we use the Gillespie algorithm to simulate a possible evolution of the cell population and solve the stead state problem for the molecular system after each update. The parameters that are subject to optimisation are indicated in red.
-
-\subsection*{Data} 
-We used two types of data: the growth curves of multi-cellular spheroids over time and histological information on the spatial distribution of proliferating cells and extra-cellular matrix at a certain moment of the experiment.
-
-\subsection*{ABC}
-The ABC SMC method used in this paper is based on Toni et al. \cite{ToniWel2009}. The idea can be briefly summarised as the following: 
-
+%%%%
+%%%%
+\subsection*{Parallel ABC~SMC}
+For this study we developed a simple parallelized version of the ABC SMC method introduced by Toni et al.~\cite{ToniWel2009}. The master node runs the main routine which iteratively samples $T$ generations, $t = 0$ to $t = T-1$, with decreasing tolerances, $\epsilon_0>\ldots>\epsilon_{T-1}$. To explore several cores, candidate parameters are evaluated in parallel. To ensure convergence of the sampling to the true posterior, the main routing keeps track of the order of the candidate parameters. Merely if the evaluation for the candidate parameters $j = 1,\ldots,J$ is finished and if these candidate parameters resulted in $N$ accepted points, the algorithm continuous with the next generation. The pseudocode of the main routine is:
+% Parallel ABC SMC
+\paragraph{Main routine: Parallel ABC~SMC}
 \begin{itemize}
-\item[S1)] initialize: $t=1, p_{1}(\theta) = \pi(\theta)$, $\epsilon_{1} = \infty$
-\item[S2.0)] set $i = 1$ \emph{\#new generation }
-\item[S2.1)] draw $\theta_{t}^{i}$ from proposal distribution $p_{t}$ \emph{\#sample}
-\item[S2.2)] draw $y_{t}^{i} = f(\hat{x}, \theta_{t}^{i})$ \emph{\#simulate}
-\item[S2.3)] if $d( y_{t}^{i}, \hat{y}) \ge \epsilon_t$ go to S2.1. \emph{\#reject}
-\item[S2.4)] if $i = n$ set $t=t+1$ and go to S2.0.  \emph{\#next generation}
+\item[\it In:]
+Number of generations $T$, number of samples per generation $N$ and number of available cores $C$.
+%
+\item[\it S1]
+Set the generation indicator $t=0$. \\
+Set the initial threshold $\epsilon_{0} = \infty$.\\
+%
+\item[\it S2] Set the candidate number $j = 1$.
+\item[\it S3] If number of jobs on queue is below or drops below $C$, determine from stored files the smallest candidate number $J+1$ for which no results are available.
+	\begin{itemize}
+	\item[$\bullet$] If number of accepted candidates in the set $j = 1,\ldots,J$ is $N$, assign parameters and normalized weights to $\{\theta^{(i)}_{t-1}\}_{i=1}^N$ and $\{w^{(i)}_{t-1}\}_{i=1}^N$.
+	\item[$\bullet$] Else, start new job on computing cluster by executing the subroutine $\mathrm{getSample}\!\left(t,\epsilon_t,j,\{\theta^{(i)}_{t-1}\}_{i=1}^N,\{w^{(i)}_{t-1}\}_{i=1}^N\right)$, set $j = j +1$ and go to S3.
+	\end{itemize}
+\item[\it S4] If $t < T$ set $t = t+1$, $\epsilon_t = f(\{d^{(i)}\}_{i=1}^N)$ and go to S2. \\
+Else, stop algorithm and output results.
+\item[\it Out:] Samples $\{\theta^{(i)}_{t}\}_{i=1}^N$ and weights $w^{(i)}_{t}$.
 \end{itemize}
+%
+The main routine calls a subroutine which runs on a slave and initiates an individual sample. In generation $t$ a sample from generation $t-1$ is selected and perturbed using the perturbation kernel $K_t(\theta|\theta')$ to obtain a new candidate parameter. If a stochastic simulation using this candidate parameters yields a distance $d$ between simulation and data below the tolerance $\epsilon_t$, this candidate is accepted. Otherwise, it is rejected. The pseudocode for this subroutine is:
+%
+\paragraph{Subroutine: Sampling and evaluation of candidate parameter, $\boldsymbol{\mathrm{getSample}(\cdot)}$}
+\begin{itemize}
+%
+\item[\it In:]
+Generation number $t$, tolerance $\epsilon_t$, candidate number $j$, sample $\{\theta^{(i)}_{t-1}\}_{i=1}^N$ and weights $\{w^{(i)}_{t-1}\}_{i=1}^N$ from previous generation.
+%
+\item[\it S1] If $t=0$, sample candidate parameter $\theta^*$ independently from the prior, $\theta^* \sim p(\theta)$. \\
+Else, sample $\theta'$ from the previous generation $\{\theta^{(i)}_{t-1}\}_{i=1}^I$ with probability $w^{(i)}_{t-1}$ and perturb it to obtain the candidate parameter $\theta^* \sim K_t(\theta|\theta')$. If prior probability of $\theta^*$ is zero, $p(\theta^*) = 0$, return to S1.
+\item[\it S2] Sample candidate dataset $\mathcal{D}^*$ by simulating the model, $\mathcal{D}^* \sim p(\mathcal{D}|\theta^*)$.
+\item[\it S3] Create a file indicating the generation and candidate number, $t$ and $j$, and write the parameter candidate $\theta^*$, distance $d(\mathcal{D}^*,\mathcal{D},\infty)$ and weight 
+\begin{equation*}
+w_t^{(i)} = \left\{\begin{array}{ll}
+1 &, \text{if } t = 0 \\
+\dfrac{p(\theta^*)}{\sum_{j=1}^{N} w_{t-1} K_t(\theta^{(j)}_{t-1}|\theta^*)} &, \text{otherwise},
+\end{array}\right.
+\end{equation*}
+in the created file.
+\end{itemize}
+%
+In order to increase computational efficiency, we use a sophisticated implementation which stops the model simulation in step \textit{S2} as soon as the tolerance $\epsilon_t$ is reached. In this case, $d(\mathcal{D}^*,\mathcal{D},\infty) > \epsilon_t$ is returned. This is possible as we use a distance $d(\mathcal{D}^*,\mathcal{D},t_{\text{sim}})$ which is monotonically increases in the simulation time $t_{\text{sim}}$.
 
-Each iteration $t \ge 1$ we sample candidate parameter vectors $\theta^*$ from a prior distribution $p^{(t)}(\theta)$ and evaluate the model $y^{*} = f(x, \theta^*)$. If the corresponding  objective function value is $\delta(y^{*}, y) < \varepsilon^{(t)}$, then $\theta^*$ will be accepted and added to $\Theta^{(t)}$. If a minimal number of $n$ accepted parameter vectors is reached, then the algorithm will proceed to the next iteration, $t = t+1$. The main extension of ABC SMC compared to ABC is to itertively adapt both, the prior distribution $p^{(t)}(\theta)$ and the acceptance threshold $\varepsilon^{(t)}$.
+%
+\paragraph{Distance measure:}
+Our statistical analysis indicated a multiplicative error. For this reason, we use as distance the sum of weighted least squares,
+\begin{equation*}
+\begin{aligned}
+d(\mathcal{D}^*,\mathcal{D},t_{\text{sim}}) 
+&= \frac{1}{n_g}\sum_{k=1}^{n_g} \Heaviside{t_{\text{sim}} - t_k} \! \left(\frac{r^m(t_k) - r(t_k,\theta^*)}{\bar{r}^m}\right)^2 \\
+&+ \frac{1}{n_h n_d}\sum_{k=1}^{n_h} \Heaviside{t_{\text{sim}} - t_k} \sum_{l=1}^{n_d} \left(\frac{f^m(t_k,d_l) - f(t_k,d_l,\theta^*)}{\bar{f}^m}\right)^2 \\
+&+ \frac{1}{n_h n_d} \sum_{k=1}^{n_h} \Heaviside{t_{\text{sim}} - t_k} \sum_{l=1}^{n_d} \left(\frac{e^m(t_k,d_l) - e(t_k,d_l,\theta^*)}{\bar{e}^m}\right)^2.
+\end{aligned}
+\end{equation*}
+with average values of the measured quantities
+\begin{equation*}
+\bar{r}^m = \sum_{k=1}^{n_g} r^m(t_k), \quad
+\bar{f}^m = \sum_{k=1}^{n_h} \sum_{l=1}^{n_d} f^m(t_k,d_l) \quad \text{and} \quad
+\bar{e}^m = \sum_{k=1}^{n_h} \sum_{l=1}^{n_d} e^m(t_k,d_l).
+\end{equation*}
+The first term penalizes the relative error in the spheroid radius, the second term the relative error in the fraction of proliferation cells and the third term the relative errors in the extracellular matrix density. All contributions are normalized with the corresponding number of measurements. As the simulation is run till time point $t_{\text{sim}}$, merely measurements with $t_k \leq t_{\text{sim}}$ are considered. For $t_{\text{sim}} > \max\{t_{n_g},t_{n_h}\}$, all measurement data are considered. This final distance is denoted by $d(\mathcal{D}^*,\mathcal{D},\infty)$.
 
-{\color{red}
-\paragraph{Choice of Prior Distribution $p^{(t)}(\theta)$}
-Here we chose a Gaussian perturbation kernel:
-\begin{equation}
-	p^{(t)}(\theta) = \sum_{i}\frac{1}{w^{(t)}_{i}} (2\pi)^{-k/2} |\Sigma|^{-1/2}e^{-1/2(x-\mu)^{T}\Sigma^{-1}(x-\mu)},
-\end{equation}
-where $\mu$ is the mean and $\Sigma$ is the standard deviation of the current population $t$.
-\paragraph{Choice of $\varepsilon$-thresholds} The threshold distance $\epsilon$ for accepting a candidate parameter is chosen to be the median among the actual population 
-\begin{equation}
-	\epsilon^{(t)} = \text{median} \{ \theta^{(t)} \}
-\end{equation}
-}
+In Section {\color{green}?}, several experimental conditions are considered simultaneously. In this case, the overall distance $d$ is the sum of the distances for the individual conditions.
 
+%
+\paragraph{Adaptation of perturbation kernel and tolerance:}
+The efficiency of ABC~SMC methods depends critically on the perturbation kernels~\cite{FilippiBar2013} and the tolerance sequence~{\color{green}cite?}. To facilitate the applicability of the algorithms to a wide range of inference problems, we implemented adaptive methods. Inspired by kernel density estimation~\cite{Scott1992}, a multi-variate normal distribution is used as perturbation kernel,
+\begin{equation*}
+K_t(\theta|\theta') = \mathcal{N}(\theta|\theta',\Sigma_{t-1}),
+\end{equation*}
+with $\Sigma_t$ being the {\color{green}scaled????} covariance matrix of sample $\{\theta^{(i)}_{t-1}\}_{i=1}^N$. This perturbation kernel adapts to the correlation structure of the sample, thereby improving the representation of the distribution. The tolerance for generation $t$ is set to the median of the accepted distances in generation $t-1$.
 
+%% Standard ABC SMC
+%\paragraph{Algorithm~0: ABC~SMC}
+%\begin{itemize}
+%%
+%\item[\it Input:]
+%Number of samples per generation $N$ and number of cores one queue $C$.
+%%
+%\item[\it S1]
+%Set the generation indicator $t=0$. \\
+%Set the initial threshold $\epsilon_{0} = \infty$.\\
+%%
+%\item[\it S2.0] Set the particle indicator $i = 1$.
+%\item[\it S2.1] If $t=0$, sample candidate parameter $\theta^*$ independently from the prior, $\theta^* \sim p(\theta)$. \\
+%Else, sample $\theta'$ from the previous generation $\{\theta^{(i)}_{t-1}\}_{i=1}^I$ with probability $w^{(i)}_{t-1}$ and perturb it to obtain the candidate parameter $\theta^* \sim K_t(\theta|\theta')$. If $p(\theta^*) = 0$ return to S2.1.
+%\item[\it S2.2] Sample candidate dataset $\mathcal{D}^*$ by simulating the model, $\mathcal{D}^* \sim p(\mathcal{D}|\theta^*)$.
+%\item[\it S2.3] If $d(\mathcal{D}^*,\mathcal{D}) > \epsilon_t$, go to S2.1. \\
+%Else, set $\theta^{(i)} = \theta^*$, $d^{(i)} = d(\mathcal{D}^*,\mathcal{D})$ and 
+%\begin{equation*}
+%w_t^{(i)} = \left\{\begin{array}{ll}
+%1 &, \text{if } t = 0 \\
+%\dfrac{p(\theta^*)}{\sum_{j=1}^{N} w_{t-1} K_t(\theta^{(j)}_{t-1}|\theta^{(i)}_{t})} &, \text{otherwise}.
+%\end{array}\right.
+%\end{equation*}
+%\item[\it S2.3]  If $i < N$, set $i = i + 1$, go to S2.1. \\
+%Else, normalize weighs $w_t^{(i)} = w_t^{(i)}/(\sum_{j=1}^N w_t^{(j)})$.
+%\item[\it S3] If $t < T$ set $t = t+1$, $\epsilon_t = f(\{d^{(i)}\}_{i=1}^N)$ and go to S2.0. \\
+%Else, stop algorithm and output results.
+%\item[\it Output:] Samples $\{\theta^{(i)}_{t-1}\}_{i=1}^N$ and weights $w^{(i)}_{t-1}$.
+%\end{itemize}
 
-
+%%%%
+%%%%
+\subsection*{Implementation}
+The agent-based model for tumor spheroid growth is implemented in C++. For parallel ABC~SMC algorithm and the evaluation of the results is implemented in MATLAB. The code for the simulation and inference is available in the GitHub repository {\color{green}...}. 
 
 %%%%%%
 %%%%%%
 %%%%%%
 \section*{Supporting Information}
+
+\begin{figure}[p]
+\textbf{A} \hspace{180pt} \textbf{B} \\
+\includegraphics[width=0.49\textwidth]{Data/TumorToyData2D_0.001merr_XXX0pop_GCKI67ECMfunctionEvaluations}
+\includegraphics[width=0.49\textwidth]{Data/TumorToyData2D_0.001merr_XXX0pop_GCKI67ECMobjectiveFunction}\\
+ \textbf{C} \\
+\includegraphics[width=\textwidth]{Data/TumorToyData2D_0.001merr_XXX0pop_GCKI67ECMindependentBoxplots}\\
+ \textbf{D} \\
+\includegraphics[width=\textwidth]{Data/TumorToyData2D_0.001merr_XXX0pop_GCKI67ECMfit}\\
+\caption{{\bf Sensitivity to Population/Sample Size.}
+\textbf{A}  number of function evaluations over iteration; \textbf{B} threshold over iteration; \textbf{C} box plot of final sample for different population sizes. \textbf{D} final fits.}
+\label{fig4}
+\end{figure}
 
 % Include only the SI item label in the subsection heading. Use the \nameref{label} command to cite SI items in the text.
 %\subsection*{S1 Video}
@@ -740,7 +829,7 @@ where $\mu$ is the mean and $\Sigma$ is the standard deviation of the current po
 
 %(this will go in the funding statement provided in the online submission system)
 
-This work was supported by the Postdoctoral Fellowship Program (PFP) of the Helmholtz Zentrum M\"unchen (J.H.).
+The authors acknowledge financial support from the German Federal Ministry of Education and Research (BMBF) within the SYS-Stomach project (Grant No. 01ZX1310B), the European Union within the ERC grant ``LatentCauses'', and the Postdoctoral Fellowship Program (PFP) of the Helmholtz Zentrum M\"unchen.
 
 %%%%%%
 %%%%%%
@@ -750,7 +839,7 @@ This work was supported by the Postdoctoral Fellowship Program (PFP) of the Helm
 Conceived and Designed the Methods: NJ DR FJT JH.
 Developed Models: NJ.
 Performed Numerical Experiments: NJ DR.
-Wrote the Paper: NJ FJT JH.
+Wrote the Paper: NJ JH.
 
 \nolinenumbers
 
