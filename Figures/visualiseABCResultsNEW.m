@@ -121,8 +121,8 @@ end
     nx= ceil(n^0.5);
     ny= ceil(n/nx);
     for j=1:n
-        %subplot(1,n, j);
-        subplot(nx,ny, j);
+        subplot(1,n, j);
+        %subplot(nx,ny, j);
         for k=1:size(raw_data,1)
             try
                 plot(raw_data(k,j).x, raw_data(k,j).y, 'color', color_map(i,:),'LineWidth',2); hold on;
@@ -244,18 +244,18 @@ hold on;
 [d,n] = size(x);
 h_sp.Position = [0 0 1 1]*d*100
 saveas( h_sp, [ prefix '_NEW_scatterPlotMatrix.png' ], 'png');
-%plotEPS(h_sp,[ prefix '-scatterPlotMatrix.eps' ],800, 800);
+plotEPS(h_sp,[ prefix '-scatterPlotMatrix.eps' ],800, 800);
 
 %h_of = figure(2);
 saveas( h_of, [ prefix '_NEW_objFunc.png' ], 'png');
-%plotEPS(h_of,[ prefix '-objFunc.eps'],400, 300);
+plotEPS(h_of,[ prefix '-objFunc.eps'],400, 300);
 
 %h_ar = figure(3);
 saveas( h_ar, [ prefix '_NEW_acceptanceRate.png' ], 'png');
-%plotEPS(h_ar,[ prefix '-acceptanceRate.eps'],400, 300);
+plotEPS(h_ar,[ prefix '-acceptanceRate.eps'],400, 300);
 
 saveas( h_fi, [ prefix '_NEW_fits.png' ], 'png');
-%plotEPS(h_fi,[ prefix '-fits.eps'],800, 600/3);
+plotEPS(h_fi,[ prefix '-fits.eps'],800, 600/3);
 
 saveas( h_fe, [ prefix '_NEW_functionEvaluations.png' ], 'png');
 %plotEPS(h_fi,'/Users/jagiella/Dropbox/Work/PUBLICATIONS/Paper-Helmholtz-ParameterEstimation/Figures/FitToyData1.eps',800, 800/3);

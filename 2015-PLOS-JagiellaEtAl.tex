@@ -141,6 +141,7 @@
 
 \newcommand{\jh}[1]{{\color{red}#1}}
 \newcommand{\nj}[1]{{\color{blue}#1}}
+\newcommand{\todo}[1]{{\color{magenta}#1}}
 
 
 \newcommand{\sI}[1]{{\color{red}#1}}
@@ -234,13 +235,14 @@ Jan Hasenauer\textsuperscript{1,2,*}
 %%%%%%
 % Please keep the abstract below 300 words
 \section*{Abstract}
-The accurate description of multi-scale biological process requires sophisticated computational models. A variety of tools for the construction and simulations of such models are available. The inference of the unknown parameters of multi-scale models however remains and open problem. Key challenges are stochasticity and computational complexity of most multi-scale models. In this manuscript we present a parallel Approximate Bayesian Computations (pABC) sequential Monte Carlo (SMC) algorithm for the inference of hybrid discrete-continuum models of biological tissue. The propose pABC~SMC algorithm is tailored for large computing clusters with a queuing systems, and allows for the study of stochastic processes. In a simulation example, we verify that the parameters of hybrid discrete-continuum models of tumor spheroids can be inferred reliably. Accordingly, we use the pABC~SMC algorithm to study tumor spheroid growth in droplets, a model for in vivo tumor spread. Interestingly, we find that 2D and 3D models provide similar parameter estimates. Furthermore, the inference results can be used for experimental planning. These results illustrate the feasibility of data-driven modeling of complex multi-scale processes and the reliability of ABC methods.
+The accurate description of multi-scale biological process requires sophisticated computational models. A variety of tools for the construction and simulations of such models are available. The inference of the unknown parameters of multi-scale models however remains and open problem. Key challenges are stochasticity and computational complexity of most multi-scale models. In this manuscript we present a parallel Approximate Bayesian Computations sequential Monte Carlo (pABC~SMC) algorithm for the inference of hybrid discrete-continuum models of biological tissue. The propose pABC~SMC algorithm is tailored for high-performance computing clusters with a queuing systems, and allows for the study of stochastic processes. In a simulation example, we verify that the parameters of hybrid discrete-continuum models of tumor spheroids can be inferred reliably. Accordingly, we use the pABC~SMC algorithm to study tumor spheroid growth in droplets, a model for avascular tumors. Models for this process are highly complex as $10^6$ individual cells have to be simulated along with continuous fields for several molecular species. We used 2D and 3D models for the process and -- surpassingly -- observed that the obtained parameter estimates are similar. This allow us to improve efficiency further and to fit multiple experimental conditions simultaneous. Our results demonstrate the feasibility of data-driven modeling of complex multi-scale processes as well as the reliability and scalability of ABC methods.
 
 % Please keep the Author Summary between 150 and 200 words
 % Use first person. PLOS ONE authors please skip this step. 
 % Author Summary not valid for PLOS ONE submissions.   
 \section*{Author Summary}
-To do.
+We inferred the parameters of a computationally intensive, stochastic multi-scale models for avascular tumor growth for experimental data using an automated procedure. This provided proof-of-principle that a consistent and integrated treatment of multi-scale inference problems is feasible, using e.g. ABC methods. The fitting of datatypes for different scales under several experimental conditions, enables a holistic analysis of the involved processes. This required computations were accelerated using reduced order modeling \nj{(reduced order?)} and employed high-performance computing (HPC). Our HPC implementation used massive parallelization of simulations, which does not require a reimplementation of the simulation routines. This also ensures transferability of algorithms to other model classes and data types. The particular application is is highly relevant for drug screening studies and integrated modeling might improve the reuse of information.
+
 
 \linenumbers
 
@@ -279,7 +281,7 @@ ABC methods rely on Bayes' theorem and approximate the posterior distribution $p
 
 In this work, we parallelized the ABC~SMC methods by parallelizing calculations for the current generation~$t$. For each tolerance~$\epsilon_t$ a sample of at least $N$ accepted parameter values is required. To obtain this sample one has to repeatedly draw a parameter values drawn from the distribution approximation obtained by generation~$t$, (Step~1) simulate the hybrid discrete-continuum model and (Step~2) evaluate the distance between simulation and data. This can easily be parallelized by simultaneously performing the computationally intensive Step~1 \&~2 on several machines.
 
-From the long list of possible implementations (multi-core, GPU, cluster, etc.) we have chosen a queue-mediated cluster architecture. A master was running the ABC~SMC routine and was outsourcing the time (CPU) and resource (RAM) consuming model simulation and distance evaluation to slave machines. In our case the work distribution was handled by a queue (Univa grid engine). The number of running (or queued) model evaluations was kept constant at $m$, i.e. finished jobs are immediately replaced by new ones. The evaluation results were stored in the same order as the corresponding jobs were submitted. As soon as the first $J$ jobs are finished containing $N$ accepted parameters, the Master stops all still running/queued evaluations and continues with the next generation. We note that it was important to not simple wait for $N$ samples to be accepted, but we had to use $J$ in the first $N$ finished jobs. Otherwise, the parameters samples were biased towards regimes for which the computation time was lower \nj{(see Example in Supplement Material)}.
+From the long list of possible implementations (multi-core, GPU, cluster, etc.) we have chosen a queue-mediated cluster architecture. A master was running the ABC~SMC routine and was outsourcing the time (CPU) and resource (RAM) consuming model simulation and distance evaluation to slave machines. In our case the work distribution was handled by a queue (Univa grid engine). The number of running (or queued) model evaluations was kept constant at $m$, i.e. finished jobs are immediately replaced by new ones. The evaluation results were stored in the same order as the corresponding jobs were submitted. As soon as the first $J$ jobs are finished containing $N$ accepted parameters, the Master stops all still running/queued evaluations and continues with the next generation. We note that it was important to not simple wait for $N$ samples to be accepted, but we had to use $J$ in the first $N$ finished jobs. Otherwise, the parameters samples were biased towards regimes for which the computation time was lower. %\nj{(see Example in Supplement Material)}.
 
 To accelerate the parameter estimation further, we intertwined simulation and distance measure evaluation. We used weighted-least squares type distance measures which were strictly increasing as new data becomes available. If the objective function threshold $\epsilon$ was already reached for the data points up to the current simulation time, the simulation was stopped and the corresponding parameter values was rejected. This elimination of unnecessary simulations reduced the computation time significantly without introducing a bias.
 
@@ -289,9 +291,10 @@ For details regarding the ABC~SMC method and our parallel implementation we refe
 \includegraphics[width=\textwidth]{Figures/Pipeline.pdf}
 \caption{{\bf Flowchart of parallel ABC~SMC methods.}
 pABC~SMC uses a master/slave structure. The master performs the parameter sampling, submits the jobs, collects the results and proceeds to the next generation. Slaves simulate the model for different parameter values, evaluate the distance measure and return the results.
-\jh{$\epsilon_t$!}
+\jh{$\epsilon_t$!} \nj{done}
 \jh{The simulation and objective function evaluation is actually intertwined. this is not depicted.}
 \jh{We could add an illustration of ABC SMC in general.}
+\nj{better?}
 }
 \label{fig:Pipeline}
 \end{figure}
@@ -300,169 +303,206 @@ pABC~SMC uses a master/slave structure. The master performs the parameter sampli
 %%%%%%
 \subsection*{Evaluation of pABC~SMC on artificial experimental data}
 
-To assess the properties of ABC~SMC methods for biological multi-scale process, we consider 2D and 3D models for in-vitro tumor growth we developed previously~\cite{JagiellaMul2015}. These hybrid discrete-continuum models exploit an agent-based description for individual cancer cells and a PDE-based description for extracellular metabolites and extracellular matrix components (ECM). The intracellular regulation of cell division and cell death are captured by a combination of continuous time Markov chains (CTMCs) and simple decision rules. For further details we refer to the \textit{Materials and Methods} section.
+To assess the properties of ABC~SMC methods for biological multi-scale process, we consider 2D models for in-vitro tumor growth we developed previously~\cite{JagiellaMul2015}. These hybrid discrete-continuum models exploit an agent-based description for individual cancer cells and a PDE-based description for extracellular metabolites and extracellular matrix components (ECM). The intracellular regulation of cell division and cell death are captured by a combination of continuous time Markov chains (CTMCs) and simple decision rules. For further details we refer to the \textit{Materials and Methods} section.
 
 The trajectories of the tumor growth models are subject to stochastic fluctuations. In particular during the initial growth phase, which are marked by low cell numbers, stochastic simulations differ greatly. During later phases with higher cell numbers a self-averaging effect occurs. These stochastic dynamics and the multi-scale nature of the models provide an interesting but challenging inference problem.
 
 %%%%%%
-\paragraph{Artificial experimental data:}
-To assess the performance of ABC SMC we created an artificial dataset for a reference parameter $\hat{\theta}$ (see Tab.~\ref{tab:model-parameters}, Scenario~I). For the parameter, cell proliferation is exclusively controlled by available space and ECM abundance. Nutritions are not limiting, which simplifies the model.
+\paragraph{Artificial experimental data.}
+We created artificial data by simulating \nj{the 2D version} of the hybrid discrete-continuum model. As a scenario without nutrition limitations is considered, cell proliferation depends exclusively on the available space and the ECM abundance (see Scenario I in Materials and Methods section). The reference parameter $\hat{\theta}$ used for the simulation is provided in Tab.~\ref{tab:model-parameters}.
 
-The artificial dataset closely resembles the experimental data used in later and provides growth curves and histological information. Fig.~\ref{fig2} depicts a sequence of simulation snapshots illustrating the model evolution over time and a respective experimental micrograph. The color-coding indicates that the proliferative activity is limited to an outer rim, while cells further in the interior are mostly quiescent. Because the spheroids expand outwards into zones where no ECM previously exists, one can observe a ECM gradient from the outer border toward the interior. These images provide the fraction of proliferation and relative ECM abundance and complimentary growth curves provide the time-dependent spheroid radius. All these information are in the following used for inference.
+The artificial data closely commonly available experimental data for tumor spheroid growth and provides growth curves and histological information. Fig.~\ref{fig: illustration of artificial and experimental data} depicts a sequence of simulation snapshots for the 3D simulation illustrating the time evolution of model and a respective experimental image. Simulation and experiment show that proliferation is limited to an outer rim, while cells further in the interior are mostly quiescent. Furthermore, ECM abundance increases from the outer border toward the interior. These histological images provide the fraction of proliferation and relative ECM abundance and complimentary growth curves provide the time-dependent spheroid radius.
 
 \begin{figure}[!t]
 \includegraphics[width=\textwidth]{Figures/SimulationSnapshots}
 \caption{{\bf Histological images of \textit{in-silicio} simulations and \textit{in-vitro} experiments.}
 The cross sections depicted DAPI-stained cell nucleus (blue), Ki67-stained proliferating cells (red), and ColIV-stained extracellular matrix staining (green).}
-\label{fig2}
-\end{figure}
-
-%In the following sections we present one inference run in detail and the results of a sensitivity analysis for different population sizes and additive (measurement) noise. 
-
-%%%%%%
-\paragraph{Parameter inference:}
-
-Fig.~\ref{fig3}D shows the comparison between data and model prediction for the parameter population evolving over generations ($t=1,11,22,33,44$). One can clearly see, that the initial population spreads rather widely across the state space. With growing generations predictions resemble more and more the experimental observations for the whole population of parameters. For the final population all predicted trajectories are even mostly confined within the error bars.
-
-As the scatter plot matrix in Fig.~\ref{fig3}C indicates, all model parameters, that were used to create the artificial data (see Tab.~\ref{tab:model-parameters}), could be identified. Nevertheless, the coupling parameter between cellular model and extracellular matrix, $e^{crit}$, needs a lot of evaluations and remains with a very large uncertainty. 
-
-Further more, we observe, that the acceptance rate of candidate samples (Fig.~\ref{fig3}A) becomes dramatically low for objective function values small than the objective function expected at the optimum itself, $\epsilon_{t} < \epsilon_{D}$ (Fig.~\ref{fig3}B) \nj{(explain $\epsilon_{D}$ in material methods)}.
-
-\begin{figure}[htbp]
-\begin{minipage}[t]{0.33\textwidth}
-%\textbf{A} \hspace{180pt} \textbf{B} \\
-\textbf{A}
-\includegraphics[width=\textwidth]{Data/TumorToyData2D_0.001merr_100pop_GCKI67ECM_NEW_acceptanceRate}\\
-\textbf{B}
-\includegraphics[width=\textwidth]{Data/TumorToyData2D_0.001merr_100pop_GCKI67ECM-objFunc}
-\end{minipage}
-\begin{minipage}[t]{0.66\textwidth}
-\textbf{C}\\
-\includegraphics[width=\textwidth]{Data/TumorToyData2D_0.001merr_100pop_GCKI67ECM-scatterPlotMatrix}
-\end{minipage}
-\textbf{D}\\
-\includegraphics[width=\textwidth]{Data/TumorToyData2D_0.001merr_100pop_GCKI67ECM-fits}
-\caption{{\bf Artificial data and fits for 5 (color-coded) generation (complete dataset).}
-\textbf{A}  acceptance rate over iteration; \textbf{B} $\epsilon$ threshold (cyan) and distance of the accepted population (blue) over iteration; for comparison the median distance at the optimum is depicted (red); \textbf{C} scatter matrix for 5 (color-coded) generation. todo: color spectrum. \textbf{D} Artificial data and fits for 5 (color-coded) generations (complete dataset).}
-\label{fig3}
-\end{figure}
-
-
-%%%%%%
-%%%%%%
-\paragraph{Sensitivity to Population/Sample Size}
-In the following we varied the population size $n$ to explore the methods sensitivity on the sample size requirement. Fig.~\ref{fig4} summarizes nicely, that the population size has in deed a critical impact on the convergence of the algorithm. If the population size is chosen too small, in our case 20, then convergence can not be assured. On the other hand, we observe no significant improvement for an increase from 100 to 200. The objective function values as well as the number of function evaluations develop similarly with increasing number of iterations. So for the means of limiting the cluster load per iteration all following parameter inference runs will be done with a population size of 100.
-
-
-%%%%%%
-%%%%%%
-\subsection*{Experimental data (2D)} For artificial data all identifiable parameters should be inferable accurately to a certain extend depending on the model-inherent stochsticity by fitting the model to data produced by the model itself. For real data one can apriori not be sure that the model is mechanistically able to reproduce the behaviour of the biological system which lead to a data set. 
-
-In the following we study the parameter identifiability using the same model, scenario I, as in the previous section (see Tab.~\ref{tab:model-parameters}). The special focus lied on how the parameter va identifiability or even inferred parameter values change with the amount / type of experimental data at hand. As the growth curves are the easiest information to experimentally measure compared to histological information, they will be part of all inference runs. So we test all 4 combinations of including / excluding the histological data on cell proliferation (Ki67) and extra-cellular matrix (ECM).
-In the following we study the parameter identifiability using the same model setting I as in the previous section (see Tab.~\ref{tab:model-parameters}). The special focus lied on how the parameter va identifiability or even infered parameter values change with the amount / type of experimental data at hand. As the growth curves are the easiest information to experimentally measure compared to histological information, they will be part of all inference runs. So we test all 4 combinations of including / excluding the histological data on cell proliferation (Ki67) and extra-cellular matrix (ECM).
-
-%Fig.~\ref{fig:exp2d} 
-
-Fig.~\ref{fig:exp2d} indicates, that all data sets (growth curve, Ki67, ECM) have to be included into the objective function in order to fit all three of them. In case no histological information on Ki67-stained cells is available the inferred values of those parameters controlling the distribution of proliferating cells, $L^{div}$ and $e^{div}$ predict a too large number of proliferating cells which are partly compensated for by the growth rate being underestimated. So here the growth curves seem to bias the parameter estimation without additional histological information.
-On the other hand leaving out the ColV-staining data will mainly render the kinetic ECM parameters, $k^{e}_{pro}$ and $k^{e}_{deg}$, as well as the coupling parameter of ECM and cells unidentifiable. 
-no histological info on proliferation (Ki67) leads to wrong predictions cellular kinetic param.
-kinetic ECM param. not identifiable without hist. info. on ECM (ColV)
-
-
-\begin{figure}[htbp]
-\textbf{A}\\
-%\includegraphics[width=0.49\textwidth]{Figures/FitToyData5a}
-%\includegraphics[width=0.49\textwidth]{Figures/FitToyData5b}
-\includegraphics[width=\textwidth]{Data/Tumor2dGCXXXindependentBoxplots}\\
-\textbf{B}\\
-%\includegraphics[width=\textwidth]{Figures/FitExpDataIdentifiabilityTable}\\
-\input{Data/Tumor2dGCXXXidentifiability}
-\input{Data/Tumor2dGCXXXuncertainty}
-\textbf{C}\\
-\includegraphics[width=\textwidth]{Data/Tumor2dGCXXXfit}
-\caption{{\bf Different combinations of experimental data sets.}
-\textbf{A} box plot for different combinations of data sets; \textbf{B} identifiablitity table (+ identifiable, o large uncertainty, - unidentifiable); \textbf{C} final fits and scenarios.}
-\label{fig:exp2d}
+\label{fig: illustration of artificial and experimental data}
 \end{figure}
 
 %%%%%%
+\paragraph{Parameter estimation.}
+Given the artificial data, we asked whether the pABC~SMC algorithm can fit hybrid discrete-continuum models and provide reliable parameter estimates. To address this, we used the 2D model and the corresponding dataset \nj{of a single experiment}. The individual parameters $\theta_i$ were merely restricted to the range $10^{-5} - 10^0$ to resemble the common lack of prior information.
+
+A visualization of the behavior of the pABC~SMC algorithm is provided in Fig.~\ref{fig: inference using 2D model}. We found that the pABC~SMC algorithm yields excellent fits to the artificial experimental data (Fig.~\ref{fig: inference using 2D model}A). Although not a single member of the initial generation provided a satisfactory fit, after 25 generations the model simulations closely resembled the observed data. After 30 generations the improvement is minor and the acceptance rate drops (Fig.~\ref{fig: inference using 2D model}B and~C). This is indeed the point at which even for the true parameter only a fraction of the simulations would be accepted. Over the different generations the parameter sample successive contracted around the true parameter used to generate the artificial (Fig.~\ref{fig: inference using 2D model}B). Hence, the pABC~SMC algorithm worked. While the final confidence intervals for most parameters were narrow, for the critical ECM concentration $e^{\text{div}}$ only an upper bound could be established. This indicated a weak dependence of the observables on the critical ECM concentration.
+
+For parameter estimation we used a queue with $C = 100$ cores and required $N = 100$ accepted samples per generation. An individual simulation of the 2D model took on average \nj{0.1} minutes, resulting in an overall computation time of roughly \nj{$10^{4}$} cpu hours. Accordingly, parallelization was essential to obtain results in a reasonable amount of time. As the number of accepted parameters per generation, $N$, influences the convergence of the estimators as well as the computation time we studied its impact. We found that for this estimation problem $N = 100$ is sufficient as similar results wer observed for a higher number of accepted samples. The decrease of the required number of accepted parameters to $N = 20$ resulted in convergence problems and even contraction at the wrong point (results not shown). A potential cause was the limited coverage of the distribution and degeneracy of the perturbation kernel. The computation time increased linearly with $N$, which was expected.
+
 %%%%%%
-\subsection*{Experimental data (3D)}
-While all previous sections were referring to the two-dimensional model, Fig.~\ref{fig:exp3d} shows the parameter inference results using the three-dimensional model and applying the conclusions gained from the former sensitivity analysis. The fits (Fig.~\ref{fig:exp3d} D) and parameter identifiability (Fig.~\ref{fig:exp3d} C) confirm the 2D results. The inferred parameter ranges are even very close to identical as the comparison in Fig.~\ref{fig:exp2dvs3d} illustrates. 
-Fig.~\ref{fig:exp3d} 
-
-\begin{figure}[htbp]
-\begin{minipage}[t]{0.33\textwidth}
-%\textbf{A} \hspace{180pt} \textbf{B} \\
-\textbf{A}
-\includegraphics[width=\textwidth]{Data/Tumor3dGCKI67ECM-acceptanceRate.eps}\\
-\textbf{B}
-\includegraphics[width=\textwidth]{Data/Tumor3dGCKI67ECM-objFunc.eps}
+\begin{figure}[p]
+\begin{adjustwidth}{-2in}{0in} % Comment out/remove adjustwidth environment if table fits in text column.
+\begin{center}
+\textbf{A} \\ \includegraphics[width=1.3\textwidth]{Data/TumorToyData2D_0.001merr_100pop_GCKI67ECM-fits} \\
+\begin{minipage}[t]{0.45\textwidth}
+	\textbf{B} \\ \includegraphics[width=0.95\textwidth]{Data/TumorToyData2D_0.001merr_100pop_GCKI67ECM_NEW_acceptanceRate}\\
+	\textbf{C} \\ \includegraphics[width=0.95\textwidth]{Data/TumorToyData2D_0.001merr_100pop_GCKI67ECM-objFunc}
 \end{minipage}
-\begin{minipage}[t]{0.66\textwidth}
-\textbf{C}\\
-\includegraphics[width=\textwidth]{Data/Tumor3dGCKI67ECM-scatterPlotMatrix.eps}
+\begin{minipage}[t]{0.85\textwidth}
+	\textbf{D}\\ \includegraphics[width=\textwidth]{Data/TumorToyData2D_0.001merr_100pop_GCKI67ECM-scatterPlotMatrix}
 \end{minipage}
-\textbf{D}\\
-\includegraphics[width=\textwidth]{Data/Tumor3dGCKI67ECM-fits.eps}
-\caption{{\bf Artificial data and fits for 5 (color-coded) generation (complete dataset).}
-\textbf{A}  acceptance rate over iteration; \textbf{B} $\epsilon$ threshold (cyan) and distance of the accepted population (blue) over iteration; for comparison the median distance at the optimum is depicted (red); \textbf{C} scatter matrix for 5 (color-coded) generation. todo: color spectrum. \textbf{D} Artificial data and fits for 5 (color-coded) generations (complete dataset).}
-\label{fig:exp3d}
-\end{figure}
-
-\begin{figure}[htbp]
-\includegraphics[width=\textwidth]{Data/TumorXXXdGCKI67ECMindependentBoxplots}
-\caption{{\bf Fitting experimental data: 2d versus 3d model.}
+\end{center}
+\vspace*{0.5cm}
+\caption{{\bf Estimation results for artificial data.}
+(\textbf{A}) Artificial data (black) and fits for members of generation 0 (blue), 11 (cyan), 23 (green), 34 (orange) and 46 (red).
+(\textbf{B}) Distance between simulation and data for accepted samples for different generation. The median is provided as reference. 
+(\textbf{C}) Acceptance rate for different generations.
+(\textbf{D}) 2D scatter plots and Pearson correlation for parameters in generation 0, 11, 23, 34 and 46 and true parameter (black asterisk). 
+The colors in the different subplots are matched.
 }
-\label{fig:exp2dvs3d}
+\label{fig: inference using 2D model}
+\end{adjustwidth}
 \end{figure}
+%%%%%%
+
+%%%%%%
+\paragraph*{Experimental design.}
+Following the successful parameter estimation using the pABC~SMC algorithm, we studied the necessity of the different datasets for reliable prediction of tumor spheroid growth. We considered the following datasets:
+\begin{itemize}
+\item Dataset 1: Spheroid radius.
+\item Dataset 2: Spheroid radius and fraction of proliferating cells.
+\item Dataset 3: Spheroid radius and ECM abundance.
+\item Dataset 4: Spheroid radius, fraction of proliferating cells and ECM abundance.
+\end{itemize}
+Datasets 1-3 provided reduced sets of information compared to Dataset~4, which has been used in the previous section. The spheroid radius is included in all dataset as it is easy to assess compared to the histological information. We used pABC~SMC to estimate the model parameters from the Dataset 1-4. The algorithm was terminated as soon as the acceptance rate dropped below \jh{???}.
+
+We found that only a subset of the system properties were predicted correctly if reduced datasets are used for inference (Fig.~\ref{fig: experimental design using 2D model}). In particular, the model predictions for the fraction of proliferating cells and the ECM abundance were only consistent with the experimental data if the respective datasets were used in the fitting. This indicated that the histological information is essential and that a further reduction of the dataset is not possible. Accordingly, Dataset~4 already provided a minimal dataset  for the development of predictive models of tumor spheroid growth.
+%
+%As the ECM threshold $e^{\text{div}}$ has been practically non-identifiable, we explored additional experiments. We found that .... might help to infer this parameter uniquely. -> COMMENT: Here we could do a simple model prediction for the set of accepted parameters (with simulations below threshold) and color-code the dependence on $e^{\text{div}}$. I could imaging that in particular early histological information might be informative.
+\\[2ex]
+\noindent To conclude the simulation example, we found that the pABC~SMC algorithm facilitated the inference of hybrid discrete-continuum models. The algorithm works robustly despite the stochastic nature of the problems and parallelization renders it tractable for complex simulation models. Furthermore, by testing different combinations of data, it can be used to guide future experiments.
+
+%%%%%%
+\begin{figure}[t]
+\begin{adjustwidth}{-2in}{0in} % Comment out/remove adjustwidth environment if table fits in text column.
+\begin{center}
+Experimental data:\\
+\includegraphics[width=\textwidth]{Data/Tumor2dGCXXXfit}\\
+Artificial data:\\
+\includegraphics[width=\textwidth]{Data/TumorToyData2D_0.001adderr_100pop_GCXXXfit}
+\end{center}
+\vspace*{0.5cm}
+\caption{{\bf Experimental design results for artificial/experimental data.}
+The individual columns depict artificial data (black) and final generation provided by the pABC~SMC algorithm (blue) for the Datasets 1-4. The background color indicates whether the artificial experimental data have been used for fitting (white: experiment is fitted; gray: experiment is predicted.}
+\label{fig: experimental design using 2D model}
+\end{adjustwidth}
+\end{figure}
+%%%%%%
 
 %%%%%%
 %%%%%%
-\subsection*{Analysis of tumor spheroid growth using pABC~SMC}
-$sum_{k=1}^n ((y(t_k)-y_sim(t_k))/(1/n sum_{k=1}^n y_sim(t_k)))^2$
+\subsection*{Model-based analysis of experimental data using pABC~SMC}
+As our pABC~SMC algorithm worked with artificial data, we exploited it for the data-driven modeling of tumor spheroids formed by SK-MES-1 cells. SK-MES-1 cells from spheroid with a rich spatial structure, including proliferative rim and necrotic core, which resemble avascular tumors. Therefore, tumor spheroids are more suited for the analysis of drug delivery and drug response than mono-layer cultures~\cite{CarverMin2014,LemmoAte2014}. An understanding of the underlying mechanisms however requires quantitative mechanistic models. 
 
-%\begin{table}[!ht]
-%\begin{adjustwidth}{-2.25in}{0in} % Comment out/remove adjustwidth environment if table fits in text column.
-%\caption{
-%{\bf Table caption Nulla mi mi, venenatis sed ipsum varius, volutpat euismod diam.}}
-%\begin{tabular}{|l|l|l|l|l|l|l|l|}
-%\hline
-%\multicolumn{4}{|l|}{\bf Heading1} & \multicolumn{4}{|l|}{\bf Heading2}\\ \hline
-%$cell1 row1$ & cell2 row 1 & cell3 row 1 & cell4 row 1 & cell5 row 1 & cell6 row 1 & cell7 row 1 & cell8 row 1\\ \hline
-%$cell1 row2$ & cell2 row 2 & cell3 row 2 & cell4 row 2 & cell5 row 2 & cell6 row 2 & cell7 row 2 & cell8 row 2\\ \hline
-%$cell1 row3$ & cell2 row 3 & cell3 row 3 & cell4 row 3 & cell5 row 3 & cell6 row 3 & cell7 row 3 & cell8 row 3\\ \hline
-%\end{tabular}
-%\begin{flushleft} Table notes Phasellus venenatis, tortor nec vestibulum mattis, massa tortor interdum felis, nec pellentesque metus tortor nec nisl. Ut ornare mauris tellus, vel dapibus arcu suscipit sed.
-%\end{flushleft}
-%\label{table1}
-%\end{adjustwidth}
-%\end{table}
+Beyond the increasing relevance of tumor spheroid models in drug screening~\cite{KwapiszewskaMic2014}, this system is well suited for the assessment of our pABC~SMC algorithm in practice. The model is stochastic and includes multiple scales. Furthermore, no deterministic approximation is available which could be used with more standard inference methods.
 
+%%%%%%
+\paragraph*{Experimental data and reference parameters.}
+Experimental data for tumor spheroids formed by SK-MES-1 cells have been collected and processed by Jagiella et al.~\cite{JagiellaMul2015}. The spheroid radius and histological information has been measured under up to four experimental conditions, i.e. a condition without nutrition limitation as well as conditions with oxygen and/or glucose limitation  (see Table~\ref{tab:boundary conditions}). For details regarding the experimental data and their evaluation we refer to the original publication~\cite{JagiellaMul2015}.
+
+The experimental data have been modeled using a precursor of the hybrid discrete-continuum model we consider in this publication~\cite{JagiellaMul2015}. Parameters were determined using a combination of manual search and parameter sweeps. Although neither optimization nor uncertainty analysis has not been performed, we consider the parameter derived in~\cite{JagiellaMul2015} as reference parameters, $\theta^{\text{ref}}$, and restricted our search domain to $\theta_i \in [10^{-2} \cdot \theta_i^{\text{ref}},10^{2} \cdot\theta_i^{\text{ref}}]$.
+
+%%%%%%
+\paragraph*{Comparison 2D and 3D model.}
+The experimental data are derived from three-dimensional tumor spheroids. As the simulation of the corresponding 3D \textit{in silico} model is however computationally demanding (roughly 12 cpu hours per simulation), we asked in a first step how similar the estimating results obtained using 2D and 3D model are. To study this, we considered a scenario without nutrition limitation and fitted 2D and 3D model to the observed experimental data using the pABC~SMC algorithm. The results are provided in Fig.~\ref{fig: fitting of 2D and 3D model to experimental data for case without nutrition limitation}.
+
+We found that both, 2D and 3D model, allowed for a good fit of the experimental data (Fig.~\ref{fig: fitting of 2D and 3D model to experimental data for case without nutrition limitation}A). Furthermore, the convergence properties and acceptance rates for both models were, as shown in Fig.~\ref{fig: fitting of 2D and 3D model to experimental data for case without nutrition limitation}B and~C. As the simulation of the 2D model is \nj{100-times} faster, the inference using the 2D model required only \jh{???} cpu hours compared to \jh{???} cpu hours for the 3D model. The simulation of the 3D model is slower as it captures the dynamics of \nj{$\sim10^6$ cells} and requires the simulation of a systems of coupled PDEs in three dimensions. Note that the intertwining of simulation and distance measure evaluation was employed for the 3D model. Simulations in which the tolerance was exceeded or which reached a spheroid radius of \nj{670 $\mu$m} were directly terminated, resulted in a significant acceleration in particular for generation~0.
+
+While the 3D model described a spheroid, the 2D model assumes symmetry in the third direction and rather described a cylinder. Given the difference we were surprised that the parameter estimates are in good agreement. In the scatter plots depicted in Fig.~\ref{fig: fitting of 2D and 3D model to experimental data for case without nutrition limitation}D the point clouds and the confidence intervals for the parameters were overlapping. Even the similar correlation patterns between parameters were similar\jh{???}. This implied that, at least for certain nutrition concentration, the parameters of the 3D process could be inferred using a 2D model.
+
+%%%%%%
+\begin{figure}[p]
+\begin{adjustwidth}{-2in}{0in} % Comment out/remove adjustwidth environment if table fits in text column.
+\begin{center}
+\textbf{A} \\ \includegraphics[width=1.3\textwidth]{Data/TumorXXXdGCKI67ECMfit}
+\begin{minipage}[t]{0.65\textwidth}
+\textbf{B} \\ \includegraphics[width=\textwidth]{Data/TumorXXXdGCKI67ECMobjectiveFunction}
+\end{minipage}
+\begin{minipage}[t]{0.65\textwidth}
+\textbf{C} \\ \includegraphics[width=\textwidth]{Data/TumorXXXdGCKI67ECMfunctionEvaluations}
+\end{minipage}\\
+\textbf{D} \\ \includegraphics[width=1.3\textwidth]{Data/TumorXXXdGCKI67ECMindependentBoxplots}
+\end{center}
+\caption{{\bf Comparison of inference using 2D and 3D model.}
+(\textbf{A}) Experimental data (black) and fits for 2D model (blue) and 3D model (red).
+(\textbf{B}) Distance between simulation and data for accepted samples for different generation. The median is provided as reference. 
+(\textbf{C}) Function evaluations for different generations.
+(\textbf{D}) 2D scatter plots and Pearson correlation for parameters for 2D model (blue) and 3D model (red). 
+(\textbf{A},\textbf{D}) The results for the last generation of the pABC~SMC algorithm are depicted.
+}
+\label{fig: fitting of 2D and 3D model to experimental data for case without nutrition limitation}
+\end{adjustwidth}
+\end{figure}
+%%%%%%
+
+
+
+
+%%%%%%
+\paragraph*{Multi-experiment fitting.}
+Beyond the fitting of individual experimental conditions, we performed multi-experiment fitting to evaluate the scalability of the approach. This was important as increasing many spheroid data for different nutrition and drug concentrations become available\cite{KwapiszewskaMic2014}. As we observed that the 2D model closely resembles the data, we employed the 2D model for parameter estimation. The results are depicted in Fig.~\ref{fig: multi-experiment fitting using 2D model}.
+
+The 2D model was able to describe the experimental data, even the saturation effects observed at later time points (Fig.~\ref{fig: multi-experiment fitting using 2D model}A). The distance is successively reduced and for later generations the acceptance rates tended to decrease (Fig.~\ref{fig: multi-experiment fitting using 2D model}B and~C). The confidence intervals for most parameters were rather narrow, indicating good practical identifiability. \jh{Merely, ... .} Furthermore, we observed that the previously derived reference parameter~\cite{JagiellaMul2015} is in good agreement with the obtained estimates. \jh{For ... we see a small disagreement ... but .. . For the distance function we employ the reference parameter is suboptimal and gets rejected???.}
+
+\jh{
+To study whether the observed discrepancies are due to the use of the 2D spheroid model, we also employed the 3D model for fitting. A save computation time, we initialized the sampling with an intermediate results for the 2D model. This reduced the number of required simulations of the 3D model and, according to the properties of ABC~SMC methods, yielded unbiased estimates. The results are depicted in Fig.~\ref{fig: multi-experiment fitting using 2D model}. We find that the final results obtained using the 3D model are again in good agreement with the results observed for the 2D model. The histograms and scatter plots depicted in Fig.~\ref{fig: multi-experiment fitting using 2D model}D indicate the same identifiability properties. \jh{There parameter r.. is however slightly off???.}
+}
+
+%%%%%%
+\begin{figure}[p]
+\begin{adjustwidth}{-2in}{0in} % Comment out/remove adjustwidth environment if table fits in text column.
+\begin{center}
+\textbf{A}\\
+\includegraphics[width=0.6\textwidth]{Data/Tumor2dfull_trunc_fixerr_P100__NEW_fits}\\
+\textbf{B}\\
+\includegraphics[width=0.6\textwidth]{Data/Tumor2dfull_trunc_fixerr_minmax_P100__NEW_fits}\\
+\textbf{C}\\
+\includegraphics[width=0.6\textwidth]{Data/Tumor2dfull_trunc_fixerr_std_P100__NEW_fits}
+\end{center}
+\vspace*{0.5cm}
+\caption{{\bf Multi-experiment fitting of experimental data using 2D tumor spheroid model.}
+The squared error at a data point is weighted by A) the sample variance at the data point, B) the value span within the same data set, or C) the variance of the values within the same data set. 
+}
+\label{fig: multi-experiment fitting using 2D model}
+\end{adjustwidth}
+\end{figure}
+%%%%%%
+
+%%%%%%
+\paragraph*{Model-based prediction of ...?}
+\jh{put something in regarding prediction of unmeasured components. Maybe one with low and one with high uncertainty?} \nj{grid of experimental conditions and predicted spheroid radii at saturation!}
+\\[2ex]
+\noindent To conclude, in this section a proof-of-principle for the inference of hybrid discrete-continuum models from experimental data has been provided. We employed the pABC~SMC algorithm to assess the growth characteristics of tumors cells in 3D culture under different nutrition conditions. In contrast to over studies, not also parameter estimates but also confidence intervals are provided. Finally, we demonstrated how models of different complexity can be employed for fitting.
 
 %%%%%%
 %%%%%%
 %%%%%%
 \section*{Discussion}
 
-Compared to the alternative of parallelizing the model simulation directly, the suggested parallelization with respect to the drawn parameters has the advantage that the code used for model evaluation does not have to be touched. Furthermore, communication is minimized as merely the parameters and the calculated objection functions values have to be send over the network.
+Multi-scale models are mostly stochastic and their simulation is computationally intensive, rendering parameter estimation notoriously challenging. In this manuscript, we introduced a robust and flexible method for parameter estimation in multi-scale models. As stochasticity usually prevents the evaluation of the likelihood function which, we used an ABC methods instead of conventional statistical approaches. We presented a parallel implementation of the standard ABC method for queues, enabling the study of computationally intensive problems. Compared to the alternative of parallelizing a single model evaluation, this implementation bears the advantages that communication is minimized. Furthermore, the model simulation does not have to be touched. This extends the applicability beyond the parallel implementation provided by other toolboxes such as ABC-SysBio~\cite{LiepeBar2010}. The handling of the model as black box facilitates the applicability to pABC~SMC to a wide range of models, e.g. multi-scale modes implemented using platforms such as FLAME~\cite{RichmondWal2010}, CompuCell3D~\cite{SwatTho2012}, Morpheus~\cite{StarrussBac2014}, EPISIM~\cite{SutterlinKol2013} and Chaste~\cite{MiramsArt2013}.
 
-mention that DREAM 15 parameters, no ABC, the best performing methods applied a trick that the trick that the objective function (which is deterministic) could be optimized directly
+In the past, quantitative multi-scale models have also been obtained by data-driven modeling of individual scales and subsequent coupling~\cite{tenTusscherNob2004,HayengaTho2011,ChewWen2014}. While this approach is usually computationally less demanding than using pABC~SMC on the full system, for certain classes of multi-scale couplings it is not be feasible and consistency as well as optimality cannot be ensured~\cite{HasenauerJag2015}. In addition, experimental data for different submodels might have been collected under different experimental conditions, raising questions of model validity. In contrast, the pABC~SMC method will provide reliable confidence intervals as it relies as the deep theory of ABC methods~\cite{MarjoramMol2003,SissonFan2007,ToniWel2009}.
 
-spatial moments
+The application of the method to a hybrid discrete-continuum model of tumor spheroid growth demonstrated its practicable applicability and the scalability with respect to the number of parameters and experimental conditions. Minor improvements, such as early interruption of simulations, provide a valuable acceleration. The analysis of artificial and real experimental data revealed that parameter estimates can be obtained in a fully automated manner using a reasonable number of function evaluations. Furthermore, a rigoros uncertainty quantification -- not possible before -- indicated that most parameters are identifiable.
 
-Methods directly applicable to inference for models implemented in multi-scale modeling platforms such as FLAME~\cite{RichmondWal2010}, CompuCell3D~\cite{SwatTho2012}, Morpheus~\cite{StarrussBac2014}, EPISIM~\cite{SutterlinKol2013} and Chaste~\cite{MiramsArt2013}.
+\jh{
+2D model instead of 3D to accelerate inference
 
-extension to model selection straight forward -> Toni paper
-but choice of metric becomes even more important
+reduced order model
 
-NunesBal2010 - On optimal selection of summary statistics for approximate {B}ayesian computation 
+comparible estimates
 
-AABC -> BuzbasRos2013
+initial sampling using reduced order models
+}
 
-surrogates / Gaussian processes
+For the considered problems, parallelization proved to be essential. The application example would have run \jh{... months} on a single CPU. An additional speed-up could be achieved by using approximate ABC methods~\cite{BuzbasRos2013} which reduce the number of required simulations. Complementarily, surrogate models could be exploit to reduce the complexity of a single model evaluations. In particular surrogate models based on Kriging~\cite{Wilkinson2011}, space mapping~\cite{BandlerDak2004}, polynomial response surfaces~\cite{BoxDra2007}, support vector machines and radial basis function approximations~\cite{RegisShoe2007} seem to be promising. Also deterministic models approximating the spatial moments of the stochastic process~\cite{BolkerPac1997,MiddletonFle2014} could be employed. Convergence to the true posterior using such model or alternative guarantees~\cite{HasenauerLoh2012} however remains to be addressed.
 
+We note that also in a recent DREAM challenge~\cite{KarrWil2015} the fitting of computationally intensive models has been considered. In contrast to this DREAM challenge~\cite{KarrWil2015} we studied here already a multi-cellular systems with slightly more parameters. In addition, unlike the DREAM challenge in which the participants had (by accident) access to the distance between the parameter candidate and true parameter, we merely used information about the difference of measured data and model simulation. This is the standard setting in practice and significantly more challenging as a stochastic rather than a deterministic problem has to be considered. The pABC-SMC algorithm developed in this work is also applicable to the analysis of stochastic single-cell models.
 
+Beyond parameter estimations, many applications require the comparison of competing hypothesis, also known as model selection. Similar to the standard ABC~SMC algorithm~\cite{ToniStu2010}, pABC~SMC can be employed for model selection by including the model index as an additional (discrete) variable. While this does not require any changes to the implementation, the choice of appropriate distance measures and summary statistics becomes however critical~\cite{RobertCor2011}. As for multi-scale models the selection of important features of the data and their weighting is non-trivial, methods for the optimal selection of summary statistics might be used~\cite{NunesBal2010}. In the application example we observed that using weighted least squares, with weights determined from standard deviations of experimental replicates, does not work reliably as the estimates of the standard deviations are obtained from same samples sizes are usually off.
+
+The pABC~SMC algorithms we developed and implemented worked efficiently for the considered examples, a variety of aspects might however by improved. Sophisticated local perturbation kernels~\cite{FilippiBar2013} and optimized tolerance-schedules~\cite{SilkFil2013} can reduce the required number of function evaluations and improve the convergence. Moreover, methods to adjust the effective samples size online might improve the robustness of the methods, in particular in situations in which the posterior distribution possesses a complex shape.
+
+Summing up, the relevance of multi-scale models in systems biology and systems medicine is steadily increasing~\cite{HunterBor2003,MartinsFer2010,DadaMen2011,WalpolePap2013}. We demonstrated that hybrid discrete-continuum models models for tumor spheroids can be parameterized using pABC~SMC algorithms running on high-performance computing clusters. We expect that the presented algorithm is also applicable to other classes of multi-scale models, providing novel insights via the consistent integration of data from multiple experiments and measurement devieces. This renders pABC~SMC potentially valuable for the analysis of broad class of computational models.
 
 % You may title this section "Methods" or "Models". 
 % "Models" is not a valid title for PLoS ONE authors. However, PLoS ONE
@@ -480,7 +520,7 @@ In this study we consider a multi-scale model describing \textit{in-vitro} tumor
 Furthermore, we denote the second derivative with respect to space -- the Laplace operator -- by $\nabla_x$.
 
 %%%%
-\paragraph{Model for single-cell dynamics:}
+\paragraph{Model for single-cell dynamics.}
 Our model considers proliferating, quiescent and necrotic cells populating a static unstructured lattice. Each lattice site can be occupied by at most one cell. The behavior of a cell located at side $x$ can depend on the time-dependent local concentrations of extra-cellular matrix $e(t,x)$, glucose $g(t,x)$, oxygen $o(t,x)$, lactate $l(t,x)$, adenosine triphosphate $a(x)$ and waste material from debris of necrotic cells $w(t,x)$ as well as the distance $L(t,x)$ to the next vacant lattice side. 
 \begin{itemize}
 %
@@ -515,10 +555,10 @@ which at low ATP synthesis levels increases with the local lactate concentration
 \end{itemize}
 The initial cell population at time point $t = 0$ occupies all lattice sites within a sphere of radius \sI{$L^{\text{init}}$} around the center of the unstructured lattice. The individual cells are quiescent with probability \sI{$q^{\text{init}}$} and proliferating (with $m=1$). 
 
-A visual summary of all cellular processes is provided in Figure~\ref{fig:cell-states}. For a detailed discussion of the transition propensities and reentering probabilities is provided in~\cite{Jagiella2012,JagiellaMul2015}. Precise numerical values for the thresholds ($e^{\text{div}}$, $k_a^{\text{div}}$, $k_a^{\text{nec}}$, $l^{\text{div}}$, $l^{\text{nec}}$, $w^{\text{div}}$, $o^{\text{div}}$, $n^{\max}$ and $L^{\text{div}}$) at which cells change there behavior as well as the properties of the initial cell population (\sI{$L^{\text{init}}$} and \sI{$q^{\text{init}}$}) are mostly unknown. The considered parameter regimes are provided in Table~\ref{tab:model-parameters}.
+A visual summary of all cellular processes is provided in Fig.~\ref{fig:cell-states}. For a detailed discussion of the transition propensities and reentering probabilities is provided in~\cite{Jagiella2012,JagiellaMul2015}. Precise numerical values for the thresholds ($e^{\text{div}}$, $k_a^{\text{div}}$, $k_a^{\text{nec}}$, $l^{\text{div}}$, $l^{\text{nec}}$, $w^{\text{div}}$, $o^{\text{div}}$, $n^{\max}$ and $L^{\text{div}}$) at which cells change there behavior as well as the properties of the initial cell population (\sI{$L^{\text{init}}$} and \sI{$q^{\text{init}}$}) are mostly unknown. The considered parameter regimes are provided in Table~\ref{tab:model-parameters}.
 
 %%%%
-\paragraph{Model for molecular species:} 
+\paragraph{Model for molecular species.} 
 The dynamics of the molecular species are governed by a system of partial differential equations (PDEs), accounting for different processes.
 \begin{itemize}
 %
@@ -529,7 +569,7 @@ The dynamics of the molecular species are governed by a system of partial differ
 	\frac{\partial o(t,x)}{\partial t} &= D_o \nabla_x o(t,x) - q_o(t,x) c(t,x), \text{ with } q_o(t,x) = V_{m,o}(t,x) \frac{o(t,x)}{o(t,x)+k_{m,o}}.\\
 \end{aligned}
 \end{equation*}
-Cells which are lacking one of the metabolites, glucose or oxygen, were observed to compensate for it by up-regulating the consumption rates of the other one in order to keep the net production of ATP molecules constant. The maximum consumption rates of glucose $V_{m,g}(x)$ and oxygen $V_{m,o}(x)$ account for these cross-dependencies,
+Cells which are lacking one of the metabolites, glucose or oxygen, were observed to compensate for it by up-regulating the consumption rates of the other one in order to keep the net production of ATP molecules constant. The maximum consumption rates of glucose $V_{m,g}(t,x)$ and oxygen $V_{m,o}(t,x)$ account for these cross-dependencies,
 \begin{equation*}
 \begin{aligned}
 V_{m,g}(t,x) &= q_g^{\max} \left(1 - \left(1- \frac{q_g^{\min}}{q_g^{\max}} \right) \frac{o(t,x)}{o(t,x) + k_o} \right) \\
@@ -565,17 +605,17 @@ As initially merely proliferation and quiescent cells are present, the initial w
 A detailed list of the boundary conditions for the different scenarios and experimental conditions is provided in Table~\ref{tab:boundary conditions}.
 
 %%%%
-\paragraph{Numerical simulations:}
+\paragraph{Numerical simulations.}
 To simulate the individual scenarios we exploit a hybrid approach. The cellular dynamics are simulated using Gillespies algorithms~\cite{Gillespie1977}, which accounts for the stochasticity of cellular processes and decision making. The PDEs governing the spatio-temporal evolution of glucose, oxygen, lactate, extra-cellular matrix and waste concentration are discretized using finite differences and solved using an implicit scheme.
 \\[1ex]
 \noindent We use this hybrid simulation approach to study two scenarios:
 \begin{itemize}
 %
-\item \textbf{Scenario 1 -- no nutrition limitation:} Glucose and oxygen are assumed to be available in excess. Hence, neither lactate nor waste material is produced. Extra-cellular matrix dynamics are still modelled using the aforementioned PDE. Cells which which become quiescent are assumed to be permanently arrested in G0 phase. To capture this scenario, different parameters are set to zero or infinity (see Table~\ref{tab:model-parameters} and~\ref{tab:boundary conditions}), effectively reducing the dimensionality of the PDE system.
+\item \textbf{Scenario I -- no nutrition limitation.} Glucose and oxygen are assumed to be available in excess. Hence, neither lactate nor waste material is produced. Extra-cellular matrix dynamics are still modelled using the aforementioned PDE. Cells which which become quiescent are assumed to be permanently arrested in G0 phase. To capture this scenario, different parameters are set to zero or infinity (see Table~\ref{tab:model-parameters} and~\ref{tab:boundary conditions}), effectively reducing the dimensionality of the PDE system.
 %
-\item \textbf{Scenario 2 -- nutrition limitation:} Glucose and oxygen are potentially limiting and all afore-described variables are simulated. Due to more possible reasons for cell to end up in G0, we in addition allow them to reenter the cell cycle with rate $k_{re}$. We considered four experimental conditions with different glucose and oxygen concentrations (Table~\ref{tab:boundary conditions}). 
+\item \textbf{Scenario II -- nutrition limitation.} Glucose and oxygen are potentially limiting and all afore-described variables are simulated. Due to more possible reasons for cell to end up in G0, we in addition allow them to reenter the cell cycle with rate $k_{re}$. We considered four experimental conditions with different glucose and oxygen concentrations (Table~\ref{tab:boundary conditions}). 
 \end{itemize}
-For details regarding the presented agent-based model, we refer to~\cite{Jagiella2012}.
+For further details regarding the presented agent-based model, we refer to~\cite{Jagiella2012}.
 
 \begin{figure}[htbp]
 %\includegraphics[width=\textwidth]{Figures/Fig5}
@@ -599,9 +639,9 @@ division rate 					&$k_{\text{div}}^{\max}$ & 1/h & 0.032 & $0.032 \times 10^{-2
 division depth 					&$L^{\text{div}}$ & $\mu$m & 130 & 1.3...13000\\ \hline
 initial population radius 			&$L^{\text{init}}$ & $\mu$m & 130 & 0.12...1200\\ \hline
 initial quiescent cell fraction 		& $q{\text{init}}$ &-& 0.75& 0.0075...75\\ \hline
-ECM production rate 			&$k_{e}^{\text{pro}}$  & {\color{green}UI}/h&0.0005 &0.000005...0.05\\ \hline
+ECM production rate 			&$k_{e}^{\text{pro}}$  & \jh{UI}/h&0.0005 &0.000005...0.05\\ \hline
 ECM degradation rate 			&$k_{e}^{\text{deg}}$ &1/h&0.0033 &0.000033...0.33\\ \hline
-ECM division threshold 			&$e^{\text{div}}$ &{\color{green}UI} &0.003 &0.00003...0.3\\ \hline
+ECM division threshold 			&$e^{\text{div}}$ &\jh{UI} &0.003 &0.00003...0.3\\ \hline
 \hline
 cell cycle reentrance rate 			&$k^{\max}_{\text{re}}$ &1/h &0*&0.00001...0.1\\ \hline
 necrosis rate 					&$k_{\text{nec}}$ &1/h&0*&0.0001...1\\ \hline
@@ -610,11 +650,9 @@ ATP synthesis division threshold 			&$k_a^{\text{div}}$ &mM/h& 0*& 9...90000\\ \
 ATP synthesis necrosis threshold 			&$k_a^{\text{nec}}$ &mM/h& 0*& 6...60000\\ \hline
 lactate division threshold 			&$l^{\text{div}}$  &mM&$\infty$* & 0.2...2000\\ \hline
 lactate necrosis threshold 			&$l^{\text{nec}}$ &mM &$\infty$* & 0.2...2000\\ \hline
-{\color{green}oxygen diffusion coefficient?} 			&$D_o$&  &  &  \\ \hline
-{\color{green}glucose diffusion coefficient?} 			&$D_g$&  &  &  \\ \hline
 waste diffusion coefficient 			&$D_W$& $\mu$m$^{2}$/h&$\infty$*& $10^{3}...10^{7}$\\ \hline
 waste degradation rate					& $k^w_{\text{deg}}$ &1/h &$0$*& $10^{-8}...10^{-4}$\\ \hline
-waste division threshold 			&$w^{\text{div}}$ &{\color{green}mM} &$\infty$*&0.00008...0.8\\ \hline
+waste division threshold 			&$w^{\text{div}}$ &\jh{mM} &$\infty$*&0.00008...0.8\\ \hline
 maximum number of cell cycles under waste exposure / oxygen deprivation  	&$n_{o,w}$&-& $\infty$*& 0.08...800\\ \hline
 \hline
 oxygen diffusion coefficient		&$D_o$&  $\mu$m$^{2}$/h&  $\infty$*& 6300000* \\ \hline
@@ -628,7 +666,7 @@ Some parameters are set to a fix value and are not subject to inference (*).
 
 
 
-%\paragraph{Molecular model:} The molecular dynamics is described by system of partial differential equations as follows:
+%\paragraph{Molecular model.} The molecular dynamics is described by system of partial differential equations as follows:
 %\begin{align}
 %	\partial_{t} e &= {\color{red}{k^{e}_{pro}}} c - {\color{red}{k^{e}_{deg}}} e,\\
 %	\partial_{t} g &= D \nabla g - k^{g}_{con} c,\\
@@ -640,10 +678,10 @@ Some parameters are set to a fix value and are not subject to inference (*).
 %
 %consumption rates
 %
-%\paragraph{Initial \& boundary conditions:}
+%\paragraph{Initial \& boundary conditions.}
 %The initial cell population occupies all lattice sites within a sphere of radius {\color{red}{$l^{init}$}}. A fraction of those cells $\color{red}{q_{init}}$ is quiescent right from the start, while the rest enters the cell cycle with $M=1$. For the molecular concentration we assume Dirichelet boundary conditions. That is to say, that molecular concentrations at the boundary of the domain $\partial \Omega$ are kept constant (see table \ref{tab:boundary conditions}).
 %
-%\paragraph{Numerical simulations:}
+%\paragraph{Numerical simulations.}
 %The cellular dynamics is treated like a chemical reaction system were each cell and the biological process it can perform can be seen as analogues to a chemical species and reactions. As such one can formulate a master equation and solve it numerically using the Gillespie algorithm \nj{[ref]}.  
 
 
@@ -720,7 +758,7 @@ in the created file.
 In order to increase computational efficiency, we use a sophisticated implementation which stops the model simulation in step \textit{S2} as soon as the tolerance $\epsilon_t$ is reached. In this case, $d(\mathcal{D}^*,\mathcal{D},\infty) > \epsilon_t$ is returned. This is possible as we use a distance $d(\mathcal{D}^*,\mathcal{D},t_{\text{sim}})$ which is monotonically increases in the simulation time $t_{\text{sim}}$.
 
 %
-\paragraph{Distance measure:}
+\paragraph{Distance measure.}
 Our statistical analysis indicated a multiplicative error. For this reason, we use as distance the sum of weighted least squares,
 \begin{equation*}
 \begin{aligned}
@@ -738,15 +776,15 @@ with average values of the measured quantities
 \end{equation*}
 The first term penalizes the relative error in the spheroid radius, the second term the relative error in the fraction of proliferation cells and the third term the relative errors in the extracellular matrix density. All contributions are normalized with the corresponding number of measurements. As the simulation is run till time point $t_{\text{sim}}$, merely measurements with $t_k \leq t_{\text{sim}}$ are considered. For $t_{\text{sim}} > \max\{t_{n_g},t_{n_h}\}$, all measurement data are considered. This final distance is denoted by $d(\mathcal{D}^*,\mathcal{D},\infty)$.
 
-In Section {\color{green}?}, several experimental conditions are considered simultaneously. In this case, the overall distance $d$ is the sum of the distances for the individual conditions.
+In Section \jh{?}, several experimental conditions are considered simultaneously. In this case, the overall distance $d$ is the sum of the distances for the individual conditions.
 
 %
-\paragraph{Adaptation of perturbation kernel and tolerance:}
-The efficiency of ABC~SMC methods depends critically on the perturbation kernels~\cite{FilippiBar2013} and the tolerance sequence~{\color{green}cite?}. To facilitate the applicability of the algorithms to a wide range of inference problems, we implemented adaptive methods. Inspired by kernel density estimation~\cite{Scott1992}, a multi-variate normal distribution is used as perturbation kernel,
+\paragraph{Adaptation of perturbation kernel and tolerance.}
+The efficiency of ABC~SMC methods depends critically on the perturbation kernels~\cite{FilippiBar2013} and the tolerance sequence~\cite{Silk2013}. To facilitate the applicability of the algorithms to a wide range of inference problems, we implemented adaptive methods. Inspired by kernel density estimation~\cite{Scott1992}, a multi-variate normal distribution is used as perturbation kernel,
 \begin{equation*}
 K_t(\theta|\theta') = \mathcal{N}(\theta|\theta',\Sigma_{t-1}),
 \end{equation*}
-with $\Sigma_t$ being the {\color{green}scaled????} covariance matrix of sample $\{\theta^{(i)}_{t-1}\}_{i=1}^N$. This perturbation kernel adapts to the correlation structure of the sample, thereby improving the representation of the distribution. The tolerance for generation $t$ is set to the median of the accepted distances in generation $t-1$.
+with $\Sigma_t$ being the \jh{scaled????} covariance matrix of sample $\{\theta^{(i)}_{t-1}\}_{i=1}^N$. This perturbation kernel adapts to the correlation structure of the sample, thereby improving the representation of the distribution. The tolerance for generation $t$ is set to the median of the accepted distances in generation $t-1$.
 
 %% Standard ABC SMC
 %\paragraph{Algorithm~0: ABC~SMC}
@@ -781,7 +819,7 @@ with $\Sigma_t$ being the {\color{green}scaled????} covariance matrix of sample 
 %%%%
 %%%%
 \subsection*{Implementation}
-The agent-based model for tumor spheroid growth is implemented in C++. For parallel ABC~SMC algorithm and the evaluation of the results is implemented in MATLAB. The code for the simulation and inference is available in the GitHub repository {\color{green}...}. 
+The agent-based model for tumor spheroid growth is implemented in C++. For pABC~SMC algorithm and the evaluation of the results is implemented in MATLAB. The code for the simulation and inference is available in the GitHub repository \jh{...}. 
 
 %%%%%%
 %%%%%%
@@ -848,6 +886,66 @@ Wrote the Paper: NJ JH.
 %%%%%%
 \bibliography{Database}
 
+
+
+%%%%%%
+%%%%%%
+%%%%%%
+\newpage
+\appendix
+\section{Fitting Data}
+
+%%%%%%
+\begin{figure}[p]
+\begin{adjustwidth}{-2in}{0in} % Comment out/remove adjustwidth environment if table fits in text column.
+\begin{center}
+\textbf{A} \\ \includegraphics[width=1.3\textwidth]{Data/Tumor2dGCKI67ECM-fits.eps} \\
+\begin{minipage}[t]{0.45\textwidth}
+	\textbf{B} \\ \includegraphics[width=0.95\textwidth]{Data/Tumor2dGCKI67ECM-acceptanceRate.eps}\\
+	\textbf{C} \\ \includegraphics[width=0.95\textwidth]{Data/Tumor2dGCKI67ECM-objFunc.eps}
+\end{minipage}
+\begin{minipage}[t]{0.85\textwidth}
+	\textbf{D}\\ \includegraphics[width=\textwidth]{Data/Tumor2dGCKI67ECM-scatterPlotMatrix.eps}
+\end{minipage}
+\end{center}
+\vspace*{0.5cm}
+\caption{{\bf Inference using 2D model.} \nj{wrong figure caption! Figure shows 3D result, not comparison with 2D!}
+(\textbf{A}) Experimental data (black) and fits for 2D model (blue) and 3D model (red).
+(\textbf{B}) Distance between simulation and data for accepted samples for different generation. The median is provided as reference. 
+(\textbf{C}) Acceptance rate for different generations.
+(\textbf{D}) 2D scatter plots and Pearson correlation for parameters for 2D model (blue) and 3D model (red). 
+(\textbf{A},\textbf{D}) The results for the last generation of the pABC~SMC algorithm are depicted.
+}
+\label{fig: fitting of 2D model to experimental data for case without nutrition limitation}
+\end{adjustwidth}
+\end{figure}
+%%%%%%
+
+%%%%%%
+\begin{figure}[p]
+\begin{adjustwidth}{-2in}{0in} % Comment out/remove adjustwidth environment if table fits in text column.
+\begin{center}
+\textbf{A} \\ \includegraphics[width=1.3\textwidth]{Data/Tumor3dGCKI67ECM-fits.eps} \\
+\begin{minipage}[t]{0.45\textwidth}
+	\textbf{B} \\ \includegraphics[width=0.95\textwidth]{Data/Tumor3dGCKI67ECM-acceptanceRate.eps}\\
+	\textbf{C} \\ \includegraphics[width=0.95\textwidth]{Data/Tumor3dGCKI67ECM-objFunc.eps}
+\end{minipage}
+\begin{minipage}[t]{0.85\textwidth}
+	\textbf{D}\\ \includegraphics[width=\textwidth]{Data/Tumor3dGCKI67ECM-scatterPlotMatrix.eps}
+\end{minipage}
+\end{center}
+\vspace*{0.5cm}
+\caption{{\bf Inference using 3D model.} \nj{wrong figure caption! Figure shows 3D result, not comparison with 2D!}
+(\textbf{A}) Experimental data (black) and fits for 2D model (blue) and 3D model (red).
+(\textbf{B}) Distance between simulation and data for accepted samples for different generation. The median is provided as reference. 
+(\textbf{C}) Acceptance rate for different generations.
+(\textbf{D}) 2D scatter plots and Pearson correlation for parameters for 2D model (blue) and 3D model (red). 
+(\textbf{A},\textbf{D}) The results for the last generation of the pABC~SMC algorithm are depicted.
+}
+\label{fig: fitting of 3D model to experimental data for case without nutrition limitation}
+\end{adjustwidth}
+\end{figure}
+%%%%%%
 
 \end{document}
 
