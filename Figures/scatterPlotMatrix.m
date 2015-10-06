@@ -215,7 +215,7 @@ function h = subplottight(n,m,i)
     
     dx=(1-margins(1)-margins(3))/m;
     dy=(1-margins(2)-margins(4))/n;
-    gap=0.01;
+    gap=0.015;
     
     ax = subplot('Position', [margins(1) + dx*(c-1), 1 - margins(4) - dy*r, dx-gap, dy-gap]);
     if(c>1)

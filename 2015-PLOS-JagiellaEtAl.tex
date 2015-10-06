@@ -331,16 +331,16 @@ For parameter estimation we used a queue with $C = 100$ cores and required $N = 
 %%%%%%
 \begin{figure}[p]
 \begin{adjustwidth}{-2in}{0in} % Comment out/remove adjustwidth environment if table fits in text column.
-\begin{center}
-\textbf{A} \\ \includegraphics[width=1.3\textwidth]{Data/TumorToyData2D_0.001merr_100pop_GCKI67ECM-fits} \\
-\begin{minipage}[t]{0.45\textwidth}
-	\textbf{B} \\ \includegraphics[width=0.95\textwidth]{Data/TumorToyData2D_0.001merr_100pop_GCKI67ECM_NEW_acceptanceRate}\\
-	\textbf{C} \\ \includegraphics[width=0.95\textwidth]{Data/TumorToyData2D_0.001merr_100pop_GCKI67ECM-objFunc}
-\end{minipage}
-\begin{minipage}[t]{0.85\textwidth}
-	\textbf{D}\\ \includegraphics[width=\textwidth]{Data/TumorToyData2D_0.001merr_100pop_GCKI67ECM-scatterPlotMatrix}
-\end{minipage}
-\end{center}
+%\begin{center}
+%\textbf{A} \\ \includegraphics[width=1.3\textwidth]{Data/TumorToyData2D_0.001merr_100pop_GCKI67ECM-fits} \\
+%\begin{minipage}[t]{0.45\textwidth}
+%	\textbf{B} \\ \includegraphics[width=0.95\textwidth]{Data/TumorToyData2D_0.001merr_100pop_GCKI67ECM_NEW_acceptanceRate}\\
+%	\textbf{C} \\ \includegraphics[width=0.95\textwidth]{Data/TumorToyData2D_0.001merr_100pop_GCKI67ECM-objFunc}
+%\end{minipage}
+%\begin{minipage}[t]{0.85\textwidth}
+%	\textbf{D}\\ \includegraphics[width=\textwidth]{Data/TumorToyData2D_0.001merr_100pop_GCKI67ECM-scatterPlotMatrix}
+%\end{minipage}
+%\end{center}
 \vspace*{0.5cm}
 \caption{{\bf Estimation results for artificial data.}
 (\textbf{A}) Artificial data (black) and fits for members of generation 0 (blue), 11 (cyan), 23 (green), 34 (orange) and 46 (red).
@@ -374,12 +374,12 @@ We found that only a subset of the system properties were predicted correctly if
 %%%%%%
 \begin{figure}[t]
 \begin{adjustwidth}{-2in}{0in} % Comment out/remove adjustwidth environment if table fits in text column.
-\begin{center}
-Experimental data:\\
-\includegraphics[width=\textwidth]{Data/Tumor2dGCXXXfit}\\
-Artificial data:\\
-\includegraphics[width=\textwidth]{Data/TumorToyData2D_0.001adderr_100pop_GCXXXfit}
-\end{center}
+%\begin{center}
+%Experimental data:\\
+%\includegraphics[width=\textwidth]{Data/Tumor2dGCXXXfit}\\
+%Artificial data:\\
+%\includegraphics[width=\textwidth]{Data/TumorToyData2D_0.001adderr_100pop_GCXXXfit}
+%\end{center}
 \vspace*{0.5cm}
 \caption{{\bf Experimental design results for artificial/experimental data.}
 The individual columns depict artificial data (black) and final generation provided by the pABC~SMC algorithm (blue) for the Datasets 1-4. The background color indicates whether the artificial experimental data have been used for fitting (white: experiment is fitted; gray: experiment is predicted.}
@@ -412,16 +412,16 @@ While the 3D model described a spheroid, the 2D model assumes symmetry in the th
 %%%%%%
 \begin{figure}[p]
 \begin{adjustwidth}{-2in}{0in} % Comment out/remove adjustwidth environment if table fits in text column.
-\begin{center}
-\textbf{A} \\ \includegraphics[width=1.3\textwidth]{Data/TumorXXXdGCKI67ECMfit}
-\begin{minipage}[t]{0.65\textwidth}
-\textbf{B} \\ \includegraphics[width=\textwidth]{Data/TumorXXXdGCKI67ECMobjectiveFunction}
-\end{minipage}
-\begin{minipage}[t]{0.65\textwidth}
-\textbf{C} \\ \includegraphics[width=\textwidth]{Data/TumorXXXdGCKI67ECMfunctionEvaluations}
-\end{minipage}\\
-\textbf{D} \\ \includegraphics[width=1.3\textwidth]{Data/TumorXXXdGCKI67ECMindependentBoxplots}
-\end{center}
+%\begin{center}
+%\textbf{A} \\ \includegraphics[width=1.3\textwidth]{Data/TumorXXXdGCKI67ECMfit}
+%\begin{minipage}[t]{0.65\textwidth}
+%\textbf{B} \\ \includegraphics[width=\textwidth]{Data/TumorXXXdGCKI67ECMobjectiveFunction}
+%\end{minipage}
+%\begin{minipage}[t]{0.65\textwidth}
+%\textbf{C} \\ \includegraphics[width=\textwidth]{Data/TumorXXXdGCKI67ECMfunctionEvaluations}
+%\end{minipage}\\
+%\textbf{D} \\ \includegraphics[width=1.3\textwidth]{Data/TumorXXXdGCKI67ECMindependentBoxplots}
+%\end{center}
 \caption{{\bf Comparison of inference using 2D and 3D model.}
 (\textbf{A}) Experimental data (black) and fits for 2D model (blue) and 3D model (red).
 (\textbf{B}) Distance between simulation and data for accepted samples for different generation. The median is provided as reference. 
@@ -450,14 +450,14 @@ To study whether the observed discrepancies are due to the use of the 2D spheroi
 %%%%%%
 \begin{figure}[p]
 \begin{adjustwidth}{-2in}{0in} % Comment out/remove adjustwidth environment if table fits in text column.
-\begin{center}
-\textbf{A}\\
-\includegraphics[width=0.6\textwidth]{Data/Tumor2dfull_trunc_fixerr_P100__NEW_fits}\\
-\textbf{B}\\
-\includegraphics[width=0.6\textwidth]{Data/Tumor2dfull_trunc_fixerr_minmax_P100__NEW_fits}\\
-\textbf{C}\\
-\includegraphics[width=0.6\textwidth]{Data/Tumor2dfull_trunc_fixerr_std_P100__NEW_fits}
-\end{center}
+%\begin{center}
+%\textbf{A}\\
+%\includegraphics[width=0.6\textwidth]{Data/Tumor2dfull_trunc_fixerr_P100__NEW_fits}\\
+%\textbf{B}\\
+%\includegraphics[width=0.6\textwidth]{Data/Tumor2dfull_trunc_fixerr_minmax_P100__NEW_fits}\\
+%\textbf{C}\\
+%\includegraphics[width=0.6\textwidth]{Data/Tumor2dfull_trunc_fixerr_std_P100__NEW_fits}
+%\end{center}
 \vspace*{0.5cm}
 \caption{{\bf Multi-experiment fitting of experimental data using 2D tumor spheroid model.}
 The squared error at a data point is weighted by A) the sample variance at the data point, B) the value span within the same data set, or C) the variance of the values within the same data set. 
@@ -619,8 +619,8 @@ For further details regarding the presented agent-based model, we refer to~\cite
 
 \begin{figure}[htbp]
 %\includegraphics[width=\textwidth]{Figures/Fig5}
-\includegraphics[width=0.45\textwidth]{Figures/SpatialStateTransitions}
-\includegraphics[width=0.55\textwidth]{Figures/InternalStateTransitions}
+%\includegraphics[width=0.45\textwidth]{Figures/SpatialStateTransitions}
+%\includegraphics[width=0.55\textwidth]{Figures/InternalStateTransitions}
 \caption{{\bf Scheme of cell states and the biological processes a cell can undergo: cell cycle (including cell growth and division), cell death (apoptosis and necrosis) and lysis.}
  Left panel: A cycling cell grows by occupying two neighboring lattice sites after a fraction of transitions in the cell cycle. Growing cells can push a certain number of cells aside. A cell dies with rate $k_{\text{nec}}$ and is consequently lysed with rate $k_{lys}$. (The schemes in the left panel are 2D for clarity; the simulations however were all in 3D). Right: All processes are modeled as Poisson processes. A cell in the cell cycle undergoes $m_d$ transitions until splitting into two daughter cells. Composed of $m_d$ sub-processes the cell cycle time ends up following an Erlang distribution. Increasing $m_d$ will lead to sharper cell cycle distributions. A cell transitions from one cell cycle state (CCS) to the next with rate $k_{div,m}$. If a cell is in state mg it will grow. If it is in state $m_d$ it will divide into 2 daughter cells during the next transition. Furthermore, the 2 daughter cells will either enter the first CCS with probability $p_{\text{re}}$ or become quiescent (G0) with probability $1 - p_{\text{re}}$. A cell in quiescence can reenter the cell cycle with rate $k_{\text{re}}$ and probability $p_{\text{re}}$.
 }
