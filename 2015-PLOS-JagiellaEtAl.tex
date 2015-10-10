@@ -237,6 +237,8 @@ Jan Hasenauer\textsuperscript{1,2,*}
 \section*{Abstract}
 The accurate description of multi-scale biological process requires sophisticated computational models. A variety of tools for the construction and simulations of such models are available. The inference of the unknown parameters of multi-scale models however remains and open problem. Key challenges are stochasticity and computational complexity of most multi-scale models. In this manuscript we present a parallel Approximate Bayesian Computations sequential Monte Carlo (pABC~SMC) algorithm for the inference of hybrid discrete-continuum models of biological tissue. The propose pABC~SMC algorithm is tailored for high-performance computing clusters with a queuing systems, and allows for the study of stochastic processes. In a simulation example, we verify that the parameters of hybrid discrete-continuum models of tumor spheroids can be inferred reliably. Accordingly, we use the pABC~SMC algorithm to study tumor spheroid growth in droplets, a model for avascular tumors. Models for this process are highly complex as $10^6$ individual cells have to be simulated along with continuous fields for several molecular species. We used 2D and 3D models for the process and -- surpassingly -- observed that the obtained parameter estimates are similar. This allow us to improve efficiency further and to fit multiple experimental conditions simultaneous. Our results demonstrate the feasibility of data-driven modeling of complex multi-scale processes as well as the reliability and scalability of ABC methods.
 
+\jh{Emphasize: First time that an agent-based model for ... is fitted; growing domain, ...}
+
 % Please keep the Author Summary between 150 and 200 words
 % Use first person. PLOS ONE authors please skip this step. 
 % Author Summary not valid for PLOS ONE submissions.   
@@ -331,6 +333,7 @@ For parameter estimation we used a queue with $C = 100$ cores and required $N = 
 %%%%%%
 \begin{figure}[p]
 \begin{adjustwidth}{-2in}{0in} % Comment out/remove adjustwidth environment if table fits in text column.
+\includegraphics{fig__fitting_artificial_data__2D}
 %\begin{center}
 %\textbf{A} \\ \includegraphics[width=1.3\textwidth]{Data/TumorToyData2D_0.001merr_100pop_GCKI67ECM-fits} \\
 %\begin{minipage}[t]{0.45\textwidth}
@@ -373,14 +376,10 @@ We found that only a subset of the system properties were predicted correctly if
 
 %%%%%%
 \begin{figure}[t]
-\begin{adjustwidth}{-2in}{0in} % Comment out/remove adjustwidth environment if table fits in text column.
-%\begin{center}
-%Experimental data:\\
-%\includegraphics[width=\textwidth]{Data/Tumor2dGCXXXfit}\\
-%Artificial data:\\
-%\includegraphics[width=\textwidth]{Data/TumorToyData2D_0.001adderr_100pop_GCXXXfit}
-%\end{center}
-\vspace*{0.5cm}
+\begin{adjustwidth}{-2in}{0in}
+\begin{center}
+	\includegraphics{fig__experimental_design__experimental_data}
+\end{center}
 \caption{{\bf Experimental design results for artificial/experimental data.}
 The individual columns depict artificial data (black) and final generation provided by the pABC~SMC algorithm (blue) for the Datasets 1-4. The background color indicates whether the artificial experimental data have been used for fitting (white: experiment is fitted; gray: experiment is predicted.}
 \label{fig: experimental design using 2D model}
@@ -411,17 +410,10 @@ While the 3D model described a spheroid, the 2D model assumes symmetry in the th
 
 %%%%%%
 \begin{figure}[p]
-\begin{adjustwidth}{-2in}{0in} % Comment out/remove adjustwidth environment if table fits in text column.
-%\begin{center}
-%\textbf{A} \\ \includegraphics[width=1.3\textwidth]{Data/TumorXXXdGCKI67ECMfit}
-%\begin{minipage}[t]{0.65\textwidth}
-%\textbf{B} \\ \includegraphics[width=\textwidth]{Data/TumorXXXdGCKI67ECMobjectiveFunction}
-%\end{minipage}
-%\begin{minipage}[t]{0.65\textwidth}
-%\textbf{C} \\ \includegraphics[width=\textwidth]{Data/TumorXXXdGCKI67ECMfunctionEvaluations}
-%\end{minipage}\\
-%\textbf{D} \\ \includegraphics[width=1.3\textwidth]{Data/TumorXXXdGCKI67ECMindependentBoxplots}
-%\end{center}
+\begin{adjustwidth}{-2in}{0in}
+\begin{center}
+\includegraphics[width=1.3\textwidth]{fig__2D_3D_comparison}
+\end{center}
 \caption{{\bf Comparison of inference using 2D and 3D model.}
 (\textbf{A}) Experimental data (black) and fits for 2D model (blue) and 3D model (red).
 (\textbf{B}) Distance between simulation and data for accepted samples for different generation. The median is provided as reference. 
@@ -637,8 +629,8 @@ For further details regarding the presented agent-based model, we refer to~\cite
 {\bf Parameter} 					&{\bf Symbol} &{\bf Unit} &\sI{\bf Scenario I} &\sII{\bf Scenario II}\\ \hline
 division rate 					&$k_{\text{div}}^{\max}$ & 1/h & 0.032 & $0.032 \times 10^{-2...2}$\\ \hline
 division depth 					&$L^{\text{div}}$ & $\mu$m & 130 & 1.3...13000\\ \hline
-initial population radius 			&$L^{\text{init}}$ & $\mu$m & 130 & 0.12...1200\\ \hline
-initial quiescent cell fraction 		& $q{\text{init}}$ &-& 0.75& 0.0075...75\\ \hline
+initial spheroid radius 			&$L^{\text{init}}$ & $\mu$m & 130 & 0.12...1200\\ \hline
+initial quiescent cell fraction 		& $q^{\text{init}}$ &-& 0.75& 0.0075...75\\ \hline
 ECM production rate 			&$k_{e}^{\text{pro}}$  & \jh{UI}/h&0.0005 &0.000005...0.05\\ \hline
 ECM degradation rate 			&$k_{e}^{\text{deg}}$ &1/h&0.0033 &0.000033...0.33\\ \hline
 ECM division threshold 			&$e^{\text{div}}$ &\jh{UI} &0.003 &0.00003...0.3\\ \hline
@@ -898,16 +890,16 @@ Wrote the Paper: NJ JH.
 %%%%%%
 \begin{figure}[p]
 \begin{adjustwidth}{-2in}{0in} % Comment out/remove adjustwidth environment if table fits in text column.
-\begin{center}
-\textbf{A} \\ \includegraphics[width=1.3\textwidth]{Data/Tumor2dGCKI67ECM-fits.eps} \\
-\begin{minipage}[t]{0.45\textwidth}
-	\textbf{B} \\ \includegraphics[width=0.95\textwidth]{Data/Tumor2dGCKI67ECM-acceptanceRate.eps}\\
-	\textbf{C} \\ \includegraphics[width=0.95\textwidth]{Data/Tumor2dGCKI67ECM-objFunc.eps}
-\end{minipage}
-\begin{minipage}[t]{0.85\textwidth}
-	\textbf{D}\\ \includegraphics[width=\textwidth]{Data/Tumor2dGCKI67ECM-scatterPlotMatrix.eps}
-\end{minipage}
-\end{center}
+%\begin{center}
+%\textbf{A} \\ \includegraphics[width=1.3\textwidth]{Data/Tumor2dGCKI67ECM-fits.eps} \\
+%\begin{minipage}[t]{0.45\textwidth}
+%	\textbf{B} \\ \includegraphics[width=0.95\textwidth]{Data/Tumor2dGCKI67ECM-acceptanceRate.eps}\\
+%	\textbf{C} \\ \includegraphics[width=0.95\textwidth]{Data/Tumor2dGCKI67ECM-objFunc.eps}
+%\end{minipage}
+%\begin{minipage}[t]{0.85\textwidth}
+%	\textbf{D}\\ \includegraphics[width=\textwidth]{Data/Tumor2dGCKI67ECM-scatterPlotMatrix.eps}
+%\end{minipage}
+%\end{center}
 \vspace*{0.5cm}
 \caption{{\bf Inference using 2D model.} \nj{wrong figure caption! Figure shows 3D result, not comparison with 2D!}
 (\textbf{A}) Experimental data (black) and fits for 2D model (blue) and 3D model (red).
@@ -925,14 +917,7 @@ Wrote the Paper: NJ JH.
 \begin{figure}[p]
 \begin{adjustwidth}{-2in}{0in} % Comment out/remove adjustwidth environment if table fits in text column.
 \begin{center}
-\textbf{A} \\ \includegraphics[width=1.3\textwidth]{Data/Tumor3dGCKI67ECM-fits.eps} \\
-\begin{minipage}[t]{0.45\textwidth}
-	\textbf{B} \\ \includegraphics[width=0.95\textwidth]{Data/Tumor3dGCKI67ECM-acceptanceRate.eps}\\
-	\textbf{C} \\ \includegraphics[width=0.95\textwidth]{Data/Tumor3dGCKI67ECM-objFunc.eps}
-\end{minipage}
-\begin{minipage}[t]{0.85\textwidth}
-	\textbf{D}\\ \includegraphics[width=\textwidth]{Data/Tumor3dGCKI67ECM-scatterPlotMatrix.eps}
-\end{minipage}
+\includegraphics{fig__2D_3D_comparison.pdf}
 \end{center}
 \vspace*{0.5cm}
 \caption{{\bf Inference using 3D model.} \nj{wrong figure caption! Figure shows 3D result, not comparison with 2D!}
